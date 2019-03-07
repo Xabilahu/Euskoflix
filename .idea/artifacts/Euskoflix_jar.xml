@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Euskoflix:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Euskoflix_jar</output-path>
+    <root id="archive" name="Euskoflix.jar">
+      <element id="module-output" name="Euskoflix" />
+    </root>
+  </artifact>
+</component>
