@@ -7,12 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Euskoflix" />
-        <module name="euskoflix" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="euskoflix" target="1.5" />
-      <module name="Euskoflix" target="1.5" />
+      <module name="Euskoflix" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

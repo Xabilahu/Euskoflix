@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Euskoflix/Euskoflix.iml" filepath="$PROJECT_DIR$/Euskoflix/Euskoflix.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Euskoflix.iml" filepath="$PROJECT_DIR$/.idea/Euskoflix.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Euskoflix/euskoflix.iml" filepath="$PROJECT_DIR$/Euskoflix/euskoflix.iml" />
     </modules>
   </component>
 </project>
