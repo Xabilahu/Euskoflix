@@ -7,7 +7,14 @@
     <artifactId>euskoflix</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <dependencies> </dependencies>
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.8.11.2</version>
+        </dependency>
+    </dependencies>
 
     
 </project>
