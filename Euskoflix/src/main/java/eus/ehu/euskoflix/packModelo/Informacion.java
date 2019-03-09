@@ -14,4 +14,13 @@ public class Informacion {
         this.director = pDirector;
     }
 
+    @Override
+    public String toString(){
+        StringBuilder str = new StringBuilder();
+        str.append("Sinopsis: " + sinopsis + "\n");
+        str.append("Director: " + director + "\n");
+        str.append("Imagen: " + poster.toString() + "\n");
+        return str.toString();
+    }
+
 }
