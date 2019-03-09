@@ -25,7 +25,7 @@ public class Usuario {
 
     private String encriptarPassword(String pPassword) {
         try {
-            MessageDigest mg = MessageDigest.getInstance("SHA-256");
+            MessageDigest mg = MessageDigest.getInstance(PropertiesManager.getInstance().getEncryptionType());
             mg.reset();
             mg.update(pPassword.getBytes());
             return new BigInteger(1, mg.digest()).toString(16);
