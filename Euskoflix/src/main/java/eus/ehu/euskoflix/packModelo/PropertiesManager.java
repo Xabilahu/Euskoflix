@@ -19,7 +19,6 @@ public class PropertiesManager {
     private PropertiesManager() {
         this.properties = new Properties();
         File f = new File(Cartelera.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-        System.out.println(f);
         try {
             InputStream in = new FileInputStream(f.getParent() + File.separator + PROPERTIES_FILE_NAME);
             this.properties.load(in);
@@ -45,4 +44,23 @@ public class PropertiesManager {
         stringBuilder.append("&language=es");
         return  stringBuilder.toString();
     }
+
+    public String getPosterApiRequestURL(String image){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(this.properties.getProperty("api.image.url"));
+        stringBuilder.append(this.properties.getProperty("api.image.width"));
+        stringBuilder.append(image);
+        return  stringBuilder.toString();
+    }
+
+    public String getCreditsApiRequestURL(int id){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(this.properties.getProperty("api.movie.url"));
+        stringBuilder.append(id);
+        stringBuilder.append("/credits?api_key=");
+        stringBuilder.append(this.properties.getProperty("api.key"));
+        stringBuilder.append("&language=es");
+        return  stringBuilder.toString();
+    }
+
 }

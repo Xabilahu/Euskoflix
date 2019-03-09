@@ -5,6 +5,7 @@ import eus.ehu.euskoflix.packModelo.Informacion;
 import eus.ehu.euskoflix.packModelo.PropertiesManager;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -38,7 +39,8 @@ public class Main {
             String posterPath = movie.get("poster_path").getAsString();
             String sinopsis = movie.get("overview").getAsString();
             //Movie credits info query
-            URL credits = new URL("https://api.themoviedb.org/3/movie/" + tmdbID + "/credits?api_key=e9f7e8f9f25e5afa642449f0d4a1b4a7");
+            //URL credits = new URL("https://api.themoviedb.org/3/movie/" + tmdbID + "/credits?api_key=e9f7e8f9f25e5afa642449f0d4a1b4a7");
+            URL credits = new URL(PropertiesManager.getInstance().getCreditsApiRequestURL(tmdbID));
             con = (HttpURLConnection) credits.openConnection();
             con.setRequestProperty("Content-Type", "application/json");
             in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -58,11 +60,16 @@ public class Main {
                 }
             }
             //Movie poster query
-            URL img = new URL("https://image.tmdb.org/t/p/w92" + posterPath);
+            //URL img = new URL("https://image.tmdb.org/t/p/w154" + posterPath);
+            URL img  = new URL(PropertiesManager.getInstance().getPosterApiRequestURL(posterPath));
             Image image = ImageIO.read(img);
             Informacion infoExtra = new Informacion(image, sinopsis, director);
             System.out.println("Titulo: " + titulo);
             System.out.println(infoExtra.toString());
+            //Testing image
+            ImageIcon imageIcon = new ImageIcon();
+            imageIcon.setImage(image);
+            JOptionPane.showMessageDialog(null,"","Image",JOptionPane.PLAIN_MESSAGE, imageIcon);
         } catch (Exception e) {
             e.printStackTrace();
         }

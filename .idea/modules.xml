@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Euskoflix/Euskoflix.iml" filepath="$PROJECT_DIR$/Euskoflix/Euskoflix.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../workspaces/intellij_workspace/Euskoflix/Euskoflix/Euskoflix.iml" filepath="$PROJECT_DIR$/../workspaces/intellij_workspace/Euskoflix/Euskoflix/Euskoflix.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Euskoflix/euskoflix.iml" filepath="$PROJECT_DIR$/Euskoflix/euskoflix.iml" />
     </modules>
   </component>
 </project>
