@@ -2,6 +2,7 @@ package eus.ehu.euskoflix.packPrincipal;
 
 import com.google.gson.*;
 import eus.ehu.euskoflix.packModelo.Informacion;
+import eus.ehu.euskoflix.packModelo.PropertiesManager;
 
 import javax.imageio.ImageIO;
 import java.awt.Image;
@@ -9,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Properties;
 
 public class Main {
 
@@ -18,9 +18,7 @@ public class Main {
     }
 
     private void makeTMBDRequest(int tmdbID) {
-        String movieUrl = "https://api.themoviedb.org/3/movie/" + tmdbID + "?api_key=e9f7e8f9f25e5afa642449f0d4a1b4a7&language=es";
-        String json = "";
-        Gson gson = new Gson();
+        String movieUrl = PropertiesManager.getInstance().getMovieApiRequestURL(tmdbID);
         try {
             //Movie general info query
             URL mov = new URL(movieUrl);
@@ -33,7 +31,7 @@ public class Main {
             }
             in.close();
             con.disconnect();
-            json = str.toString();
+            String json = str.toString();
             JsonParser parser = new JsonParser();
             JsonObject movie = parser.parse(json).getAsJsonObject();
             String titulo = movie.get("title").getAsString();
