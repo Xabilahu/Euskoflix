@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: eus.ehu.euskoflix.Main
+Main-Class: eus.ehu.euskoflix.packPrincipal.Main
 
