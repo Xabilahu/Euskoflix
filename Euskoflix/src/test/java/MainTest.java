@@ -1,3 +1,5 @@
+import eus.ehu.euskoflix.packModelo.PropertiesManager;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -13,6 +15,7 @@ public class MainTest {
         mg.update("patata".getBytes());
         b = new BigInteger(1,mg.digest());
         System.out.println(b.toString(16));
+        PropertiesManager.getInstance().getAPIKey();
     }
 
 }
