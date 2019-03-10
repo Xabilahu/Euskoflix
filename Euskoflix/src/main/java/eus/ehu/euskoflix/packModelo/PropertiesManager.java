@@ -31,6 +31,10 @@ public class PropertiesManager {
         return this.properties.getProperty("encryption.type");
     }
 
+    public String getPathToFile(String file){
+        return this.properties.getProperty("path.to." + file);
+    }
+
     public String getAPIKey(){
         return this.properties.getProperty("api.key");
     }
