@@ -15,14 +15,13 @@ import java.net.URL;
 public class Main {
 
     public static void main(String[] args) {
-        new Main().makeTMBDRequest(550);
+        new Main().makeTMBDRequest(5);
     }
 
     private void makeTMBDRequest(int tmdbID) {
-        String movieUrl = PropertiesManager.getInstance().getMovieApiRequestURL(tmdbID);
         try {
             //Movie general info query
-            URL mov = new URL(movieUrl);
+            URL mov = new URL(PropertiesManager.getInstance().getMovieApiRequestURL(tmdbID));
             HttpURLConnection con = (HttpURLConnection) mov.openConnection();
             con.setRequestProperty("Content-Type", "application/json");
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
