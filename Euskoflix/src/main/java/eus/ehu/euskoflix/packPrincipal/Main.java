@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.Image;
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -15,7 +16,8 @@ import java.net.URL;
 public class Main {
 
     public static void main(String[] args) {
-        new Main().makeTMBDRequest(5);
+        //new Main().makeTMBDRequest(5);
+        new Main().cargarFicheros();
     }
 
     private void makeTMBDRequest(int tmdbID) {
@@ -72,6 +74,23 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void cargarFicheros() {
+        StringBuilder str = new StringBuilder();
+        InputStream is = Main.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("links"));
+        System.out.println(is==null);
+        try {
+            BufferedReader in = new BufferedReader(new InputStreamReader(is));
+            while (in.ready())
+                str.append(in.readLine());
+            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+
+        System.out.println(str.toString());
     }
 
 }
