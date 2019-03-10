@@ -19,7 +19,6 @@ public class Informacion {
         StringBuilder str = new StringBuilder();
         str.append("Sinopsis: " + sinopsis + "\n");
         str.append("Director: " + director + "\n");
-        str.append("Imagen: " + poster.toString() + "\n");
         return str.toString();
     }
 
