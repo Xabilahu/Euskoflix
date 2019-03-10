@@ -1,10 +1,16 @@
 package eus.ehu.euskoflix.packControlador;
 
+import eus.ehu.euskoflix.packModelo.Cartelera;
+import eus.ehu.euskoflix.packModelo.PropertiesManager;
+import eus.ehu.euskoflix.packPrincipal.Main;
+
+import javax.swing.plaf.nimbus.State;
+import java.io.BufferedReader;
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.sql.*;
+import java.util.StringTokenizer;
 
 public class BaseDatos {
 
@@ -42,7 +48,8 @@ public class BaseDatos {
 	//post: devuelve true si existe la base de datos, false si no existe
 	//desc: metodo para comprobar si ya existe una base de datos
 	private boolean comprobarExisteBD() {
-		File f = new File("data/basedatos.db");
+		File f = new File(new File(BaseDatos.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent()
+				+ File.separator + "data/basedatos.db");
 		return f.exists();
 	}
 	
@@ -50,11 +57,13 @@ public class BaseDatos {
 	//post: se introducen las tablas en la base de datos
 	//desc: metodo para crear la base de datos con sus tablas y claves	
 	private void crearBD() {
-		File data_dir = new File("data");
+		File data_dir = new File(new File(BaseDatos.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent()
+				+ File.separator + "data");
 		data_dir.mkdir();
 		try {
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:data/basedatos.db");
+			c = DriverManager.getConnection("jdbc:sqlite:" + new File(BaseDatos.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent()
+							+ File.separator + "data/basedatos.db");
 			s = c.createStatement();
 			
 			String instruccion = "CREATE TABLE usuario ( " +
@@ -90,10 +99,11 @@ public class BaseDatos {
 					"    PRIMARY KEY (id_usuario, id_pelicula, etiqueta), " +
 					"    FOREIGN KEY (id_usuario) REFERENCES usuario(id), " +
 					"    FOREIGN KEY (id_pelicula) REFERENCES pelicula(id)); " ;
-			
+
 			s.executeUpdate(instruccion);
 			s.close();
 			c.close();
+			anadirDatos();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
@@ -101,8 +111,49 @@ public class BaseDatos {
 		System.out.println("Base de datos creada");
 		
 	}
-	
-	
+
+	private Connection getConexion() throws SQLException {
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return DriverManager.getConnection("jdbc:sqlite:" + new File(BaseDatos.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent()
+				+ File.separator + "data/basedatos.db");
+	}
+
+	private void anadirDatos() {
+		anadirUsuarios();
+	}
+
+	private void anadirUsuarios() {
+		try {
+			c = this.getConexion();
+			c.setAutoCommit(false);
+			InputStream is = Main.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("nombres"));
+			try {
+				BufferedReader in = new BufferedReader(new InputStreamReader(is));
+				PreparedStatement pst = c.prepareStatement("INSERT INTO usuario(contrasena,nombre,apellido) VALUES(?,?,?)");
+				String defaultPass = PropertiesManager.getInstance().getDefaultPassword();
+				while (in.ready()){
+					StringTokenizer stringTokenizer = new StringTokenizer(in.readLine());
+					pst.setString(1,defaultPass);
+					pst.setString(2,stringTokenizer.nextToken(","));
+					pst.setString(3,stringTokenizer.nextToken(","));
+					pst.addBatch();
+				}
+				pst.executeBatch();
+				in.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.exit(-1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 	//pre: el id introducido debe existir en la base de datos
 	//post: devuelve el string del nombre correspondiente al id
 	//desc: se introduce el id de un usuario que existe y se obtiene el string de su nombre
@@ -111,8 +162,7 @@ public class BaseDatos {
 		String nombre = "";
 		
 		try {
-		    Class.forName("org.sqlite.JDBC");
-		    c = DriverManager.getConnection("jdbc:sqlite:data/basedatos.db");
+		    c = this.getConexion();
 		    c.setAutoCommit(false);
 	
 		    s = c.createStatement();

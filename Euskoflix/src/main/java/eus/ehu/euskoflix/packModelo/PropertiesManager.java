@@ -67,4 +67,7 @@ public class PropertiesManager {
         return  stringBuilder.toString();
     }
 
+    public String getDefaultPassword() {
+        return this.properties.getProperty("default.password");
+    }
 }
