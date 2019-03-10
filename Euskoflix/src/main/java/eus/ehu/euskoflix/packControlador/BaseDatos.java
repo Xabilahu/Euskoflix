@@ -143,6 +143,9 @@ public class BaseDatos {
 					pst.addBatch();
 				}
 				pst.executeBatch();
+				c.commit();
+				c.setAutoCommit(true);
+				c.close();
 				in.close();
 			} catch (Exception e) {
 				e.printStackTrace();
