@@ -138,3 +138,5 @@ fabric.properties
 *.userlibraries
 *.bak*
 !/Euskoflix/target/euskoflix.properties
+/Euskoflix/data/
+/Euskoflix/target/

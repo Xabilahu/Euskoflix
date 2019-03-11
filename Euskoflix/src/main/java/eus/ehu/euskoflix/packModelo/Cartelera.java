@@ -16,8 +16,12 @@ public class Cartelera {
         return mCartelera;
     }
 
-    public void cargarDatos() {
+    public void addPelicula(Pelicula pPeli) {
+        this.lista.addPelicula(pPeli);
+    }
 
+    public void print() {
+        lista.print();
     }
 
 }
