@@ -264,7 +264,7 @@ public class BaseDatos {
 				StringTokenizer stringTokenizer = new StringTokenizer(line);
 				int id = Integer.parseInt(stringTokenizer.nextToken(","));
 				// añadiendo titulo
-				peliculasPst.setString(1,stringTokenizer.nextToken(","));
+				peliculasPst.setString(1,line.substring(line.indexOf(",")+1,line.lastIndexOf(",")));
 				peliculasPst.setInt(2,id);
 				peliculasPst.addBatch();
 				//añadiendo genero
