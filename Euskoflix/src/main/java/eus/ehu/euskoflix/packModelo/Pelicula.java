@@ -18,4 +18,8 @@ public class Pelicula {
         this.lista.addTag(pTag);
     }
 
+    public void print() {
+        System.out.println("ID: " + id + " Título: " + titulo);
+    }
+
 }

@@ -1,14 +1,14 @@
 package eus.ehu.euskoflix.packModelo;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 public class CatalogoUsuarios {
 
     private static CatalogoUsuarios mCatalogo;
-    private Collection<Usuario> lista;
+    private ArrayList<Usuario> lista;
 
     private CatalogoUsuarios() {
-        //TODO:inicializar lista cuando se decida la colección a utilizar
+        this.lista = new ArrayList<Usuario>();
     }
 
     public static CatalogoUsuarios getInstance() {
@@ -22,8 +22,8 @@ public class CatalogoUsuarios {
 
     }
 
-    public void cargar(){
-
+    public void addUsuario(Usuario pUser){
+        this.lista.add(pUser);
     }
 
     public Usuario login(Usuario pUsuario) {

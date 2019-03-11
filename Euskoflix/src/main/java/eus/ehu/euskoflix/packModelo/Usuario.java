@@ -12,14 +12,14 @@ public class Usuario {
     private String password;
     private ListaPeliculas pelisValoradas;
 
-    public Usuario(String pNombre, String pApellido, String pPassword) throws NoSuchAlgorithmException {
+    public Usuario(String pNombre, String pApellido, String pPassword) {
         this.nombre = pNombre;
         this.apellido = pApellido;
         this.password = this.encriptarPassword(pPassword);
         this.pelisValoradas = new ListaPeliculas();
     }
 
-    public boolean comprobarContraseña(String pPassword){
+    public boolean comprobarPassword(String pPassword){
         return this.password.equals(this.encriptarPassword(pPassword));
     }
 
