@@ -1,6 +1,9 @@
 package eus.ehu.euskoflix.packPrincipal;
 
 import com.google.gson.*;
+import eus.ehu.euskoflix.packControlador.BaseDatos;
+import eus.ehu.euskoflix.packModelo.Cartelera;
+import eus.ehu.euskoflix.packModelo.GestionDatos;
 import eus.ehu.euskoflix.packModelo.Informacion;
 import eus.ehu.euskoflix.packModelo.PropertiesManager;
 
@@ -17,7 +20,9 @@ public class Main {
 
     public static void main(String[] args) {
         //new Main().makeTMBDRequest(5);
-        new Main().cargarFicheros();
+        //new Main().cargarFicheros();
+        GestionDatos.getInstance().cargarDatos();
+        Cartelera.getInstance().print();
     }
 
     private void makeTMBDRequest(int tmdbID) {
@@ -79,7 +84,6 @@ public class Main {
     public void cargarFicheros() {
         StringBuilder str = new StringBuilder();
         InputStream is = Main.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("links"));
-        System.out.println(is==null);
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(is));
             while (in.ready())
