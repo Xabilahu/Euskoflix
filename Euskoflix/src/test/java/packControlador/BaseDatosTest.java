@@ -2,6 +2,7 @@ package packControlador;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -21,14 +22,14 @@ public class BaseDatosTest {
 	@Before
 	public void setUp() throws Exception {
 		baseDatos.reiniciarBD();
-		String instruccion1 = "INSERT INTO usuario VALUES "
+		String instruccion1 = /*"INSERT INTO usuario VALUES "
 				+ "(80425, 'contra0', 'nombre0', 'apellido0'),"
 				+ "(92496, 'contra1', 'nombre1', 'apellido1'),"
 				+ "(8725, 'contra2', 'nombre2', 'apellido2'),"
 				+ "(284, 'contra3', 'nombre3', 'apellido3'),"
 				+ "(396, 'contra4', 'nombre4', 'apellido4');"
-				
-				+ " INSERT INTO pelicula VALUES "
+
+				+ */" INSERT INTO pelicula VALUES "
 				+ "(4624, 4823, 'Enter the Void', 'drama'),"
 				+ "(729, 159, 'Ghost in the Shell', 'accion'),"
 				+ "(97296, 1218, 'Blade Runner 2049', 'thriller'),"
@@ -51,7 +52,8 @@ public class BaseDatosTest {
 		
 		try {		
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:data/basedatos.db");
+			c = DriverManager.getConnection("jdbc:sqlite:" + new File(BaseDatos.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent()
+					+ File.separator + "data/basedatos.db");
 			s = c.createStatement();
 			
 			s.executeUpdate(instruccion1);
@@ -59,7 +61,7 @@ public class BaseDatosTest {
 			c.close();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			System.exit(0);
+			System.exit(-1);
 		}		
 		
 		System.out.println("Datos de pruebas introducidos en la base de datos");
@@ -71,7 +73,8 @@ public class BaseDatosTest {
 	
 	@Test
 	public void testIdANombre() {
-		assertEquals(baseDatos.idUsuarioANombre(284), "nombre3");
+		//assertEquals(baseDatos.idUsuarioANombre(284), "nombre3");
+		assertEquals(baseDatos.idUsuarioANombre(4125), "Alejandro");
 	}
 
 }
