@@ -1,10 +1,8 @@
 package eus.ehu.euskoflix.packControlador;
 
-import eus.ehu.euskoflix.packModelo.Cartelera;
 import eus.ehu.euskoflix.packModelo.PropertiesManager;
 import eus.ehu.euskoflix.packPrincipal.Main;
 
-import javax.swing.plaf.nimbus.State;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
@@ -26,21 +24,26 @@ public class BaseDatos {
 		return mBaseDatos;
 		
 	}
+
+	private File getBDFile() {
+		return new File(new File(BaseDatos.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent()
+				+ File.separator + "data/basedatos.db");
+	}
 	
 	//pre: -
 	//post: si la base da datos no existe, se crea una nueva
 	//desc: metodo para inicializar la base de datos del sistema
 	public void iniciarBD() {
 		if (!comprobarExisteBD())
-			crearBD();		
+			crearBD();
 	}
 	
 	//pre: -
 	//post: si existia una base de datos se elimina y se crea una nueva
 	//desc: metodo para eliminar la base de datos existente y crear una nueva
 	public void reiniciarBD() {
-    	File file = new File("data/basedatos.db");
-    	file.delete();
+    	File file = this.getBDFile();
+		file.delete();
     	crearBD();
     }
 	
@@ -48,8 +51,7 @@ public class BaseDatos {
 	//post: devuelve true si existe la base de datos, false si no existe
 	//desc: metodo para comprobar si ya existe una base de datos
 	private boolean comprobarExisteBD() {
-		File f = new File(new File(BaseDatos.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent()
-				+ File.separator + "data/basedatos.db");
+		File f = this.getBDFile();
 		return f.exists();
 	}
 	
@@ -57,13 +59,11 @@ public class BaseDatos {
 	//post: se introducen las tablas en la base de datos
 	//desc: metodo para crear la base de datos con sus tablas y claves	
 	private void crearBD() {
-		File data_dir = new File(new File(BaseDatos.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent()
-				+ File.separator + "data");
+		File data_dir = new File(this.getBDFile().getParent());
 		data_dir.mkdir();
 		try {
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:" + new File(BaseDatos.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent()
-							+ File.separator + "data/basedatos.db");
+			c = this.getConexion();
 			s = c.createStatement();
 			
 			String instruccion = "CREATE TABLE usuario ( " +
@@ -106,7 +106,7 @@ public class BaseDatos {
 			anadirDatos();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+            System.exit(-1);
         }
 		System.out.println("Base de datos creada");
 		
@@ -118,8 +118,7 @@ public class BaseDatos {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return DriverManager.getConnection("jdbc:sqlite:" + new File(BaseDatos.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent()
-				+ File.separator + "data/basedatos.db");
+		return DriverManager.getConnection("jdbc:sqlite:" + this.getBDFile().getPath());
 	}
 
 	private void anadirDatos() {
@@ -180,11 +179,22 @@ public class BaseDatos {
 	
 		} catch (Exception e) {
 		    System.err.println(e.getClass().getName() + ": " + e.getMessage());
-		    System.exit(0);
+		    System.exit(-1);
 		}
 		    
 		return nombre;
 		
 	}
-	
+
+	public ResultSet pedirTabla(String query) {
+		try {
+			c = this.getConexion();
+			PreparedStatement ps = c.prepareStatement(query);
+			return ps.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }
