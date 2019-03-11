@@ -1,5 +1,6 @@
 package eus.ehu.euskoflix.packPrincipal;
 
+import com.alee.laf.WebLookAndFeel;
 import com.google.gson.*;
 import eus.ehu.euskoflix.packControlador.BaseDatos;
 import eus.ehu.euskoflix.packModelo.Cartelera;
@@ -75,6 +76,7 @@ public class Main {
             //Testing image
             ImageIcon imageIcon = new ImageIcon();
             imageIcon.setImage(image);
+            WebLookAndFeel.install ();
             JOptionPane.showMessageDialog(null,"","Image",JOptionPane.PLAIN_MESSAGE, imageIcon);
         } catch (Exception e) {
             e.printStackTrace();
