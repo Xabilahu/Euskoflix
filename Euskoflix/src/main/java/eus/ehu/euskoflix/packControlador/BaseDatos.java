@@ -1,13 +1,11 @@
 package eus.ehu.euskoflix.packControlador;
 
 import eus.ehu.euskoflix.packModelo.PropertiesManager;
-import eus.ehu.euskoflix.packPrincipal.Main;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.StringTokenizer;
 
 public class BaseDatos {
@@ -123,13 +121,79 @@ public class BaseDatos {
 
 	private void anadirDatos() {
 		anadirUsuarios();
+		anadirPeliculas();
+		anadirValoraciones();
+		anadirEtiquetas();
+	}
+
+	private void anadirPeliculas() {
+		addIds();
+		addPeliculaYGenero();
+	}
+
+	private void anadirEtiquetas() {
+		try {
+			c = this.getConexion();
+			c.setAutoCommit(false);
+			InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("tags"));
+			try {
+				BufferedReader in = new BufferedReader(new InputStreamReader(is));
+				in.readLine(); // skip headers
+				PreparedStatement pst = c.prepareStatement("INSERT INTO etiqueta(id_usuario, id_pelicula, etiqueta) VALUES (?,?,?)");
+				while (in.ready()){
+					StringTokenizer stringTokenizer = new StringTokenizer(in.readLine());
+					pst.setInt(1, Integer.parseInt(stringTokenizer.nextToken(",")));
+					pst.setInt(2, Integer.parseInt(stringTokenizer.nextToken(",")));
+					pst.setString(3, stringTokenizer.nextToken(","));
+					pst.addBatch();
+				}
+				pst.executeBatch();
+				c.commit();
+				c.close();
+				in.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.exit(-1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void anadirValoraciones(){
+		try {
+			c = this.getConexion();
+			c.setAutoCommit(false);
+			InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("ratings"));
+			try {
+				BufferedReader in = new BufferedReader(new InputStreamReader(is));
+				in.readLine(); // skip headers
+				PreparedStatement pst = c.prepareStatement("INSERT INTO valoracion(id_usuario, id_pelicula, valoracion) VALUES (?,?,?)");
+				while (in.ready()){
+					StringTokenizer stringTokenizer = new StringTokenizer(in.readLine());
+					pst.setInt(1, Integer.parseInt(stringTokenizer.nextToken(",")));
+					pst.setInt(2, Integer.parseInt(stringTokenizer.nextToken(",")));
+					pst.setFloat(3, Float.parseFloat(stringTokenizer.nextToken(",")));
+					pst.addBatch();
+				}
+				pst.executeBatch();
+				c.commit();
+				c.close();
+				in.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.exit(-1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void anadirUsuarios() {
 		try {
 			c = this.getConexion();
 			c.setAutoCommit(false);
-			InputStream is = Main.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("nombres"));
+			InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("nombres"));
 			try {
 				BufferedReader in = new BufferedReader(new InputStreamReader(is));
 				PreparedStatement pst = c.prepareStatement("INSERT INTO usuario(contrasena,nombre,apellido) VALUES(?,?,?)");
@@ -155,6 +219,83 @@ public class BaseDatos {
 		}
 	}
 
+	private void addIds() {
+		try {
+			c = this.getConexion();
+			c.setAutoCommit(false);
+			InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("links"));
+			BufferedReader in = new BufferedReader(new InputStreamReader(is));
+			in.readLine(); // skip headers
+			PreparedStatement pst = c.prepareStatement("INSERT INTO pelicula(id, idTMDB,titulo) VALUES (?,?,\"\")");
+			while(in.ready()){
+				String line = in.readLine();
+				if (line.matches("\\d+\\,\\d+\\,\\d+")){
+					pst.setInt(1,Integer.parseInt(line.substring(0,line.indexOf(","))));
+					pst.setInt(2,Integer.parseInt(line.substring(line.lastIndexOf(",")+1)));
+					pst.addBatch();
+				}
+			}
+			pst.executeBatch();
+			c.commit();
+			c.close();
+			in.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void addPeliculaYGenero() {
+		try {
+			HashMap<String,Integer> genres = new HashMap<String, Integer>();
+			c = this.getConexion();
+			c.setAutoCommit(false);
+			InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("movies"));
+			BufferedReader in = new BufferedReader(new InputStreamReader(is));
+			in.readLine(); // skip headers
+			PreparedStatement peliculasPst = c.prepareStatement("UPDATE pelicula set titulo=? where id=?");
+			//PreparedStatement generosPst = c.prepareStatement("INSERT INTO genero(id,nombre) VALUES (?,?)");
+			//PreparedStatement peliculaGeneroPst = c.prepareStatement("INSERT INTO pelicula_genero(pelicula,genero) VALUES(?,?)");
+			int genreId = 1;
+			while(in.ready()){
+				String line = in.readLine();
+				StringTokenizer stringTokenizer = new StringTokenizer(line);
+				int id = Integer.parseInt(stringTokenizer.nextToken(","));
+				// añadiendo titulo
+				peliculasPst.setString(1,stringTokenizer.nextToken(","));
+				peliculasPst.setInt(2,id);
+				peliculasPst.addBatch();
+				//añadiendo genero
+				/*stringTokenizer = new StringTokenizer(line.substring(line.lastIndexOf(",")+1));
+				while(stringTokenizer.hasMoreTokens()){
+					String genre = stringTokenizer.nextToken("|");
+					if (!genres.containsKey(genre)){
+						//añadiendo genero si no exite
+						genres.put(genre,genreId);
+						generosPst.setInt(1,genreId++);
+						generosPst.setString(2,genre);
+						generosPst.addBatch();
+					}
+					//añadiendo relacion pelicula genero
+					peliculaGeneroPst.setInt(1,id);
+					peliculaGeneroPst.setInt(2,genres.get(genre));
+					peliculaGeneroPst.addBatch();
+				}*/
+			}
+			peliculasPst.executeBatch();
+			//generosPst.executeBatch();
+			//peliculaGeneroPst.executeBatch();
+			c.commit();
+			c.close();
+			in.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	//pre: el id introducido debe existir en la base de datos
 	//post: devuelve el string del nombre correspondiente al id
