@@ -70,4 +70,10 @@ public class PropertiesManager {
     public String getDefaultPassword() {
         return this.properties.getProperty("default.password");
     }
+
+    public String getPathToLogo(){
+        return this.properties.getProperty("path.to.logo");
+    }
+
+
 }
