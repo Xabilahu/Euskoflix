@@ -269,8 +269,8 @@ public class BaseDatos {
 			BufferedReader in = new BufferedReader(new InputStreamReader(is));
 			in.readLine(); // skip headers
 			PreparedStatement peliculasPst = c.prepareStatement("UPDATE pelicula set titulo=? where id=?");
-			//PreparedStatement generosPst = c.prepareStatement("INSERT INTO genero(id,nombre) VALUES (?,?)");
-			//PreparedStatement peliculaGeneroPst = c.prepareStatement("INSERT INTO pelicula_genero(pelicula,genero) VALUES(?,?)");
+			PreparedStatement generosPst = c.prepareStatement("INSERT INTO genero(id,nombre) VALUES (?,?)");
+			PreparedStatement peliculaGeneroPst = c.prepareStatement("INSERT INTO pelicula_genero(id_pelicula,id_genero) VALUES(?,?)");
 			int genreId = 1;
 			while(in.ready()){
 				String line = in.readLine();
@@ -281,7 +281,7 @@ public class BaseDatos {
 				peliculasPst.setInt(2,id);
 				peliculasPst.addBatch();
 				//añadiendo genero
-				/*stringTokenizer = new StringTokenizer(line.substring(line.lastIndexOf(",")+1));
+				stringTokenizer = new StringTokenizer(line.substring(line.lastIndexOf(",")+1));
 				while(stringTokenizer.hasMoreTokens()){
 					String genre = stringTokenizer.nextToken("|");
 					if (!genres.containsKey(genre)){
@@ -295,11 +295,11 @@ public class BaseDatos {
 					peliculaGeneroPst.setInt(1,id);
 					peliculaGeneroPst.setInt(2,genres.get(genre));
 					peliculaGeneroPst.addBatch();
-				}*/
+				}
 			}
 			peliculasPst.executeBatch();
-			//generosPst.executeBatch();
-			//peliculaGeneroPst.executeBatch();
+			generosPst.executeBatch();
+			peliculaGeneroPst.executeBatch();
 			c.commit();
 			c.close();
 			in.close();
