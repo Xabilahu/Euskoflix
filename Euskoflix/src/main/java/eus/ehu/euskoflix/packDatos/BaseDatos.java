@@ -75,7 +75,6 @@ public class BaseDatos {
 					"    id INTEGER NOT NULL, " +
 					"    idTMDB INTEGER NOT NULL, " +
 					"    titulo TEXT NOT NULL, " +
-					"    genero TEXT, " +
 
 					"    PRIMARY KEY (id));" +
 					
