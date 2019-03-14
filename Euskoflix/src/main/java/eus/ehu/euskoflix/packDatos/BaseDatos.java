@@ -95,7 +95,21 @@ public class BaseDatos {
 					
 					"    PRIMARY KEY (id_usuario, id_pelicula, etiqueta), " +
 					"    FOREIGN KEY (id_usuario) REFERENCES usuario(id), " +
-					"    FOREIGN KEY (id_pelicula) REFERENCES pelicula(id)); " ;
+					"    FOREIGN KEY (id_pelicula) REFERENCES pelicula(id)); " +
+					
+					"CREATE TABLE genero ( " +
+					"    id INTEGER NOT NULL, " +
+					"    nombre TEXT NOT NULL, " +
+					
+					"    PRIMARY KEY (id)); " +
+					
+					"CREATE TABLE pelicula_genero ( " +
+					"    id_genero INTEGER NOT NULL, " +
+					"    id_pelicula INTEGER NOT NULL, " +
+					
+					"    PRIMARY KEY (id_genero, id_pelicula), " +
+					"    FOREIGN KEY (id_genero) REFERENCES genero(id), " +
+					"    FOREIGN KEY (id_pelicula) REFERENCES pelicula(id)); ";
 
 			s.executeUpdate(instruccion);
 			s.close();
@@ -255,8 +269,8 @@ public class BaseDatos {
 			BufferedReader in = new BufferedReader(new InputStreamReader(is));
 			in.readLine(); // skip headers
 			PreparedStatement peliculasPst = c.prepareStatement("UPDATE pelicula set titulo=? where id=?");
-			//PreparedStatement generosPst = c.prepareStatement("INSERT INTO genero(id,nombre) VALUES (?,?)");
-			//PreparedStatement peliculaGeneroPst = c.prepareStatement("INSERT INTO pelicula_genero(pelicula,genero) VALUES(?,?)");
+			PreparedStatement generosPst = c.prepareStatement("INSERT INTO genero(id,nombre) VALUES (?,?)");
+			PreparedStatement peliculaGeneroPst = c.prepareStatement("INSERT INTO pelicula_genero(id_pelicula,id_genero) VALUES(?,?)");
 			int genreId = 1;
 			while(in.ready()){
 				String line = in.readLine();
@@ -267,7 +281,7 @@ public class BaseDatos {
 				peliculasPst.setInt(2,id);
 				peliculasPst.addBatch();
 				//añadiendo genero
-				/*stringTokenizer = new StringTokenizer(line.substring(line.lastIndexOf(",")+1));
+				stringTokenizer = new StringTokenizer(line.substring(line.lastIndexOf(",")+1));
 				while(stringTokenizer.hasMoreTokens()){
 					String genre = stringTokenizer.nextToken("|");
 					if (!genres.containsKey(genre)){
@@ -281,11 +295,11 @@ public class BaseDatos {
 					peliculaGeneroPst.setInt(1,id);
 					peliculaGeneroPst.setInt(2,genres.get(genre));
 					peliculaGeneroPst.addBatch();
-				}*/
+				}
 			}
 			peliculasPst.executeBatch();
-			//generosPst.executeBatch();
-			//peliculaGeneroPst.executeBatch();
+			generosPst.executeBatch();
+			peliculaGeneroPst.executeBatch();
 			c.commit();
 			c.close();
 			in.close();
