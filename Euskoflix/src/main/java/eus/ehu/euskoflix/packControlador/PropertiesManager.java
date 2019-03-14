@@ -42,13 +42,7 @@ public class PropertiesManager {
     }
 
     public String getMovieApiRequestURL(int id){
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(this.properties.getProperty("api.movie.url"));
-        stringBuilder.append(id);
-        stringBuilder.append("?api_key=");
-        stringBuilder.append(this.properties.getProperty("api.key"));
-        stringBuilder.append("&language=es");
-        return  stringBuilder.toString();
+        return getString(id, "?api_key=");
     }
 
     public String getPosterApiRequestURL(String image){
@@ -60,13 +54,7 @@ public class PropertiesManager {
     }
 
     public String getCreditsApiRequestURL(int id){
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(this.properties.getProperty("api.movie.url"));
-        stringBuilder.append(id);
-        stringBuilder.append("/credits?api_key=");
-        stringBuilder.append(this.properties.getProperty("api.key"));
-        stringBuilder.append("&language=es");
-        return  stringBuilder.toString();
+        return getString(id, "/credits?api_key=");
     }
 
     public String getDefaultPassword() {
@@ -77,5 +65,14 @@ public class PropertiesManager {
         return this.properties.getProperty("path.to.logo");
     }
 
+    private String getString(int id, String s) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(this.properties.getProperty("api.movie.url"));
+        stringBuilder.append(id);
+        stringBuilder.append(s);
+        stringBuilder.append(this.properties.getProperty("api.key"));
+        stringBuilder.append("&language=es");
+        return  stringBuilder.toString();
+    }
 
 }

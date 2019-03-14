@@ -2,6 +2,7 @@ package eus.ehu.euskoflix.packPrincipal;
 
 import com.alee.laf.WebLookAndFeel;
 import com.google.gson.*;
+import eus.ehu.euskoflix.packControlador.GestionDatos;
 import eus.ehu.euskoflix.packModelo.Informacion;
 import eus.ehu.euskoflix.packControlador.PropertiesManager;
 
@@ -17,9 +18,9 @@ import java.net.URL;
 public class Main {
 
     public static void main(String[] args) {
-        new Main().makeTMBDRequest(5);
+        //new Main().makeTMBDRequest(5);
 //        new Main().cargarFicheros();
-//        GestionDatos.getInstance().cargarDatos();
+        GestionDatos.getInstance().cargarDatos();
 //        Cartelera.getInstance().print();
     }
 

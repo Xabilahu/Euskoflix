@@ -1,6 +1,7 @@
 package eus.ehu.euskoflix.packVista;
 
 import com.alee.laf.WebLookAndFeel;
+import eus.ehu.euskoflix.packControlador.GestionDatos;
 import eus.ehu.euskoflix.packControlador.PropertiesManager;
 
 import javax.imageio.ImageIO;
@@ -45,8 +46,6 @@ public class EuskoFlixLoader extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        this.setVisible(true);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
@@ -63,7 +62,10 @@ public class EuskoFlixLoader extends JFrame {
     }
 
     public static void main(String[] args) {
-        new EuskoFlixLoader();
+        EuskoFlixLoader el = new EuskoFlixLoader();
+        el.setVisible(true);
+        GestionDatos.getInstance().cargarDatos();
+        el.setVisible(false);
     }
 
 }

@@ -2,11 +2,11 @@ package eus.ehu.euskoflix.packVista;
 
 import com.alee.laf.WebLookAndFeel;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import eus.ehu.euskoflix.packControlador.ControladorVista;
 import eus.ehu.euskoflix.packControlador.GestionDatos;
@@ -44,16 +44,15 @@ public class VentanaCargaDatos extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+        tableUsers = new JTable(ControladorVista.getInstance().datosUsuario(),ControladorVista.getInstance().getCabeceraUsers());
+        JScrollPane scrollPane = new JScrollPane(tableUsers);
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.add(scrollPane, BorderLayout.CENTER);
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        tabbedPane.addTab("Usuarios", null, panel, null);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
-
-		JPanel panel = new JPanel();
-		tabbedPane.addTab("Usuarios", null, panel, null);
-
-		tableUsers = new JTable(ControladorVista.getInstance().datosUsuario(),ControladorVista.getInstance().getCabeceraUsers());
-		JScrollPane scrollPane = new JScrollPane(tableUsers);
-		panel.add(scrollPane);
+		this.setMinimumSize(new Dimension(450, 300));
 	}
 
 }
