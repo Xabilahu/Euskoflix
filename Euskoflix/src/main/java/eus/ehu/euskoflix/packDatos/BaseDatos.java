@@ -95,7 +95,21 @@ public class BaseDatos {
 					
 					"    PRIMARY KEY (id_usuario, id_pelicula, etiqueta), " +
 					"    FOREIGN KEY (id_usuario) REFERENCES usuario(id), " +
-					"    FOREIGN KEY (id_pelicula) REFERENCES pelicula(id)); " ;
+					"    FOREIGN KEY (id_pelicula) REFERENCES pelicula(id)); " +
+					
+					"CREATE TABLE genero ( " +
+					"    id INTEGER NOT NULL, " +
+					"    nombre TEXT NOT NULL, " +
+					
+					"    PRIMARY KEY (id)); " +
+					
+					"CREATE TABLE pelicula_genero ( " +
+					"    id_genero INTEGER NOT NULL, " +
+					"    id_pelicula INTEGER NOT NULL, " +
+					
+					"    PRIMARY KEY (id_genero, id_pelicula), " +
+					"    FOREIGN KEY (id_genero) REFERENCES genero(id), " +
+					"    FOREIGN KEY (id_pelicula) REFERENCES pelicula(id)); ";
 
 			s.executeUpdate(instruccion);
 			s.close();
