@@ -1,21 +1,23 @@
 package eus.ehu.euskoflix.packModelo;
 
+import java.util.LinkedList;
+
 public class Pelicula {
 
     private int id;
     private String titulo;
-    private ListaTags lista;
+    private LinkedList<Tag> lista;
     private Informacion infoExtra;
 
     public Pelicula(int pId, String pTitulo, Informacion pInfo) {
         this.id = pId;
         this.titulo = pTitulo;
-        this.lista = new ListaTags();
+        this.lista = new LinkedList<>();
         this.infoExtra = pInfo;
     }
 
-    public void addTag(String pTag) {
-        this.lista.addTag(pTag);
+    public void addTag(Tag pTag) {
+        this.lista.add(pTag);
     }
 
     public void print() {

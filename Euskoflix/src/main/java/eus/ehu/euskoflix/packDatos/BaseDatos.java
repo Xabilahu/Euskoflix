@@ -340,15 +340,45 @@ public class BaseDatos {
 		
 	}
 
-	public ResultSet pedirTabla(String query) {
+	public ResultSet getPeliculas() {
+		return this.pedirTabla("peliculas");
+	}
+
+	public ResultSet getTags() {
+		return this.pedirTabla("tags");
+	}
+
+	public ResultSet getUsuarios() {
+		return this.pedirTabla("usuarios");
+	}
+
+	public ResultSet getValoraciones() {
+		return this.pedirTabla("valoraciones");
+	}
+
+	private ResultSet pedirTabla(String query) {
+		ResultSet rst = null;
 		try {
-			c = this.getConexion();
-			PreparedStatement ps = c.prepareStatement(query);
-			return ps.executeQuery();
+			PreparedStatement pst = this.getConexion().prepareStatement("SELECT * FROM ?");
+			switch (query) {
+				case "peliculas":
+					pst.setString(1, "pelicula");
+					break;
+				case "valoraciones":
+					pst.setString(1, "valoracion");
+					break;
+				case "usuarios":
+					pst.setString(1, "usuario");
+					break;
+				case "tags":
+					pst.setString(1, "etiqueta");
+					break;
+			}
+			rst = pst.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
+		return rst;
 	}
 
 }

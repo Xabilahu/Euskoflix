@@ -3,6 +3,7 @@ package eus.ehu.euskoflix.packPrincipal;
 import com.alee.laf.WebLookAndFeel;
 import com.google.gson.*;
 import eus.ehu.euskoflix.packControlador.GestionDatos;
+import eus.ehu.euskoflix.packModelo.Cartelera;
 import eus.ehu.euskoflix.packModelo.Informacion;
 import eus.ehu.euskoflix.packControlador.PropertiesManager;
 
@@ -21,7 +22,7 @@ public class Main {
         //new Main().makeTMBDRequest(5);
 //        new Main().cargarFicheros();
         GestionDatos.getInstance().cargarDatos();
-//        Cartelera.getInstance().print();
+        Cartelera.getInstance().print();
     }
 
     private void makeTMBDRequest(int tmdbID) {

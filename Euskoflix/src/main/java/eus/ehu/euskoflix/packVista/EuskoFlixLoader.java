@@ -38,7 +38,6 @@ public class EuskoFlixLoader extends JFrame {
 
             this.add(progressBar,BorderLayout.SOUTH);
             Dimension d = new Dimension(icon.getIconWidth(),icon.getIconHeight()+progressBar.getHeight());
-            System.out.println(d);
             this.setMinimumSize(d);
             this.setMaximumSize(d);
             this.setPreferredSize(d);
@@ -65,7 +64,7 @@ public class EuskoFlixLoader extends JFrame {
         EuskoFlixLoader el = new EuskoFlixLoader();
         el.setVisible(true);
         GestionDatos.getInstance().cargarDatos();
-        el.setVisible(false);
+        el.dispose();
     }
 
 }

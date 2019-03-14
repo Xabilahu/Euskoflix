@@ -5,6 +5,7 @@ import eus.ehu.euskoflix.packModelo.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class GestionDatos {
 
@@ -20,20 +21,14 @@ public class GestionDatos {
         return mGestionDatos;
     }
 
-    public ListaPeliculas buscar(String pConsulta, Tipo pTipo){
-        return null;
-    }
-
     public void cargarDatos() {
         BaseDatos.getBaseDatos().iniciarBD();
         this.cargarPeliculas();
         this.cargarUsuarios();
-        this.cargarTags();
-        this.cargarValoraciones();
     }
 
     private void cargarPeliculas() {
-        ResultSet pelis = BaseDatos.getBaseDatos().pedirTabla("SELECT * FROM pelicula;");
+        ResultSet pelis = BaseDatos.getBaseDatos().getPeliculas();
         try {
             while (pelis.next()) {
                 Pelicula p = new Pelicula(pelis.getInt("id"), pelis.getString("titulo"), null);
@@ -45,7 +40,7 @@ public class GestionDatos {
     }
 
     private void cargarUsuarios() {
-        ResultSet usuarios = BaseDatos.getBaseDatos().pedirTabla("SELECT * FROM usuario;");
+        ResultSet usuarios = BaseDatos.getBaseDatos().getUsuarios();
         try {
             while (usuarios.next()) {
                 Usuario u = new Usuario(usuarios.getInt("id"), usuarios.getString("nombre"), usuarios.getString("apellido"), usuarios.getString("contrasena"));
@@ -56,12 +51,30 @@ public class GestionDatos {
         }
     }
 
-    private void cargarTags() {
-        //TODO:implementar tras resolver la duda
+    private ArrayList<Tag> cargarTags() {
+        ResultSet rst = BaseDatos.getBaseDatos().getTags();
+        ArrayList<Tag> tags = new ArrayList<>();
+        try{
+            while (rst.next()) {
+                tags.add(new Tag(rst.getInt("id_usuario"), rst.getInt("id_pelicula"), rst.getString("etiqueta")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tags;
     }
 
-    private void cargarValoraciones() {
-        //TODO:implementar tras resolver la duda
+    private ArrayList<Valoracion> cargarValoraciones() {
+        ResultSet rst = BaseDatos.getBaseDatos().getValoraciones();
+        ArrayList<Valoracion> ratings = new ArrayList<>();
+        try {
+            while (rst.next()) {
+                ratings.add(new Valoracion(rst.getInt("id_usuario"), rst.getInt("id_pelicula"), rst.getFloat("valoracion")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ratings;
     }
 
 }
