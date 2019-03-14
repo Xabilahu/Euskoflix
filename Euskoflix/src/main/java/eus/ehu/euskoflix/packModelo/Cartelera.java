@@ -24,4 +24,12 @@ public class Cartelera {
         lista.print();
     }
 
+    public int getNumPeliculas() {
+        return this.lista.getNumPeliculas();
+    }
+
+    public Pelicula getPeliculaPorId(int pId) {
+        return this.lista.getPeliculaPorId(pId);
+    }
+
 }

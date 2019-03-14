@@ -24,4 +24,11 @@ public class Pelicula {
         System.out.println("ID: " + id + " Título: " + titulo);
     }
 
+    public int getId() {
+        return this.id;
+    }
+    public String getTitulo() {
+        return this.titulo;
+    }
+
 }

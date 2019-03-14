@@ -2,6 +2,7 @@ package eus.ehu.euskoflix.packControlador;
 
 import eus.ehu.euskoflix.packModelo.Cartelera;
 import eus.ehu.euskoflix.packModelo.CatalogoUsuarios;
+import eus.ehu.euskoflix.packModelo.Pelicula;
 import eus.ehu.euskoflix.packModelo.Usuario;
 
 
@@ -41,9 +42,22 @@ public class ControladorVista {
 		CatalogoUsuarios.getInstance();
 		return null;
 	}
+
+	//Pestana peliculas y su cabecera
 	public String[][] datosPelis(){
-		Cartelera.getInstance();
+		Cartelera films = Cartelera.getInstance();
+		int size = films.getNumPeliculas();//crear
+		String [][] resulFilms = new String[size][2];
+		Pelicula filmNew;
+		for(int i =0;i<size -1;i++) {
+			filmNew = films.getPeliculaPorId(i+1);//crear
+			resulFilms[i][0] = String.valueOf(filmNew.getId());//crear
+			resulFilms[i][1] = filmNew.getTitulo();//crear
+		}
 		return null;
+	}
+	public String[] getCabeceraFilms(){
+		return new String[] {"ID","Titulo"};
 	}
 
 }

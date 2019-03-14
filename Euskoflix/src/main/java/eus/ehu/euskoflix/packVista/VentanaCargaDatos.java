@@ -6,7 +6,6 @@ import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
 import eus.ehu.euskoflix.packControlador.ControladorVista;
 import eus.ehu.euskoflix.packControlador.GestionDatos;
@@ -15,6 +14,7 @@ public class VentanaCargaDatos extends JFrame {
 
 	private JPanel contentPane;
 	private JTable tableUsers;
+	private JTable tableFilms;
 
 	/**
 	 * Launch the application.
@@ -53,6 +53,12 @@ public class VentanaCargaDatos extends JFrame {
         tabbedPane.addTab("Usuarios", null, panel, null);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		this.setMinimumSize(new Dimension(450, 300));
+		//Pelis
+		JPanel panel1 = new JPanel();
+		tabbedPane.addTab("Peliculas", null, panel1, null);
+		tableFilms = new JTable(ControladorVista.getInstance().datosPelis(),ControladorVista.getInstance().getCabeceraFilms());
+		JScrollPane scrollPane1 = new JScrollPane(tableFilms);
+		panel1.add(scrollPane1);
 	}
 
 }

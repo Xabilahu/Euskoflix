@@ -12,14 +12,12 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String password;
-    private ListaPeliculas pelisValoradas;
 
     public Usuario(int pId, String pNombre, String pApellido, String pPassword) {
         this.id = pId;
         this.nombre = pNombre;
         this.apellido = pApellido;
         this.password = this.encriptarPassword(pPassword);
-        this.pelisValoradas = new ListaPeliculas();
     }
 
     public boolean comprobarPassword(String pPassword){

@@ -33,6 +33,13 @@ public class BaseDatos {
 	public void iniciarBD() {
 		if (!comprobarExisteBD())
 			crearBD();
+		else {
+			try {
+				Thread.sleep(6000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	//pre: -
@@ -358,19 +365,19 @@ public class BaseDatos {
 	private ResultSet pedirTabla(String query) {
 		ResultSet rst = null;
 		try {
-			PreparedStatement pst = this.getConexion().prepareStatement("SELECT * FROM ?");
+			PreparedStatement pst = null;
 			switch (query) {
 				case "peliculas":
-					pst.setString(1, "pelicula");
+					pst = this.getConexion().prepareStatement("SELECT * FROM pelicula");
 					break;
 				case "valoraciones":
-					pst.setString(1, "valoracion");
+					pst = this.getConexion().prepareStatement("SELECT * FROM valoracion");
 					break;
 				case "usuarios":
-					pst.setString(1, "usuario");
+					pst = this.getConexion().prepareStatement("SELECT * FROM usuario");
 					break;
 				case "tags":
-					pst.setString(1, "etiqueta");
+					pst = this.getConexion().prepareStatement("SELECT * FROM etiqueta");
 					break;
 			}
 			rst = pst.executeQuery();
@@ -403,4 +410,12 @@ public class BaseDatos {
 		}
 		return rst;
 	}
+
+	//Estructura usuario pelicula valorcion
+	//select id_usuario,id_pelicula,valoracion from valoracion where id_pelicula IN (select id_pelicula from valoracion where id_usuario=8 ) AND id_usuario !=8 -- meter umbral
+
+//	select id_usuario,id_pelicula,valoracion from valoracion where id_pelicula IN (select id_pelicula from valoracion where id_usuario=8 ) AND id_usuario !=8; -- meter umbral
+//	select id_pelicula,etiqueta,count(etiqueta) from etiqueta where id_pelicula IN(select id_pelicula from valoracion where id_usuario=36 ) group by id_pelicula,etiqueta;
+//	select count(*) as cuenta,id_usuario from valoracion group by id_usuario order by cuenta asc;
+
 }

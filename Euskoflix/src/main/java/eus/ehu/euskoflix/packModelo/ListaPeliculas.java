@@ -23,5 +23,11 @@ public class ListaPeliculas {
             else
                 p.print();
     }
+    public int getNumPeliculas() {
+    	return this.lista.size();
+    }
 
+    public Pelicula getPeliculaPorId(int pId) {
+        return this.lista.get(pId);
+    }
 }
