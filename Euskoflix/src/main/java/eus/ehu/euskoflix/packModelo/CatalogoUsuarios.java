@@ -30,4 +30,8 @@ public class CatalogoUsuarios {
         return null;
     }
 
+    public Usuario getUsuarioPorId(int pId) {
+        return this.lista.get(pId);
+    }
+
 }
