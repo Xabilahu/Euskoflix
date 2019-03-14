@@ -380,4 +380,27 @@ public class BaseDatos {
 		return rst;
 	}
 
+	public ResultSet getTagsByPelicula(int pId) {
+		ResultSet rst = null;
+		try {
+			PreparedStatement pst = this.getConexion().prepareStatement("SELECT id_usuario, etiqueta FROM etiqueta WHERE id_pelicula = ?");
+			pst.setInt(1, pId);
+			rst = pst.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rst;
+	}
+
+	public ResultSet getValoracionByPelicula(int pId) {
+		ResultSet rst = null;
+		try {
+			PreparedStatement pst = this.getConexion().prepareStatement("SELECT id_usuario, valoracion FROM valoracion WHERE id_pelicula = ?");
+			pst.setInt(1, pId);
+			rst = pst.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rst;
+	}
 }

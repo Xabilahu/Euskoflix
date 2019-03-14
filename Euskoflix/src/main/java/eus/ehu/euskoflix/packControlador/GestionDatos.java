@@ -51,20 +51,12 @@ public class GestionDatos {
         }
     }
 
-    private ArrayList<Tag> cargarTags() {
+    private ArrayList<Tag> cogerTags() {
         ResultSet rst = BaseDatos.getBaseDatos().getTags();
-        ArrayList<Tag> tags = new ArrayList<>();
-        try{
-            while (rst.next()) {
-                tags.add(new Tag(rst.getInt("id_usuario"), rst.getInt("id_pelicula"), rst.getString("etiqueta")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return tags;
+        return getTags(rst);
     }
 
-    private ArrayList<Valoracion> cargarValoraciones() {
+    private ArrayList<Valoracion> cogerValoraciones() {
         ResultSet rst = BaseDatos.getBaseDatos().getValoraciones();
         ArrayList<Valoracion> ratings = new ArrayList<>();
         try {
@@ -76,5 +68,24 @@ public class GestionDatos {
         }
         return ratings;
     }
+
+    public ArrayList<Tag> getTagsByPelicula(int pId) {
+        ResultSet rst = BaseDatos.getBaseDatos().getTagsByPelicula(pId);
+        return getTags(rst);
+    }
+
+    private ArrayList<Tag> getTags(ResultSet rst) {
+        ArrayList<Tag> tags = new ArrayList<>();
+        try {
+            while (rst.next()) {
+                tags.add(new Tag(rst.getInt("id_usuario"), rst.getInt("id_pelicula"), rst.getString("etiqueta")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tags;
+    }
+
+
 
 }
