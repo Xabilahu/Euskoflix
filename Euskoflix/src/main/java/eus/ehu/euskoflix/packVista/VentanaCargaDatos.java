@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import main.java.eus.ehu.euskoflix.packControlador.ControladorVista;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -13,7 +16,7 @@ import javax.swing.JTable;
 public class VentanaCargaDatos extends JFrame {
 
 	private JPanel contentPane;
-	private JTable table;
+	private JTable tableUsers;
 
 	/**
 	 * Launch the application.
@@ -48,8 +51,8 @@ public class VentanaCargaDatos extends JFrame {
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("New tab", null, panel, null);
 		
-		table = new JTable();
-		panel.add(table);
+		tableUsers = new JTable(ControladorVista.getInstance().datosUsuario(),ControladorVista.getInstance().getCabeceraUsers());
+		panel.add(tableUsers);
 	}
 
 }
