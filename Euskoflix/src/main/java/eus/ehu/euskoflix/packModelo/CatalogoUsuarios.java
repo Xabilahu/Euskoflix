@@ -34,4 +34,8 @@ public class CatalogoUsuarios {
         return this.lista.get(pId);
     }
 
+    public int getNumUsuarios() {
+        return this.lista.size();
+    }
+
 }
