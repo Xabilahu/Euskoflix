@@ -2,7 +2,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import eus.ehu.euskoflix.packModelo.PropertiesManager;
+import eus.ehu.euskoflix.packControlador.PropertiesManager;
 
 import java.io.*;
 import java.math.BigInteger;

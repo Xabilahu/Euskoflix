@@ -1,4 +1,6 @@
-package eus.ehu.euskoflix.packModelo;
+package eus.ehu.euskoflix.packControlador;
+
+import eus.ehu.euskoflix.packModelo.Cartelera;
 
 import java.io.File;
 import java.io.FileInputStream;

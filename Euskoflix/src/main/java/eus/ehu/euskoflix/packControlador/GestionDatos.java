@@ -1,6 +1,7 @@
-package eus.ehu.euskoflix.packModelo;
+package eus.ehu.euskoflix.packControlador;
 
-import eus.ehu.euskoflix.packControlador.BaseDatos;
+import eus.ehu.euskoflix.packDatos.BaseDatos;
+import eus.ehu.euskoflix.packModelo.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

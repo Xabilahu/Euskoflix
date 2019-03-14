@@ -1,8 +1,7 @@
-package eus.ehu.euskoflix.packPrincipal;
+package eus.ehu.euskoflix.packVista;
 
 import com.alee.laf.WebLookAndFeel;
-import eus.ehu.euskoflix.packControlador.BaseDatos;
-import eus.ehu.euskoflix.packModelo.PropertiesManager;
+import eus.ehu.euskoflix.packControlador.PropertiesManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

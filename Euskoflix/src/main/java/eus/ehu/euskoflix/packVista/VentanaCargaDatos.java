@@ -8,9 +8,8 @@ import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import eus.ehu.euskoflix.packControlador.BaseDatos;
 import eus.ehu.euskoflix.packControlador.ControladorVista;
-import eus.ehu.euskoflix.packModelo.GestionDatos;
+import eus.ehu.euskoflix.packControlador.GestionDatos;
 
 public class VentanaCargaDatos extends JFrame {
 

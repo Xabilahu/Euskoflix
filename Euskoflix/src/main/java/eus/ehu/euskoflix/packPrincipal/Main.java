@@ -2,11 +2,8 @@ package eus.ehu.euskoflix.packPrincipal;
 
 import com.alee.laf.WebLookAndFeel;
 import com.google.gson.*;
-import eus.ehu.euskoflix.packControlador.BaseDatos;
-import eus.ehu.euskoflix.packModelo.Cartelera;
-import eus.ehu.euskoflix.packModelo.GestionDatos;
 import eus.ehu.euskoflix.packModelo.Informacion;
-import eus.ehu.euskoflix.packModelo.PropertiesManager;
+import eus.ehu.euskoflix.packControlador.PropertiesManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

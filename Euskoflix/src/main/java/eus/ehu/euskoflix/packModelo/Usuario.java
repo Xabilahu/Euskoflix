@@ -1,5 +1,7 @@
 package eus.ehu.euskoflix.packModelo;
 
+import eus.ehu.euskoflix.packControlador.PropertiesManager;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

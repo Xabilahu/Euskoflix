@@ -11,7 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import eus.ehu.euskoflix.packControlador.BaseDatos;
+import eus.ehu.euskoflix.packDatos.BaseDatos;
 
 public class BaseDatosTest {
 

@@ -1,11 +1,10 @@
-package eus.ehu.euskoflix.packControlador;
+package eus.ehu.euskoflix.packDatos;
 
-import eus.ehu.euskoflix.packModelo.PropertiesManager;
+import eus.ehu.euskoflix.packControlador.PropertiesManager;
 
 import java.io.*;
 import java.sql.*;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.StringTokenizer;
 
 public class BaseDatos {
