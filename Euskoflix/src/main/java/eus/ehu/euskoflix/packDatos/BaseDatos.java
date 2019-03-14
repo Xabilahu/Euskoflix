@@ -418,4 +418,10 @@ public class BaseDatos {
 //	select id_pelicula,etiqueta,count(etiqueta) from etiqueta where id_pelicula IN(select id_pelicula from valoracion where id_usuario=36 ) group by id_pelicula,etiqueta;
 //	select count(*) as cuenta,id_usuario from valoracion group by id_usuario order by cuenta asc;
 
+	/*
+	* select id_pelicula,etiqueta,count(etiqueta) from etiqueta group by etiqueta order by id_pelicula; -- tf
+	*	select count(*) from pelicula; -- N
+	*	select count(*) from etiqueta where etiqueta = 1 -- Nt
+	*
+	* */
 }
