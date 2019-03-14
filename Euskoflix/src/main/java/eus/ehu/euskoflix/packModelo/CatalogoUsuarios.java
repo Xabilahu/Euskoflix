@@ -9,6 +9,7 @@ public class CatalogoUsuarios {
 
     private CatalogoUsuarios() {
         this.lista = new ArrayList<Usuario>();
+        this.lista.add(0,null);
     }
 
     public static CatalogoUsuarios getInstance() {

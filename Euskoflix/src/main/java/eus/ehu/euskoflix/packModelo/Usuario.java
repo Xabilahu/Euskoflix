@@ -12,7 +12,8 @@ public class Usuario {
     private String password;
     private ListaPeliculas pelisValoradas;
 
-    public Usuario(String pNombre, String pApellido, String pPassword) {
+    public Usuario(int pId, String pNombre, String pApellido, String pPassword) {
+        this.id = pId;
         this.nombre = pNombre;
         this.apellido = pApellido;
         this.password = this.encriptarPassword(pPassword);

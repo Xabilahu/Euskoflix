@@ -1,17 +1,16 @@
-package main.java.eus.ehu.euskoflix.packVista;
+package eus.ehu.euskoflix.packVista;
+
+import com.alee.laf.WebLookAndFeel;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import main.java.eus.ehu.euskoflix.packControlador.ControladorVista;
-
-import javax.swing.JTabbedPane;
-import javax.swing.JLabel;
-import javax.swing.JTable;
+import eus.ehu.euskoflix.packControlador.BaseDatos;
+import eus.ehu.euskoflix.packControlador.ControladorVista;
+import eus.ehu.euskoflix.packModelo.GestionDatos;
 
 public class VentanaCargaDatos extends JFrame {
 
@@ -22,6 +21,7 @@ public class VentanaCargaDatos extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		GestionDatos.getInstance().cargarDatos();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -38,6 +38,7 @@ public class VentanaCargaDatos extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaCargaDatos() {
+		WebLookAndFeel.install();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -47,12 +48,13 @@ public class VentanaCargaDatos extends JFrame {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
-		
+
 		JPanel panel = new JPanel();
-		tabbedPane.addTab("New tab", null, panel, null);
-		
+		tabbedPane.addTab("Usuarios", null, panel, null);
+
 		tableUsers = new JTable(ControladorVista.getInstance().datosUsuario(),ControladorVista.getInstance().getCabeceraUsers());
-		panel.add(tableUsers);
+		JScrollPane scrollPane = new JScrollPane(tableUsers);
+		panel.add(scrollPane);
 	}
 
 }

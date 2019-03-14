@@ -20,10 +20,10 @@ import java.net.URL;
 public class Main {
 
     public static void main(String[] args) {
-        //new Main().makeTMBDRequest(5);
-        //new Main().cargarFicheros();
-        GestionDatos.getInstance().cargarDatos();
-        Cartelera.getInstance().print();
+        new Main().makeTMBDRequest(5);
+//        new Main().cargarFicheros();
+//        GestionDatos.getInstance().cargarDatos();
+//        Cartelera.getInstance().print();
     }
 
     private void makeTMBDRequest(int tmdbID) {

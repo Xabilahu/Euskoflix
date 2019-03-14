@@ -47,7 +47,7 @@ public class GestionDatos {
         ResultSet usuarios = BaseDatos.getBaseDatos().pedirTabla("SELECT * FROM usuario;");
         try {
             while (usuarios.next()) {
-                Usuario u = new Usuario(usuarios.getString("nombre"), usuarios.getString("apellido"), usuarios.getString("contrasena"));
+                Usuario u = new Usuario(usuarios.getInt("id"), usuarios.getString("nombre"), usuarios.getString("apellido"), usuarios.getString("contrasena"));
                 CatalogoUsuarios.getInstance().addUsuario(u);
             }
         } catch (SQLException e) {
