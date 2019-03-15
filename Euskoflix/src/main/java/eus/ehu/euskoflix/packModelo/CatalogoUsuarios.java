@@ -9,7 +9,7 @@ public class CatalogoUsuarios {
 
     private CatalogoUsuarios() {
         this.lista = new ArrayList<Usuario>();
-        this.lista.add(0,null);
+        this.lista.add(0, null);
     }
 
     public static CatalogoUsuarios getInstance() {
@@ -19,11 +19,11 @@ public class CatalogoUsuarios {
         return mCatalogo;
     }
 
-    public void registrar(Usuario pUsuario){
+    public void registrar(Usuario pUsuario) {
 
     }
 
-    public void addUsuario(Usuario pUser){
+    public void addUsuario(Usuario pUser) {
         this.lista.add(pUser);
     }
 

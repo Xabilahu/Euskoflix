@@ -8,14 +8,14 @@ public class Informacion {
     private String sinopsis;
     private String director;
 
-    public Informacion(Image pPoster, String pSinopsis, String pDirector){
+    public Informacion(Image pPoster, String pSinopsis, String pDirector) {
         this.poster = pPoster;
         this.sinopsis = pSinopsis;
         this.director = pDirector;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder str = new StringBuilder();
         str.append("Sinopsis: " + sinopsis + "\n");
         str.append("Director: " + director + "\n");

@@ -6,7 +6,7 @@ public class ListaPeliculas {
 
     private ArrayList<Pelicula> lista;
 
-    public ListaPeliculas(){
+    public ListaPeliculas() {
         this.lista = new ArrayList<Pelicula>();
         this.lista.add(0, null); //Las peliculas serán insertadas por ID (1..N)
     }
@@ -23,8 +23,9 @@ public class ListaPeliculas {
             else
                 p.print();
     }
+
     public int getNumPeliculas() {
-    	return this.lista.size();
+        return this.lista.size();
     }
 
     public Pelicula getPeliculaPorId(int pId) {
