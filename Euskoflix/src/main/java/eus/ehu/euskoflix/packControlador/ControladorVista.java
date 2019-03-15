@@ -34,13 +34,21 @@ public class ControladorVista {
 	public String[] getCabeceraUsers() {
 		return new String[] {"ID","Nombre","Apellido","Password"};
 	}
+	//Pestana Tags
 	public String[][] datosTags(){
 		CatalogoUsuarios.getInstance();
 		return null;
 	}
+	public String[] getCabeceraTags() {
+		return new String[] {"Tag","Apariciones"};
+	}
+	//Pestana Ratings
 	public String[][] datosRatings(){
 		CatalogoUsuarios.getInstance();
 		return null;
+	}
+	public String[] getCabeceraRatings() {
+		return new String[] {"IdUsuario","Rating"};
 	}
 
 	//Pestana peliculas y su cabecera
