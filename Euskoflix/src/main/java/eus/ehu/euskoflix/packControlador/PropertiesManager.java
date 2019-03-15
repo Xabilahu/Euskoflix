@@ -65,6 +65,14 @@ public class PropertiesManager {
         return this.properties.getProperty("path.to.logo");
     }
 
+    public String getPathToUserIcon() {
+        return this.properties.getProperty("path.to.user.icon");
+    }
+
+    public String getPathToMovieIcon() {
+        return this.properties.getProperty("path.to.movie.icon");
+    }
+
     private String getString(int id, String s) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(this.properties.getProperty("api.movie.url"));

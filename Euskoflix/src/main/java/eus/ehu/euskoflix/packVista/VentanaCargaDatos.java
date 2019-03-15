@@ -8,18 +8,16 @@ import java.awt.event.MouseAdapter;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
-import org.w3c.dom.events.MouseEvent;
+import eus.ehu.euskoflix.packControlador.PropertiesManager;
 
 import eus.ehu.euskoflix.packControlador.ControladorVista;
 import eus.ehu.euskoflix.packControlador.GestionDatos;
-import eus.ehu.euskoflix.packModelo.Cartelera;
 
 import java.awt.event.*;
-import java.lang.Object;
-import java.util.EventObject;
-import java.awt.event.ComponentEvent;
-import java.awt.event.InputEvent;
+import java.io.IOException;
 
 public class VentanaCargaDatos extends JFrame {
 
@@ -54,67 +52,75 @@ public class VentanaCargaDatos extends JFrame {
 	public VentanaCargaDatos() {
 		WebLookAndFeel.install();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setBounds((screenSize.width - 500)/2, (screenSize.height - 500)/2, 500, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-        tableUsers = new JTable(ControladorVista.getInstance().datosUsuario(),ControladorVista.getInstance().getCabeceraUsers());
-        JScrollPane scrollPane = new JScrollPane(tableUsers);
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.add(scrollPane, BorderLayout.CENTER);
+
+		//Tab Usuarios
+		TableModel modelUser = new DefaultTableModel(ControladorVista.getInstance().datosUsuario(),ControladorVista.getInstance().getCabeceraUsers()) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+        tableUsers = new JTable(modelUser);
+        tableUsers.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tableUsers.getColumnModel().getColumn(0).setPreferredWidth(65);
+		tableUsers.getColumnModel().getColumn(1).setPreferredWidth(120);
+		tableUsers.getColumnModel().getColumn(2).setPreferredWidth(120);
+		tableUsers.getColumnModel().getColumn(3).setPreferredWidth(120);
+		tableUsers.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+
+		JScrollPane scrollPane = new JScrollPane(tableUsers);
+        JPanel panelUser = new JPanel();
+        panelUser.setLayout(new BorderLayout());
+        panelUser.add(scrollPane, BorderLayout.CENTER);
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-        tabbedPane.addTab("Usuarios", null, panel, null);
+		try {
+			tabbedPane.addTab("Usuarios", new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(PropertiesManager.getInstance().getPathToUserIcon()))), panelUser, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		this.setMinimumSize(new Dimension(450, 300));
-		//Pelis
-		JPanel panel1 = new JPanel();
-		tabbedPane.addTab("Peliculas", null, panel1, null);
-		tableFilms = new JTable(ControladorVista.getInstance().datosPelis(),ControladorVista.getInstance().getCabeceraFilms());
-		JScrollPane scrollPane1 = new JScrollPane(tableFilms);
-		panel1.add(scrollPane1);
-		//abrir ventana de info de peli
-		tableFilms.addMouseListener(new MouseAdapter() {
-			
-	         @Override
-			public void mousePressed(MouseEvent e) {
-	        	 if (e.getClickCount()== 2) {
-		               String[] seleccionado = e.getSource();
-		               int IdPeli = Integer.parseInt(seleccionado[0]);
-		             //Ventana nueva
-		               frameInfo = new JFrame();
-		               frameInfo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		       		   frameInfo.setBounds(100, 100, 450, 300);
-		               frameInfo.setVisible(true);
-		               //Tabla Rating 
-		               tableRatings= new JTable(ControladorVista.getInstance().datosRatings(),ControladorVista.getInstance().getCabeceraRatings());
-		               JScrollPane scrollPaneExtra1 = new JScrollPane(tableRatings);
-		               frameInfo.add(scrollPaneExtra1, BorderLayout.CENTER);
-		               //Tabla Tag
-		               tableTags= new JTable(ControladorVista.getInstance().datosTags(),ControladorVista.getInstance().getCabeceraTags());//LAs tablas extra
-		               contentPaneExtra = new JPanel();
-		       			contentPaneExtra.setBorder(new EmptyBorder(5, 5, 5, 5));
-		       			contentPaneExtra.setLayout(new BorderLayout(0, 0));
-		       			frameInfo.setContentPane(contentPaneExtra);
-		       			JScrollPane scrollPaneExtra = new JScrollPane(tableTags);
-		       			
-		       			
-		       			
-		       			//foto en el centro
-		       			Image logo = ImageIO.read(in);
-		                ImageIcon icon = new ImageIcon(logo);
-		                JLabel icono = new JLabel(icon);
-		                icono.setSize(icon.getIconWidth(),icon.getIconHeight());
-		                frameInfo.add(icono,BorderLayout.CENTER);
-		                //sinopsis en el este
-		                JTextArea sinopsis = new JTextArea(Cartelera.getInstance().getPeliculaPorId(IdPeli).getInfo().toString());
-		                frameInfo.add(sinopsis,BorderLayout.EAST);
-		                frameInfo.setMinimumSize(new Dimension(450,300));
-			}
 
-			
-		
-	}
-	}
+		//Tab Pelis
+		TableModel modelPeli = new DefaultTableModel(ControladorVista.getInstance().datosPelis(),ControladorVista.getInstance().getCabeceraFilms()) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		tableFilms = new JTable(modelPeli);
+		tableFilms.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tableFilms.getColumnModel().getColumn(0).setPreferredWidth(120);
+		tableFilms.getColumnModel().getColumn(1).setPreferredWidth(330);
+		tableFilms.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+		tableFilms.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent mouseEvent) {
+				JTable table =(JTable) mouseEvent.getSource();
+				Point point = mouseEvent.getPoint();
+				int row = table.rowAtPoint(point);
+				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+					crearVentanaPeli(Integer.parseInt(table.getModel().getValueAt(row, 0).toString()));
+				}
+			}
+		});
+		JPanel panelFilm = new JPanel();
+		JScrollPane scrollPane1 = new JScrollPane(tableFilms);
+		panelFilm.add(scrollPane1);
+		try {
+			tabbedPane.addTab("Peliculas", new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(PropertiesManager.getInstance().getPathToMovieIcon()))), panelFilm, null);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
+
+	private void crearVentanaPeli(int pId) {
+
+	}
+
+}

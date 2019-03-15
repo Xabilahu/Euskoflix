@@ -54,15 +54,15 @@ public class ControladorVista {
 	//Pestana peliculas y su cabecera
 	public String[][] datosPelis(){
 		Cartelera films = Cartelera.getInstance();
-		int size = films.getNumPeliculas();//crear
+		int size = films.getNumPeliculas();
 		String [][] resulFilms = new String[size][2];
 		Pelicula filmNew;
 		for(int i =0;i<size -1;i++) {
-			filmNew = films.getPeliculaPorId(i+1);//crear
-			resulFilms[i][0] = String.valueOf(filmNew.getId());//crear
-			resulFilms[i][1] = filmNew.getTitulo();//crear
+			filmNew = films.getPeliculaPorId(i+1);
+			resulFilms[i][0] = String.valueOf(filmNew.getId());
+			resulFilms[i][1] = filmNew.getTitulo();
 		}
-		return null;
+		return resulFilms;
 	}
 	public String[] getCabeceraFilms(){
 		return new String[] {"ID","Titulo"};
