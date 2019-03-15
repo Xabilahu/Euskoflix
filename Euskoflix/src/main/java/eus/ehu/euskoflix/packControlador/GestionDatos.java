@@ -36,6 +36,7 @@ public class GestionDatos {
         BaseDatos.getBaseDatos().iniciarBD();
         this.cargarPeliculas();
         this.cargarUsuarios();
+        MatrizValoraciones.getInstance().cargarValoraciones();
     }
 
     private void cargarPeliculas() {

@@ -34,11 +34,11 @@ public class BaseDatos {
 		if (!comprobarExisteBD())
 			crearBD();
 		else {
-			try {
+			/*try {
 				Thread.sleep(6000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}
+			}*/
 		}
 	}
 	

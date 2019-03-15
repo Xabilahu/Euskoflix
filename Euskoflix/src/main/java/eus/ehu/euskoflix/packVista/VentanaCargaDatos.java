@@ -39,6 +39,7 @@ public class VentanaCargaDatos extends JFrame {
 				try {
 					VentanaCargaDatos frame = new VentanaCargaDatos();
 					frame.setVisible(true);
+					frame.requestFocus();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -50,7 +51,10 @@ public class VentanaCargaDatos extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaCargaDatos() {
-		WebLookAndFeel.install();
+		if(!WebLookAndFeel.isInstalled()){
+			WebLookAndFeel.install();
+		}
+		this.setTitle("Euskoflix");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds((screenSize.width - 500)/2, (screenSize.height - 500)/2, 500, 500);
@@ -110,8 +114,9 @@ public class VentanaCargaDatos extends JFrame {
 			}
 		});
 		JPanel panelFilm = new JPanel();
+		panelFilm.setLayout(new BorderLayout());
 		JScrollPane scrollPane1 = new JScrollPane(tableFilms);
-		panelFilm.add(scrollPane1);
+		panelFilm.add(scrollPane1,BorderLayout.CENTER);
 		try {
 			tabbedPane.addTab("Peliculas", new ImageIcon(ImageIO.read(this.getClass().getResourceAsStream(PropertiesManager.getInstance().getPathToMovieIcon()))), panelFilm, null);
 		} catch (IOException e) {

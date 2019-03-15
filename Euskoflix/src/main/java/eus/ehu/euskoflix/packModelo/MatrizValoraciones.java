@@ -23,7 +23,9 @@ public class MatrizValoraciones {
     }
 
     private MatrizValoraciones() {
-        //Rellenar
+    }
+
+    public void cargarValoraciones(){
         valores = GestionDatos.getInstance().getValoraciones();
         filas = GestionDatos.getInstance().getValoracionesUsuarios();
         columnas = GestionDatos.getInstance().getValoracionesPeliculas();
