@@ -54,6 +54,11 @@ public class VentanaCargaDatos extends JFrame {
 		if(!WebLookAndFeel.isInstalled()){
 			WebLookAndFeel.install();
 		}
+		try {
+			this.setIconImage(ImageIO.read(this.getClass().getResourceAsStream(PropertiesManager.getInstance().getPathToMainIcon())));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		this.setTitle("Euskoflix");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
