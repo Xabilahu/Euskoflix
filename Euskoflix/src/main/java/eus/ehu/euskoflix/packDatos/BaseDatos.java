@@ -362,6 +362,36 @@ public class BaseDatos {
 		return this.pedirTabla("valoraciones");
 	}
 
+	public int getNumPeliculasValoradas() {
+		try {
+			PreparedStatement pst = this.getConexion().prepareStatement("select count(*) from valoracion where id_pelicula in (select distinct id_pelicula from valoracion)");
+			return pst.executeQuery().getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	public int getNumUsuariosQueValoran() {
+		try {
+			PreparedStatement pst = this.getConexion().prepareStatement("select count(*) from valoracion where id_usuario in (select distinct id_usuario from valoracion);");
+			return pst.executeQuery().getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	public int getNumValoraciones() {
+		try {
+			PreparedStatement pst = this.getConexion().prepareStatement("SELECT count(*) FROM valoracion");
+			return pst.executeQuery().getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
 	private ResultSet pedirTabla(String query) {
 		ResultSet rst = null;
 		try {
@@ -371,7 +401,7 @@ public class BaseDatos {
 					pst = this.getConexion().prepareStatement("SELECT * FROM pelicula");
 					break;
 				case "valoraciones":
-					pst = this.getConexion().prepareStatement("SELECT * FROM valoracion");
+					pst = this.getConexion().prepareStatement("SELECT * FROM valoracion order by id_pelicula,id_usuario asc");
 					break;
 				case "usuarios":
 					pst = this.getConexion().prepareStatement("SELECT * FROM usuario");
@@ -404,6 +434,28 @@ public class BaseDatos {
 		try {
 			PreparedStatement pst = this.getConexion().prepareStatement("SELECT id_usuario, valoracion FROM valoracion WHERE id_pelicula = ?");
 			pst.setInt(1, pId);
+			rst = pst.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rst;
+	}
+
+	public ResultSet getValoracionesUsuarios() {
+		ResultSet rst = null;
+		try {
+			PreparedStatement pst = this.getConexion().prepareStatement("SELECT id_usuario FROM valoracion order by id_usuario asc");
+			rst = pst.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rst;
+	}
+
+	public ResultSet getNumValoracionesUsuario() {
+		ResultSet rst = null;
+		try {
+			PreparedStatement pst = this.getConexion().prepareStatement("select id_usuario,count(valoracion) as suma from valoracion group by id_usuario order by id_usuario;");
 			rst = pst.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -6,6 +6,7 @@ import eus.ehu.euskoflix.packControlador.GestionDatos;
 import eus.ehu.euskoflix.packModelo.Cartelera;
 import eus.ehu.euskoflix.packModelo.Informacion;
 import eus.ehu.euskoflix.packControlador.PropertiesManager;
+import eus.ehu.euskoflix.packModelo.MatrizValoraciones;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -22,7 +23,8 @@ public class Main {
         //new Main().makeTMBDRequest(5);
 //        new Main().cargarFicheros();
         GestionDatos.getInstance().cargarDatos();
-        Cartelera.getInstance().print();
+        System.out.println(MatrizValoraciones.getInstance().toString());
+        //Cartelera.getInstance().print();
     }
 
     private void makeTMBDRequest(int tmdbID) {

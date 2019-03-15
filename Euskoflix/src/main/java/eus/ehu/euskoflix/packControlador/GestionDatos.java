@@ -3,6 +3,7 @@ package eus.ehu.euskoflix.packControlador;
 import eus.ehu.euskoflix.packDatos.BaseDatos;
 import eus.ehu.euskoflix.packModelo.*;
 
+import javax.xml.transform.Result;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -84,6 +85,58 @@ public class GestionDatos {
             e.printStackTrace();
         }
         return tags;
+    }
+
+
+    public float[] getValoraciones() {
+        ResultSet rst = BaseDatos.getBaseDatos().getValoraciones();
+        float[] valoraciones = null;
+            try {
+                valoraciones = new float[BaseDatos.getBaseDatos().getNumValoraciones()];
+                for (int i = 0; rst.next();i++){
+                    valoraciones[i] = rst.getFloat("valoracion");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        return valoraciones;
+    }
+
+    public int[] getValoracionesUsuarios() {
+        ResultSet rst = BaseDatos.getBaseDatos().getValoracionesUsuarios();
+        ResultSet rst2 = BaseDatos.getBaseDatos().getNumValoracionesUsuario();
+        int[] filas = null;
+        try{
+            filas = new int[BaseDatos.getBaseDatos().getNumUsuariosQueValoran()];
+            int id =  rst.getInt("id_usuario");
+            for (int i = 0 ; i < filas.length; i++){
+                if (i+1 == id){
+                    rst2.next();
+                    filas[i] = i+rst2.getInt("suma");
+                    rst.next();
+                    id = rst.getInt("id_usuario");
+                }else{
+                    filas[i] = 0;
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return filas;
+    }
+
+    public int[] getValoracionesPeliculas() {
+        ResultSet rst = BaseDatos.getBaseDatos().getValoraciones();
+        int[] columnas = null;
+        try {
+            columnas = new int[BaseDatos.getBaseDatos().getNumPeliculasValoradas() + 1];
+            for (int i = 0; rst.next();i++){
+                columnas[i] = rst.getInt("id_pelicula");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return columnas;
     }
 
 
