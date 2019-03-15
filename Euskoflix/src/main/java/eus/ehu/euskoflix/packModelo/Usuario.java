@@ -20,7 +20,7 @@ public class Usuario {
         this.password = this.encriptarPassword(pPassword);
     }
 
-    public boolean comprobarPassword(String pPassword){
+    public boolean comprobarPassword(String pPassword) {
         return this.password.equals(this.encriptarPassword(pPassword));
     }
 

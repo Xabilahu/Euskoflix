@@ -27,6 +27,7 @@ public class Pelicula {
     public int getId() {
         return this.id;
     }
+
     public String getTitulo() {
         return this.titulo;
     }
