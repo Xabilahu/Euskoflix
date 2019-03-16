@@ -8,13 +8,13 @@ public class Pelicula {
     private int id;
     private String titulo;
     private LinkedList<Tag> lista;
-    private Informacion infoExtra;
+    private int tmdbId;
 
-    public Pelicula(int pId, String pTitulo, Informacion pInfo) {
+    public Pelicula(int pId, String pTitulo, int pTmdbId) {
         this.id = pId;
         this.titulo = pTitulo;
         this.lista = new LinkedList<>();
-        this.infoExtra = pInfo;
+        this.tmdbId = pTmdbId;
     }
 
     public void addTag(Tag pTag) {
@@ -32,11 +32,12 @@ public class Pelicula {
     public String getTitulo() {
         return this.titulo;
     }
-    public String getSinopsis() {
-    	return this.infoExtra.getSinopsis();
-    }
-    public Image getPoster() {
-    	return this.infoExtra.getPoster();
+
+    public int getTmdbId() {
+        return tmdbId;
     }
 
+    public void setTmdbId(int tmdbId) {
+        this.tmdbId = tmdbId;
+    }
 }

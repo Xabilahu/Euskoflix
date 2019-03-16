@@ -1,9 +1,6 @@
 package eus.ehu.euskoflix.packControlador;
 
-import eus.ehu.euskoflix.packModelo.Cartelera;
-import eus.ehu.euskoflix.packModelo.CatalogoUsuarios;
-import eus.ehu.euskoflix.packModelo.Pelicula;
-import eus.ehu.euskoflix.packModelo.Usuario;
+import eus.ehu.euskoflix.packModelo.*;
 
 
 public class ControladorVista {
@@ -68,4 +65,7 @@ public class ControladorVista {
 		return new String[] {"ID","Titulo"};
 	}
 
+	public Informacion getInformacionExtra(int pFilm) {
+		return GestionDatos.getInstance().getInfoExtra(Cartelera.getInstance().getPeliculaPorId(pFilm));
+	}
 }
