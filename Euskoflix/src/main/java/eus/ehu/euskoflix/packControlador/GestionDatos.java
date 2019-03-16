@@ -7,7 +7,6 @@ import com.google.gson.JsonParser;
 import eus.ehu.euskoflix.packDatos.BaseDatos;
 import eus.ehu.euskoflix.packModelo.*;
 
-import javax.xml.transform.Result;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.BufferedReader;
@@ -103,8 +102,8 @@ public class GestionDatos {
         ResultSet rst = BaseDatos.getBaseDatos().getValoraciones();
         float[] valoraciones = null;
             try {
-                valoraciones = new float[BaseDatos.getBaseDatos().getNumValoraciones()];
-                for (int i = 0; rst.next();i++){
+                valoraciones = new float[BaseDatos.getBaseDatos().getNumValoraciones() + 1];
+                for (int i = 1; rst.next();i++){
                     valoraciones[i] = rst.getFloat("valoracion");
                 }
             } catch (SQLException e) {
@@ -118,16 +117,25 @@ public class GestionDatos {
         ResultSet rst2 = BaseDatos.getBaseDatos().getNumValoracionesUsuario();
         int[] filas = null;
         try{
-            filas = new int[BaseDatos.getBaseDatos().getNumUsuariosQueValoran()];
+            boolean primero = true;
+            filas = new int[BaseDatos.getBaseDatos().getNumUsuariosQueValoran() + 1];
             int id =  rst.getInt("id_usuario");
-            for (int i = 0 ; i < filas.length; i++){
-                if (i+1 == id){
-                    rst2.next();
-                    filas[i] = i+rst2.getInt("suma");
-                    rst.next();
+            int idAnterior = 0;
+            filas[idAnterior] = 0;
+            for (int i = 1 ; i < filas.length; i++){
+                if (i == id){
+                    if (primero) {
+                        filas[i] = 1;
+                        primero = false;
+                    } else {
+                        filas[i] = filas[idAnterior]+rst2.getInt("suma");
+                        rst2.next();
+                    }
+                    idAnterior = id;
+                    rst.next();//TODO: Esta instrucción se ejecuta pero no avanza el result set
                     id = rst.getInt("id_usuario");
                 }else{
-                    filas[i] = 0;
+                    filas[i] = -1;
                 }
             }
         }catch (Exception e){
@@ -141,7 +149,7 @@ public class GestionDatos {
         int[] columnas = null;
         try {
             columnas = new int[BaseDatos.getBaseDatos().getNumPeliculasValoradas() + 1];
-            for (int i = 0; rst.next();i++){
+            for (int i = 1; rst.next();i++){
                 columnas[i] = rst.getInt("id_pelicula");
             }
         } catch (SQLException e) {

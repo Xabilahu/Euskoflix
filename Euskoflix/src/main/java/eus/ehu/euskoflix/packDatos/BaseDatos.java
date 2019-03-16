@@ -401,7 +401,7 @@ public class BaseDatos {
 					pst = this.getConexion().prepareStatement("SELECT * FROM pelicula");
 					break;
 				case "valoraciones":
-					pst = this.getConexion().prepareStatement("SELECT * FROM valoracion order by id_pelicula,id_usuario asc");
+					pst = this.getConexion().prepareStatement("SELECT * FROM valoracion order by id_usuario, id_pelicula asc");
 					break;
 				case "usuarios":
 					pst = this.getConexion().prepareStatement("SELECT * FROM usuario");
@@ -444,7 +444,7 @@ public class BaseDatos {
 	public ResultSet getValoracionesUsuarios() {
 		ResultSet rst = null;
 		try {
-			PreparedStatement pst = this.getConexion().prepareStatement("SELECT id_usuario FROM valoracion order by id_usuario asc");
+			PreparedStatement pst = this.getConexion().prepareStatement("SELECT DISTINCT id_usuario FROM valoracion order by id_usuario asc");
 			rst = pst.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
