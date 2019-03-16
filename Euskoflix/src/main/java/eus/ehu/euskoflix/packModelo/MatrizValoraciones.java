@@ -43,7 +43,7 @@ public class MatrizValoraciones {
         int pos = this.filas[pUsuario];
         float valoracion = -1f;
         if (pos != -1) {
-            for (int i = pos; i < this.filas[pUsuario]; i++) {
+            for (int i = pos; i < this.filas[pUsuario + 1]; i++) {
                 if (this.columnas[i] == pPelicula) {
                     valoracion = this.valores[i];
                     break;

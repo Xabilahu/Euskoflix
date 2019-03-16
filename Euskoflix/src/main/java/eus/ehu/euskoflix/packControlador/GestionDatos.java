@@ -119,6 +119,8 @@ public class GestionDatos {
         try{
             boolean primero = true;
             filas = new int[BaseDatos.getBaseDatos().getNumUsuariosQueValoran() + 1];
+            rst.next();
+            rst2.next();
             int id =  rst.getInt("id_usuario");
             int idAnterior = 0;
             filas[idAnterior] = 0;
@@ -132,7 +134,8 @@ public class GestionDatos {
                         rst2.next();
                     }
                     idAnterior = id;
-                    rst.next();//TODO: Esta instrucción se ejecuta pero no avanza el result set
+                    if (!rst.next()) break;
+                    //TODO: Esta instrucción se ejecuta pero no avanza el result set
                     id = rst.getInt("id_usuario");
                 }else{
                     filas[i] = -1;
