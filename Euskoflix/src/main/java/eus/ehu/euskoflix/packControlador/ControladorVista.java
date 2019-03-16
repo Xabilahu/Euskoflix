@@ -36,7 +36,7 @@ public class ControladorVista {
 	}
 	//Pestana Tags
 	public String[][] datosTags(){
-		CatalogoUsuarios.getInstance();
+		CatalogoUsuarios.getInstance();//Falta los metodos de devolver los tags de la peli--- los select 
 		return null;
 	}
 	public String[] getCabeceraTags() {
@@ -44,7 +44,7 @@ public class ControladorVista {
 	}
 	//Pestana Ratings
 	public String[][] datosRatings(){
-		CatalogoUsuarios.getInstance();
+		Cartelera.getInstance();//Falta los metodos de devolver los ratings de la peli--- los select 
 		return null;
 	}
 	public String[] getCabeceraRatings() {

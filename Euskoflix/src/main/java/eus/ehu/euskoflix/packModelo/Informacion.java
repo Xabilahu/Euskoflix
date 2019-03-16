@@ -21,5 +21,11 @@ public class Informacion {
         str.append("Director: " + director + "\n");
         return str.toString();
     }
+    public String getSinopsis() {
+    	return this.sinopsis;
+    }
+    public Image getPoster() {
+    	return this.poster;
+    }
 
 }

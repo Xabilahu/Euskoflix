@@ -114,6 +114,8 @@ public class VentanaCargaDatos extends JFrame {
 				Point point = mouseEvent.getPoint();
 				int row = table.rowAtPoint(point);
 				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+					VentanaDatosExtra infoExtra = new VentanaDatosExtra(row);
+					infoExtra.ventanaDatosExtra(row);
 					crearVentanaPeli(Integer.parseInt(table.getModel().getValueAt(row, 0).toString()));
 				}
 			}

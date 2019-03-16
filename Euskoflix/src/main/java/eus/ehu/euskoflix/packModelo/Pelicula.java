@@ -1,5 +1,6 @@
 package eus.ehu.euskoflix.packModelo;
 
+import java.awt.Image;
 import java.util.LinkedList;
 
 public class Pelicula {
@@ -30,6 +31,12 @@ public class Pelicula {
 
     public String getTitulo() {
         return this.titulo;
+    }
+    public String getSinopsis() {
+    	return this.infoExtra.getSinopsis();
+    }
+    public Image getPoster() {
+    	return this.infoExtra.getPoster();
     }
 
 }
