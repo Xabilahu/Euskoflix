@@ -1,6 +1,7 @@
 package eus.ehu.euskoflix.packVista;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
 
@@ -55,6 +56,7 @@ public class VentanaDatosExtra extends JFrame {
 		this.film = pFilm;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		this.setMinimumSize(new Dimension(450, 300));
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
