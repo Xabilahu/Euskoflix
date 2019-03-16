@@ -374,7 +374,7 @@ public class BaseDatos {
 
 	public int getNumUsuariosQueValoran() {
 		try {
-			PreparedStatement pst = this.getConexion().prepareStatement("select count(*) from valoracion where id_usuario in (select distinct id_usuario from valoracion);");
+			PreparedStatement pst = this.getConexion().prepareStatement("select count(distinct id_usuario) from valoracion");
 			return pst.executeQuery().getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();

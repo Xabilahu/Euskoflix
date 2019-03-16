@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
 //        GestionDatos.getInstance().cargarDatos();
         MatrizValoraciones.getInstance().cargarValoraciones();
-        System.out.println(MatrizValoraciones.getInstance().getValoracion(208, 1));
+        System.out.println(MatrizValoraciones.getInstance().getValoracion(7120, 266));
     }
 
 }

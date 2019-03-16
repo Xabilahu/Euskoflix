@@ -134,8 +134,9 @@ public class GestionDatos {
                         rst2.next();
                     }
                     idAnterior = id;
-                    if (!rst.next()) break;
-                    id = rst.getInt("id_usuario");
+                    if (rst.next()) {
+                        id = rst.getInt("id_usuario");
+                    }
                 }else{
                     filas[i] = -1;
                 }
