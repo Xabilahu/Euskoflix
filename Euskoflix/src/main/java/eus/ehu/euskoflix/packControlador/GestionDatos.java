@@ -135,7 +135,6 @@ public class GestionDatos {
                     }
                     idAnterior = id;
                     if (!rst.next()) break;
-                    //TODO: Esta instrucción se ejecuta pero no avanza el result set
                     id = rst.getInt("id_usuario");
                 }else{
                     filas[i] = -1;
