@@ -1,6 +1,5 @@
 package eus.ehu.euskoflix.packModelo;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ListaPeliculas {

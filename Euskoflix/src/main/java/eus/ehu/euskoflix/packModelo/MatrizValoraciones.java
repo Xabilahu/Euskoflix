@@ -1,7 +1,6 @@
 package eus.ehu.euskoflix.packModelo;
 
 import eus.ehu.euskoflix.packControlador.GestionDatos;
-import eus.ehu.euskoflix.packDatos.BaseDatos;
 
 import java.util.Arrays;
 

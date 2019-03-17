@@ -2,7 +2,6 @@ package eus.ehu.euskoflix.packControlador;
 
 import eus.ehu.euskoflix.packModelo.*;
 
-
 public class ControladorVista {
 	private static ControladorVista mControladorVista;
 	
@@ -63,7 +62,4 @@ public class ControladorVista {
 		return new String[] {"ID","Titulo"};
 	}
 
-	public Informacion getInformacionExtra(int pFilm) { //TODO: puede que falle por Mapeo id
-		return GestionDatos.getInstance().getInfoExtra(Cartelera.getInstance().getPeliculaPorId(pFilm));
-	}
 }

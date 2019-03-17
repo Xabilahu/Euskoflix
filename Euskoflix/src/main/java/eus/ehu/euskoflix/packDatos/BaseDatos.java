@@ -3,7 +3,6 @@ package eus.ehu.euskoflix.packDatos;
 import eus.ehu.euskoflix.packControlador.PropertiesManager;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.HashMap;
