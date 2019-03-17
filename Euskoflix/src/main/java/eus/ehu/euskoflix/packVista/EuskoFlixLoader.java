@@ -15,6 +15,7 @@ public class EuskoFlixLoader extends JFrame {
 
     public EuskoFlixLoader(){
         WebLookAndFeel.install ();
+        this.requestFocus();
         this.setUndecorated(true);
         this.setLayout(new BorderLayout());
         InputStream in = EuskoFlixLoader.class.getResourceAsStream(PropertiesManager.getInstance().getPathToLogo());

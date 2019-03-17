@@ -3,6 +3,7 @@ package eus.ehu.euskoflix.packDatos;
 import eus.ehu.euskoflix.packControlador.PropertiesManager;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.HashMap;
@@ -157,7 +158,7 @@ public class BaseDatos {
 			c.setAutoCommit(false);
 			InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("tags"));
 			try {
-				BufferedReader in = new BufferedReader(new InputStreamReader(is));
+				BufferedReader in = new BufferedReader(new InputStreamReader(is,StandardCharsets.UTF_8));
 				in.readLine(); // skip headers
 				PreparedStatement pst = c.prepareStatement("INSERT INTO etiqueta(id_usuario, id_pelicula, etiqueta) VALUES (?,?,?)");
 				while (in.ready()){
@@ -186,7 +187,7 @@ public class BaseDatos {
 			c.setAutoCommit(false);
 			InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("ratings"));
 			try {
-				BufferedReader in = new BufferedReader(new InputStreamReader(is));
+				BufferedReader in = new BufferedReader(new InputStreamReader(is,StandardCharsets.UTF_8));
 				in.readLine(); // skip headers
 				PreparedStatement pst = c.prepareStatement("INSERT INTO valoracion(id_usuario, id_pelicula, valoracion) VALUES (?,?,?)");
 				while (in.ready()){
@@ -244,7 +245,7 @@ public class BaseDatos {
 			c = this.getConexion();
 			c.setAutoCommit(false);
 			InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("links"));
-			BufferedReader in = new BufferedReader(new InputStreamReader(is));
+			BufferedReader in = new BufferedReader(new InputStreamReader(is,StandardCharsets.UTF_8));
 			in.readLine(); // skip headers
 			PreparedStatement pst = c.prepareStatement("INSERT INTO pelicula(id, idTMDB,titulo) VALUES (?,?,\"\")");
 			while(in.ready()){
@@ -273,7 +274,7 @@ public class BaseDatos {
 			c = this.getConexion();
 			c.setAutoCommit(false);
 			InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("movies"));
-			BufferedReader in = new BufferedReader(new InputStreamReader(is));
+			BufferedReader in = new BufferedReader(new InputStreamReader(is,StandardCharsets.UTF_8));
 			in.readLine(); // skip headers
 			PreparedStatement peliculasPst = c.prepareStatement("UPDATE pelicula set titulo=? where id=?");
 			PreparedStatement generosPst = c.prepareStatement("INSERT INTO genero(id,nombre) VALUES (?,?)");
