@@ -60,13 +60,4 @@ public class EuskoFlixLoader extends JFrame {
         setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
     }
 
-    public static void main(String[] args) {
-        EuskoFlixLoader el = new EuskoFlixLoader();
-        el.setVisible(true);
-        GestionDatos.getInstance().cargarDatos();
-        el.dispose();
-        VentanaCargaDatos ventanaCargaDatos = new VentanaCargaDatos();
-        ventanaCargaDatos.setVisible(true);
-    }
-
 }

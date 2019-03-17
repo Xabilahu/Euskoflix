@@ -14,7 +14,6 @@ import javax.swing.table.TableModel;
 import eus.ehu.euskoflix.packControlador.PropertiesManager;
 
 import eus.ehu.euskoflix.packControlador.ControladorVista;
-import eus.ehu.euskoflix.packControlador.GestionDatos;
 
 import java.awt.event.*;
 import java.io.IOException;
@@ -24,24 +23,6 @@ public class VentanaCargaDatos extends JFrame {
 	private JPanel contentPane;
 	private JTable tableUsers;
 	private JTable tableFilms;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		GestionDatos.getInstance().cargarDatos();
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaCargaDatos frame = new VentanaCargaDatos();
-					frame.setVisible(true);
-					frame.requestFocus();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -111,13 +92,10 @@ public class VentanaCargaDatos extends JFrame {
 				int row = table.rowAtPoint(point);
 				if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
 				    int id = Integer.parseInt(table.getModel().getValueAt(row,0).toString());
-					//VentanaDatosExtra infoExtra = new VentanaDatosExtra(row+1);
                     VentanaCargaDatos.this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-					//VentanaDatosExtra.ventanaDatosExtra(row+1);
                     InformacionExtraView i  = new InformacionExtraView(VentanaCargaDatos.this,true, id);
                     VentanaCargaDatos.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                     i.setVisible(true);
-					//infoExtra.setVisible(true);
 				}
 			}
 		});

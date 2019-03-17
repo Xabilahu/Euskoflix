@@ -36,7 +36,7 @@
                         <index>true</index>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>eus.ehu.euskoflix.packVista.VentanaCargaDatos</mainClass>
+                            <mainClass>eus.ehu.euskoflix.packPrincipal.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

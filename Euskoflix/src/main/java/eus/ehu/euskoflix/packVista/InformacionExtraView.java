@@ -1,8 +1,6 @@
 package eus.ehu.euskoflix.packVista;
 
-import com.alee.laf.WebLookAndFeel;
 import eus.ehu.euskoflix.packControlador.ControladorVista;
-import eus.ehu.euskoflix.packControlador.GestionDatos;
 import eus.ehu.euskoflix.packModelo.Cartelera;
 import eus.ehu.euskoflix.packModelo.Pelicula;
 
@@ -19,6 +17,25 @@ public class InformacionExtraView extends javax.swing.JDialog {
      */
 
     private Pelicula pelicula;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JLabel lblDirector;
+    private javax.swing.JLabel lblDirectorContent;
+    private javax.swing.JLabel lblImagen;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblTituloContent;
+    private javax.swing.JScrollPane scrollSipnosis;
+    private javax.swing.JTextArea txtSinopsis;
 
     public InformacionExtraView(java.awt.Frame parent, boolean modal, int pPelicula) {
         super(parent, modal);
@@ -168,6 +185,7 @@ public class InformacionExtraView extends javax.swing.JDialog {
                 return false;
             }
         });
+        jTable1.setFocusable(false);
         jScrollPane1.setViewportView(jTable1);
 
         jPanel4.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -185,6 +203,7 @@ public class InformacionExtraView extends javax.swing.JDialog {
                 return false;
             }
         });
+        jTable2.setFocusable(false);
         jScrollPane2.setViewportView(jTable2);
 
         jPanel5.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -217,53 +236,6 @@ public class InformacionExtraView extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         InformacionExtraView.this.dispose();
     }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        WebLookAndFeel.install();
-        GestionDatos.getInstance().cargarDatos();
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                InformacionExtraView dialog = new InformacionExtraView(new javax.swing.JFrame(), true, 1);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-                dialog.requestFocus();
-            }
-        });
-    }
-
-    // Variables declaration - do not modify
-    private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JLabel lblDirector;
-    private javax.swing.JLabel lblDirectorContent;
-    private javax.swing.JLabel lblImagen;
-    private javax.swing.JLabel lblTitulo;
-    private javax.swing.JLabel lblTituloContent;
-    private javax.swing.JScrollPane scrollSipnosis;
-    private javax.swing.JTextArea txtSinopsis;
-    // End of variables declaration
-
-
-
 
 }
 
