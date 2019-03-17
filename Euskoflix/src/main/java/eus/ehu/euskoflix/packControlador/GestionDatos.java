@@ -165,7 +165,8 @@ public class GestionDatos {
 
 
     public Informacion getInfoExtra(Pelicula pPelicula) {
-        Informacion i = null;
+
+        Informacion i = new Informacion();
         try {
             int tmdbID = pPelicula.getTmdbId();
             URL mov = new URL(PropertiesManager.getInstance().getMovieApiRequestURL(tmdbID));
@@ -211,10 +212,8 @@ public class GestionDatos {
 
             Image image = ImageIO.read(img);
             i = new Informacion(image, sinopsis, director);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return i;
     }

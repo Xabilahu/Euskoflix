@@ -1,6 +1,11 @@
 package eus.ehu.euskoflix.packModelo;
 
+import eus.ehu.euskoflix.packControlador.GestionDatos;
+import eus.ehu.euskoflix.packControlador.PropertiesManager;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.IOException;
 
 public class Informacion {
 
@@ -12,6 +17,17 @@ public class Informacion {
         this.poster = pPoster;
         this.sinopsis = pSinopsis;
         this.director = pDirector;
+    }
+
+    public Informacion() {
+        try {
+            this.poster = ImageIO.read(GestionDatos.class.getResourceAsStream(
+                    PropertiesManager.getInstance().getPathToLogo()));
+        } catch (IOException ignored) {
+
+        }
+        this.sinopsis = "None";
+        this.director = "None";
     }
 
     @Override
@@ -28,4 +44,11 @@ public class Informacion {
     	return this.poster;
     }
 
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
 }
