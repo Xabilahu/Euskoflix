@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -160,7 +161,7 @@ public class GestionDatos {
             URL mov = new URL(PropertiesManager.getInstance().getMovieApiRequestURL(tmdbID));
             HttpURLConnection con = (HttpURLConnection) mov.openConnection();
             con.setRequestProperty("Content-Type", "application/json");
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
             StringBuilder str = new StringBuilder();
             while (in.ready()) {
                 str.append(in.readLine());
@@ -176,7 +177,7 @@ public class GestionDatos {
             URL credits = new URL(PropertiesManager.getInstance().getCreditsApiRequestURL(tmdbID));
             con = (HttpURLConnection) credits.openConnection();
             con.setRequestProperty("Content-Type", "application/json");
-            in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(con.getInputStream(),StandardCharsets.UTF_8));
             str = new StringBuilder();
             while (in.ready()) {
                 str.append(in.readLine());
