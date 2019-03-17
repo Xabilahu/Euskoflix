@@ -32,12 +32,12 @@ public class InformacionExtraView extends javax.swing.JDialog {
 
 
     private void fillComponents() {
-        Informacion i = ControladorVista.getInstance().getInformacionExtra(this.pelicula.getId());
+        //Informacion i = ControladorVista.getInstance().getInformacionExtra(this.pelicula.getId());
         lblTituloContent.setText(pelicula.getTitulo());
-        lblDirectorContent.setText(i.getDirector());
+        lblDirectorContent.setText(pelicula.getDirector());
         lblImagen.setText("");
-        lblImagen.setIcon(new ImageIcon(i.getPoster()));
-        txtSinopsis.setText(i.getSinopsis());
+        lblImagen.setIcon(new ImageIcon(pelicula.getPoster()));
+        txtSinopsis.setText(pelicula.getSinopsis());
     }
 
     /**

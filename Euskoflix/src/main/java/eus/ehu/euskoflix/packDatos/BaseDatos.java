@@ -3,6 +3,7 @@ package eus.ehu.euskoflix.packDatos;
 import eus.ehu.euskoflix.packControlador.PropertiesManager;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.StringTokenizer;
@@ -214,7 +215,7 @@ public class BaseDatos {
 			c.setAutoCommit(false);
 			InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("nombres"));
 			try {
-				BufferedReader in = new BufferedReader(new InputStreamReader(is));
+				BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 				PreparedStatement pst = c.prepareStatement("INSERT INTO usuario(contrasena,nombre,apellido) VALUES(?,?,?)");
 				String defaultPass = PropertiesManager.getInstance().getDefaultPassword();
 				while (in.ready()){

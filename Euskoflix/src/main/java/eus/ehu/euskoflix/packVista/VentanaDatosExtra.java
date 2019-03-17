@@ -5,17 +5,16 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 import eus.ehu.euskoflix.packControlador.ControladorVista;
 import eus.ehu.euskoflix.packModelo.Cartelera;
+import eus.ehu.euskoflix.packModelo.Informacion;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -32,19 +31,15 @@ public class VentanaDatosExtra extends JFrame {
 	 */
 	public static void ventanaDatosExtra(int peli) {
 		EventQueue.invokeLater(new Runnable() {
-			public void run(int peli) {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
 				try {
 					VentanaDatosExtra frame = new VentanaDatosExtra(peli);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				
 			}
 		});
 	}
@@ -54,6 +49,7 @@ public class VentanaDatosExtra extends JFrame {
 	 */
 	public VentanaDatosExtra(int pFilm) {
 		this.film = pFilm;
+		Informacion infoExtra = ControladorVista.getInstance().getInformacionExtra(pFilm);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		this.setMinimumSize(new Dimension(450, 300));
@@ -65,9 +61,9 @@ public class VentanaDatosExtra extends JFrame {
 		JTextPane sinopsis = new JTextPane();
 		contentPane.add(sinopsis, BorderLayout.WEST);
 		sinopsis.setEditable(false);
-		sinopsis.setText(Cartelera.getInstance().getPeliculaPorId(film).getSinopsis());
+		sinopsis.setText(infoExtra.getSinopsis());
 		//Imagen		
-	      Image logo = Cartelera.getInstance().getPeliculaPorId(film).getPoster();
+	      Image logo = infoExtra.getPoster();
           ImageIcon icon = new ImageIcon(logo);
           JLabel icono = new JLabel(icon);
           contentPane.add(icono, BorderLayout.EAST);

@@ -17,9 +17,9 @@ public class EuskoFlixLoader extends JFrame {
         WebLookAndFeel.install ();
         this.setUndecorated(true);
         this.setLayout(new BorderLayout());
-
         InputStream in = EuskoFlixLoader.class.getResourceAsStream(PropertiesManager.getInstance().getPathToLogo());
         try {
+            this.setIconImage(ImageIO.read(this.getClass().getResourceAsStream(PropertiesManager.getInstance().getPathToMainIcon())));
             Image logo = ImageIO.read(in);
             ImageIcon icon = new ImageIcon(logo);
             JLabel icono = new JLabel(icon);
@@ -65,6 +65,8 @@ public class EuskoFlixLoader extends JFrame {
         el.setVisible(true);
         GestionDatos.getInstance().cargarDatos();
         el.dispose();
+        VentanaCargaDatos ventanaCargaDatos = new VentanaCargaDatos();
+        ventanaCargaDatos.setVisible(true);
     }
 
 }

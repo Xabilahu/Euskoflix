@@ -1,5 +1,7 @@
 package eus.ehu.euskoflix.packModelo;
 
+import eus.ehu.euskoflix.packControlador.GestionDatos;
+
 import java.awt.Image;
 import java.util.LinkedList;
 
@@ -9,6 +11,8 @@ public class Pelicula {
     private String titulo;
     private LinkedList<Tag> lista;
     private int tmdbId;
+    private Informacion infoExtra;
+
 
     public Pelicula(int pId, String pTitulo, int pTmdbId) {
         this.id = pId;
@@ -40,4 +44,28 @@ public class Pelicula {
     public void setTmdbId(int tmdbId) {
         this.tmdbId = tmdbId;
     }
+
+    private void fillInfoExtra(){
+        if (infoExtra == null){
+            this.infoExtra = GestionDatos.getInstance().getInfoExtra(this);
+        }
+    }
+
+    public String getDirector(){
+        this.fillInfoExtra();
+
+        return this.infoExtra.getDirector();
+    }
+
+    public String getSinopsis(){
+        this.fillInfoExtra();
+
+        return this.infoExtra.getSinopsis();
+    }
+
+    public Image getPoster(){
+        this.fillInfoExtra();
+        return  this.infoExtra.getPoster();
+    }
+
 }
