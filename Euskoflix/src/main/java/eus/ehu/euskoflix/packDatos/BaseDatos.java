@@ -126,8 +126,6 @@ public class BaseDatos {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(-1);
         }
-		System.out.println("Base de datos creada");
-		
 	}
 
 	private Connection getConexion() throws SQLException {
