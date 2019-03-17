@@ -22,7 +22,13 @@ public class PropertiesManager {
         this.properties = new Properties();
         File f = new File(Cartelera.class.getProtectionDomain().getCodeSource().getLocation().getPath());
         try {
-            InputStream in = new FileInputStream(f.getParent() + File.separator + PROPERTIES_FILE_NAME);
+            f = new File(f.getParent() + File.separator + PROPERTIES_FILE_NAME);
+            InputStream in;
+            if (!f.exists()){
+                in = PropertiesManager.class.getResourceAsStream("/eus/ehu/euskoflix/" + PROPERTIES_FILE_NAME);
+            }else{
+                in = new FileInputStream(f);
+            }
             this.properties.load(in);
         } catch (IOException e) {
             e.printStackTrace();
