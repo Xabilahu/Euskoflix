@@ -179,6 +179,8 @@ public class InformacionExtraView extends javax.swing.JDialog {
         jPanel4.setLayout(new java.awt.BorderLayout());
 
         jTable1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jTable1.setRowSelectionAllowed(false);
+        jTable1.getTableHeader().setReorderingAllowed(false);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(ControladorVista.getInstance().datosTags(this.pelicula.getId()), ControladorVista.getInstance().getCabeceraTags()){
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -197,6 +199,8 @@ public class InformacionExtraView extends javax.swing.JDialog {
 
         jScrollPane2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
+        jTable2.setRowSelectionAllowed(false);
+        jTable2.getTableHeader().setReorderingAllowed(false);
         jTable2.setModel(new javax.swing.table.DefaultTableModel(ControladorVista.getInstance().datosRatings(this.pelicula.getId()), ControladorVista.getInstance().getCabeceraRatings()){
             @Override
             public boolean isCellEditable(int row, int column) {

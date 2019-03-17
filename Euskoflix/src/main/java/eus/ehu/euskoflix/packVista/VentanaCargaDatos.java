@@ -59,6 +59,8 @@ public class VentanaCargaDatos extends JFrame {
 		tableUsers.getColumnModel().getColumn(2).setPreferredWidth(120);
 		tableUsers.getColumnModel().getColumn(3).setPreferredWidth(120);
 		tableUsers.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+		tableUsers.getTableHeader().setReorderingAllowed(false);
+		tableUsers.setRowSelectionAllowed(false);
 
 		JScrollPane scrollPane = new JScrollPane(tableUsers);
         JPanel panelUser = new JPanel();
@@ -85,6 +87,7 @@ public class VentanaCargaDatos extends JFrame {
 		tableFilms.getColumnModel().getColumn(0).setPreferredWidth(120);
 		tableFilms.getColumnModel().getColumn(1).setPreferredWidth(330);
 		tableFilms.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+		tableFilms.getTableHeader().setReorderingAllowed(false);
 		tableFilms.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent mouseEvent) {
 				JTable table =(JTable) mouseEvent.getSource();
