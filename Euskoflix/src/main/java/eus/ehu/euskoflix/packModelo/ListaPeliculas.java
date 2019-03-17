@@ -1,27 +1,25 @@
 package eus.ehu.euskoflix.packModelo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ListaPeliculas {
 
-    private ArrayList<Pelicula> lista;
+    private HashMap<Integer, Pelicula> lista;
 
     public ListaPeliculas() {
-        this.lista = new ArrayList<Pelicula>();
-        this.lista.add(0, null); //Las peliculas serán insertadas por ID (1..N)
+        this.lista = new HashMap<>();
     }
 
     public void addPelicula(Pelicula pPeli) {
-        this.lista.add(pPeli);
+        int id = pPeli.getId();
+        if (!this.lista.containsKey(id)) {
+            this.lista.put(id, pPeli);
+        }
     }
 
     public void print() {
-        boolean first = true;
-        for (Pelicula p : lista)
-            if (first)
-                first = false;
-            else
-                p.print();
+        //TODO: hacer
     }
 
     public int getNumPeliculas() {
@@ -29,6 +27,9 @@ public class ListaPeliculas {
     }
 
     public Pelicula getPeliculaPorId(int pId) {
-        return this.lista.get(pId);
+        if (this.lista.containsKey(pId)) {
+            return this.lista.get(pId);
+        }
+        return null;
     }
 }

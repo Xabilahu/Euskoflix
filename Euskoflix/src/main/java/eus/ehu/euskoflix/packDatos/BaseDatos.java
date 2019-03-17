@@ -418,10 +418,10 @@ public class BaseDatos {
 		return rst;
 	}
 
-	public ResultSet getTagsByPelicula(int pId) {
+	public ResultSet getValoracionByPelicula(int pId) {
 		ResultSet rst = null;
 		try {
-			PreparedStatement pst = this.getConexion().prepareStatement("SELECT id_usuario, etiqueta FROM etiqueta WHERE id_pelicula = ?");
+			PreparedStatement pst = this.getConexion().prepareStatement("SELECT nombre, valoracion FROM valoracion INNER JOIN usuario ON id = id_usuario WHERE id_pelicula = ? ORDER BY id ASC");
 			pst.setInt(1, pId);
 			rst = pst.executeQuery();
 		} catch (SQLException e) {
@@ -430,16 +430,17 @@ public class BaseDatos {
 		return rst;
 	}
 
-	public ResultSet getValoracionByPelicula(int pId) {
-		ResultSet rst = null;
+	public int getNumValoracionesByPelicula(int pId) {
 		try {
-			PreparedStatement pst = this.getConexion().prepareStatement("SELECT id_usuario, valoracion FROM valoracion WHERE id_pelicula = ?");
+			PreparedStatement pst = this.getConexion().prepareStatement("SELECT count(DISTINCT id_usuario) FROM valoracion WHERE id_pelicula = ?");
 			pst.setInt(1, pId);
-			rst = pst.executeQuery();
+			ResultSet rst = pst.executeQuery();
+			rst.next();
+			return rst.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return rst;
+		return 0;
 	}
 
 	public ResultSet getValoracionesUsuarios() {
@@ -463,6 +464,32 @@ public class BaseDatos {
 		}
 		return rst;
 	}
+
+	public ResultSet getTagsByPelicula(int pId) {
+		ResultSet rst = null;
+		try {
+			PreparedStatement pst = this.getConexion().prepareStatement("SELECT etiqueta, count(*) AS veces FROM etiqueta WHERE id_pelicula = ? GROUP BY etiqueta ORDER BY etiqueta ASC");
+			pst.setInt(1, pId);
+			rst = pst.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rst;
+	}
+
+	public int getNumTagsByPelicula(int pId) {
+		try {
+			PreparedStatement pst = this.getConexion().prepareStatement("SELECT count(DISTINCT etiqueta) AS veces FROM etiqueta WHERE id_pelicula = ?");
+			pst.setInt(1, pId);
+			ResultSet rst = pst.executeQuery();
+			rst.next();
+			return rst.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 
 	//Estructura usuario pelicula valorcion
 	//select id_usuario,id_pelicula,valoracion from valoracion where id_pelicula IN (select id_pelicula from valoracion where id_usuario=8 ) AND id_usuario !=8 -- meter umbral

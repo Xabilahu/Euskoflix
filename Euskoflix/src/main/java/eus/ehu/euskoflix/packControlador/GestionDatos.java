@@ -13,7 +13,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -82,9 +81,29 @@ public class GestionDatos {
         return ratings;
     }
 
-    public ArrayList<Tag> getTagsByPelicula(int pId) {
+    public String[][] getTagsByPelicula(int pId) {
         ResultSet rst = BaseDatos.getBaseDatos().getTagsByPelicula(pId);
-        return getTags(rst);
+        String[][] resultado = new String[BaseDatos.getBaseDatos().getNumTagsByPelicula(pId)][2];
+        return getStrings(rst, resultado);
+    }
+
+    public String[][] getValoracionesByPelicula(int pId) {
+        ResultSet rst = BaseDatos.getBaseDatos().getValoracionByPelicula(pId);
+        String[][] resultado = new String[BaseDatos.getBaseDatos().getNumValoracionesByPelicula(pId)][2];
+        return getStrings(rst, resultado);
+    }
+
+    private String[][] getStrings(ResultSet rst, String[][] resultado) {
+        try {
+            int i = 0;
+            while (rst.next()) {
+                resultado[i][0] = rst.getString(1);
+                resultado[i++][1] = rst.getString(2);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultado;
     }
 
     private ArrayList<Tag> getTags(ResultSet rst) {
@@ -206,10 +225,7 @@ public class GestionDatos {
             }
             //Movie poster query
             //URL img = new URL("https://image.tmdb.org/t/p/w154" + posterPath);
-            URL img = null;
-
-            img = new URL(PropertiesManager.getInstance().getPosterApiRequestURL(posterPath));
-
+            URL img = new URL(PropertiesManager.getInstance().getPosterApiRequestURL(posterPath));
             Image image = ImageIO.read(img);
             i = new Informacion(image, sinopsis, director);
         } catch (IOException e) {

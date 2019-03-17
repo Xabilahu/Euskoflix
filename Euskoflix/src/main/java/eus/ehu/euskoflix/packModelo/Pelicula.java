@@ -53,13 +53,11 @@ public class Pelicula {
 
     public String getDirector(){
         this.fillInfoExtra();
-
         return this.infoExtra.getDirector();
     }
 
     public String getSinopsis(){
         this.fillInfoExtra();
-
         return this.infoExtra.getSinopsis();
     }
 

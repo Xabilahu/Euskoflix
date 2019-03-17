@@ -62,24 +62,24 @@ public class VentanaDatosExtra extends JFrame {
 		contentPane.add(sinopsis, BorderLayout.WEST);
 		sinopsis.setEditable(false);
 		sinopsis.setText(infoExtra.getSinopsis());
-		//Imagen		
+		//Imagen
 	      Image logo = infoExtra.getPoster();
           ImageIcon icon = new ImageIcon(logo);
           JLabel icono = new JLabel(icon);
           contentPane.add(icono, BorderLayout.EAST);
           icono.setSize(icon.getIconWidth(),icon.getIconHeight());
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		//Tags
 		JPanel panelTags = new JPanel();
 		tabbedPane.addTab("Tags", null, panelTags, null);
-		JTable tableTags= new JTable(ControladorVista.getInstance().datosTags(),ControladorVista.getInstance().getCabeceraTags());//LAs tablas extra
+		JTable tableTags= new JTable(ControladorVista.getInstance().datosTags(pFilm),ControladorVista.getInstance().getCabeceraTags());//LAs tablas extra
 		panelTags.add(tableTags);
 		//Ratings
 		JPanel panelRatings = new JPanel();
 		tabbedPane.addTab("Valoraciones", null, panelRatings, null);
-		JTable tableRatings= new JTable(ControladorVista.getInstance().datosRatings(),ControladorVista.getInstance().getCabeceraRatings());
+		JTable tableRatings= new JTable(ControladorVista.getInstance().datosRatings(pFilm),ControladorVista.getInstance().getCabeceraRatings());
 		panelRatings.add(tableRatings);
 	}
 

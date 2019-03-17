@@ -32,20 +32,18 @@ public class ControladorVista {
 		return new String[] {"ID","Nombre","Apellido","Password"};
 	}
 	//Pestana Tags
-	public String[][] datosTags(){
-		CatalogoUsuarios.getInstance();//Falta los metodos de devolver los tags de la peli--- los select 
-		return null;
+	public String[][] datosTags(int id){
+		return GestionDatos.getInstance().getTagsByPelicula(id);
 	}
 	public String[] getCabeceraTags() {
 		return new String[] {"Tag","Apariciones"};
 	}
 	//Pestana Ratings
-	public String[][] datosRatings(){
-		Cartelera.getInstance();//Falta los metodos de devolver los ratings de la peli--- los select 
-		return null;
+	public String[][] datosRatings(int id){
+		return GestionDatos.getInstance().getValoracionesByPelicula(id);
 	}
 	public String[] getCabeceraRatings() {
-		return new String[] {"IdUsuario","Rating"};
+		return new String[] {"NombreUsuario","Rating"};
 	}
 
 	//Pestana peliculas y su cabecera
@@ -65,7 +63,7 @@ public class ControladorVista {
 		return new String[] {"ID","Titulo"};
 	}
 
-	public Informacion getInformacionExtra(int pFilm) {
+	public Informacion getInformacionExtra(int pFilm) { //TODO: puede que falle por Mapeo id
 		return GestionDatos.getInstance().getInfoExtra(Cartelera.getInstance().getPeliculaPorId(pFilm));
 	}
 }
