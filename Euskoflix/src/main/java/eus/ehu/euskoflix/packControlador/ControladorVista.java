@@ -52,8 +52,8 @@ public class ControladorVista {
 		int size = films.getNumPeliculas();
 		String [][] resulFilms = new String[size][2];
 		Pelicula filmNew;
-		for(int i =0;i<size -1;i++) {
-			filmNew = films.getPeliculaPorId(i+1);
+		for(int i =0;i<size;i++) {
+			filmNew = films.getPeliculaPorId(i);
 			resulFilms[i][0] = String.valueOf(filmNew.getId());
 			resulFilms[i][1] = filmNew.getTitulo();
 		}

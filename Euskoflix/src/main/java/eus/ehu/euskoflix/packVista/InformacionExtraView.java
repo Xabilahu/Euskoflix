@@ -161,7 +161,7 @@ public class InformacionExtraView extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tags", 0, 0, new java.awt.Font("Times New Roman", 1, 11))); // NOI18N
         jPanel4.setLayout(new java.awt.BorderLayout());
 
-        jTable1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(ControladorVista.getInstance().datosTags(this.pelicula.getId()), ControladorVista.getInstance().getCabeceraTags()){
             @Override
             public boolean isCellEditable(int row, int column) {
