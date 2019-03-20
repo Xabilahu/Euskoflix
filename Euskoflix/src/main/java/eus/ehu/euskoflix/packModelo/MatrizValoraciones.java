@@ -79,9 +79,6 @@ public class MatrizValoraciones {
                         break;
                     }
                 }
-                if (usuarioActual == 7118) {
-                    System.out.println();
-                }
                 if (usuarioActual != this.filas.length - 1) {
                     resultado.put(usuarioActual - 1, this.valores[i]);
                 } else if (!ultimo) {
