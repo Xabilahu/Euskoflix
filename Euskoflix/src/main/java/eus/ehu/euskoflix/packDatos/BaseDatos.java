@@ -245,8 +245,8 @@ public class BaseDatos {
             while (in.ready()) {
                 String line = in.readLine();
                 if (line.matches("\\d+\\,\\d+\\,\\d+")) {
-                    pst.setInt(1, Integer.parseInt(line.substring(0, line.indexOf(","))));
-                    pst.setInt(2, Integer.parseInt(line.substring(line.lastIndexOf(",") + 1)));
+                    pst.setInt(2, Integer.parseInt(line.substring(0, line.indexOf(","))));
+                    pst.setInt(1, Integer.parseInt(line.substring(line.lastIndexOf(",") + 1)));
                     pst.addBatch();
                 }
             }
