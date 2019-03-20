@@ -1,4 +1,4 @@
-package eus.ehu.euskoflix.packControlador;
+package eus.ehu.euskoflix.packDatos;
 
 import eus.ehu.euskoflix.packModelo.Cartelera;
 
@@ -9,14 +9,9 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertiesManager {
+    public static final String PROPERTIES_FILE_NAME = "euskoflix.properties";
     private static PropertiesManager ourInstance = new PropertiesManager();
     private Properties properties;
-
-    public static final String PROPERTIES_FILE_NAME = "euskoflix.properties";
-
-    public static PropertiesManager getInstance() {
-        return ourInstance;
-    }
 
     private PropertiesManager() {
         this.properties = new Properties();
@@ -24,9 +19,9 @@ public class PropertiesManager {
         try {
             f = new File(f.getParent() + File.separator + PROPERTIES_FILE_NAME);
             InputStream in;
-            if (!f.exists()){
+            if (!f.exists()) {
                 in = PropertiesManager.class.getResourceAsStream("/eus/ehu/euskoflix/" + PROPERTIES_FILE_NAME);
-            }else{
+            } else {
                 in = new FileInputStream(f);
             }
             this.properties.load(in);
@@ -35,31 +30,31 @@ public class PropertiesManager {
         }
     }
 
-    public String getEncryptionType(){
+    public static PropertiesManager getInstance() {
+        return ourInstance;
+    }
+
+    public String getEncryptionType() {
         return this.properties.getProperty("encryption.type");
     }
 
-    public String getPathToFile(String file){
+    public String getPathToFile(String file) {
         return this.properties.getProperty("path.to." + file);
     }
 
-    public String getAPIKey(){
-        return this.properties.getProperty("api.key");
-    }
-
-    public String getMovieApiRequestURL(int id){
+    public String getMovieApiRequestURL(int id) {
         return getString(id, "?api_key=");
     }
 
-    public String getPosterApiRequestURL(String image){
+    public String getPosterApiRequestURL(String image) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(this.properties.getProperty("api.image.url"));
         stringBuilder.append(this.properties.getProperty("api.image.width"));
         stringBuilder.append(image);
-        return  stringBuilder.toString();
+        return stringBuilder.toString();
     }
 
-    public String getCreditsApiRequestURL(int id){
+    public String getCreditsApiRequestURL(int id) {
         return getString(id, "/credits?api_key=");
     }
 
@@ -67,7 +62,7 @@ public class PropertiesManager {
         return this.properties.getProperty("default.password");
     }
 
-    public String getPathToLogo(){
+    public String getPathToLogo() {
         return this.properties.getProperty("path.to.logo");
     }
 
@@ -79,8 +74,8 @@ public class PropertiesManager {
         return this.properties.getProperty("path.to.movie.icon");
     }
 
-    public String getPathToMainIcon(){
-        return  this.properties.getProperty("path.to.logo.icon");
+    public String getPathToMainIcon() {
+        return this.properties.getProperty("path.to.logo.icon");
     }
 
     private String getString(int id, String s) {
@@ -90,7 +85,7 @@ public class PropertiesManager {
         stringBuilder.append(s);
         stringBuilder.append(this.properties.getProperty("api.key"));
         stringBuilder.append("&language=es");
-        return  stringBuilder.toString();
+        return stringBuilder.toString();
     }
 
 }

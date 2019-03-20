@@ -1,17 +1,18 @@
 package eus.ehu.euskoflix.packModelo;
 
-import org.junit.Test; 
-import org.junit.Before; 
 import org.junit.After;
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
-/** 
+import static org.junit.Assert.assertNotNull;
+
+/**
  * MatrizValoraciones Tester.
  *
- * @since Mar 20, 2019
  * @version 1.0
+ * @since Mar 20, 2019
  */
-public class MatrizValoracionesTest { 
+public class MatrizValoracionesTest {
 
     @Before
     public void before() throws Exception {
@@ -22,9 +23,7 @@ public class MatrizValoracionesTest {
     }
 
     /**
-     *
      * Method: getInstance()
-     *
      */
     @Test
     public void testGetInstance() throws Exception {
@@ -32,9 +31,7 @@ public class MatrizValoracionesTest {
     }
 
     /**
-     *
      * Method: cargarValoraciones()
-     *
      */
     @Test
     public void testCargarValoraciones() throws Exception {
@@ -42,13 +39,11 @@ public class MatrizValoracionesTest {
     }
 
     /**
-     *
      * Method: getValoracion(int pUsuario, int pPelicula)
-     *
      */
     @Test
     public void testGetValoracion() throws Exception {
-    //TODO: Test goes here...
+        //TODO: Test goes here...
     }
 
 } 

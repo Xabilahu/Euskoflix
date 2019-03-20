@@ -1,84 +1,72 @@
 package eus.ehu.euskoflix.packModelo;
 
-import org.junit.Test; 
-import org.junit.Before; 
-import org.junit.After; 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-/** 
-* Usuario Tester. 
-* 
-* @author <Authors name> 
-* @since <pre>Mar 20, 2019</pre> 
-* @version 1.0 
-*/ 
-public class UsuarioTest { 
+/**
+ * Usuario Tester.
+ *
+ * @author <Authors name>
+ * @version 1.0
+ * @since <pre>Mar 20, 2019</pre>
+ */
+public class UsuarioTest {
 
-@Before
-public void before() throws Exception { 
-} 
+    @Before
+    public void before() throws Exception {
+    }
 
-@After
-public void after() throws Exception { 
-} 
+    @After
+    public void after() throws Exception {
+    }
 
-/** 
-* 
-* Method: comprobarPassword(String pPassword) 
-* 
-*/ 
-@Test
-public void testComprobarPassword() throws Exception { 
+    /**
+     * Method: comprobarPassword(String pPassword)
+     */
+    @Test
+    public void testComprobarPassword() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getId() 
-* 
-*/ 
-@Test
-public void testGetId() throws Exception { 
+    /**
+     * Method: getId()
+     */
+    @Test
+    public void testGetId() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getNombre() 
-* 
-*/ 
-@Test
-public void testGetNombre() throws Exception { 
+    /**
+     * Method: getNombre()
+     */
+    @Test
+    public void testGetNombre() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getApellido() 
-* 
-*/ 
-@Test
-public void testGetApellido() throws Exception { 
+    /**
+     * Method: getApellido()
+     */
+    @Test
+    public void testGetApellido() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getPassword() 
-* 
-*/ 
-@Test
-public void testGetPassword() throws Exception { 
+    /**
+     * Method: getPassword()
+     */
+    @Test
+    public void testGetPassword() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
 
-/** 
-* 
-* Method: encriptarPassword(String pPassword) 
-* 
-*/ 
-@Test
-public void testEncriptarPassword() throws Exception { 
+    /**
+     * Method: encriptarPassword(String pPassword)
+     */
+    @Test
+    public void testEncriptarPassword() throws Exception {
 //TODO: Test goes here... 
 /* 
 try { 
@@ -89,7 +77,7 @@ try {
 } catch(IllegalAccessException e) { 
 } catch(InvocationTargetException e) { 
 } 
-*/ 
-} 
+*/
+    }
 
 } 

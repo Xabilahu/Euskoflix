@@ -1,154 +1,128 @@
 package eus.ehu.euskoflix.packControlador;
 
-import org.junit.Test; 
-import org.junit.Before; 
-import org.junit.After; 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-/** 
-* PropertiesManager Tester. 
-* 
-* @author <Authors name> 
-* @since <pre>Mar 20, 2019</pre> 
-* @version 1.0 
-*/ 
-public class PropertiesManagerTest { 
+/**
+ * PropertiesManager Tester.
+ *
+ * @author <Authors name>
+ * @version 1.0
+ * @since <pre>Mar 20, 2019</pre>
+ */
+public class PropertiesManagerTest {
 
-@Before
-public void before() throws Exception { 
-} 
+    @Before
+    public void before() throws Exception {
+    }
 
-@After
-public void after() throws Exception { 
-} 
+    @After
+    public void after() throws Exception {
+    }
 
-/** 
-* 
-* Method: getInstance() 
-* 
-*/ 
-@Test
-public void testGetInstance() throws Exception { 
+    /**
+     * Method: getInstance()
+     */
+    @Test
+    public void testGetInstance() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getEncryptionType() 
-* 
-*/ 
-@Test
-public void testGetEncryptionType() throws Exception { 
+    /**
+     * Method: getEncryptionType()
+     */
+    @Test
+    public void testGetEncryptionType() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getPathToFile(String file) 
-* 
-*/ 
-@Test
-public void testGetPathToFile() throws Exception { 
+    /**
+     * Method: getPathToFile(String file)
+     */
+    @Test
+    public void testGetPathToFile() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getAPIKey() 
-* 
-*/ 
-@Test
-public void testGetAPIKey() throws Exception { 
+    /**
+     * Method: getAPIKey()
+     */
+    @Test
+    public void testGetAPIKey() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getMovieApiRequestURL(int id) 
-* 
-*/ 
-@Test
-public void testGetMovieApiRequestURL() throws Exception { 
+    /**
+     * Method: getMovieApiRequestURL(int id)
+     */
+    @Test
+    public void testGetMovieApiRequestURL() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getPosterApiRequestURL(String image) 
-* 
-*/ 
-@Test
-public void testGetPosterApiRequestURL() throws Exception { 
+    /**
+     * Method: getPosterApiRequestURL(String image)
+     */
+    @Test
+    public void testGetPosterApiRequestURL() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getCreditsApiRequestURL(int id) 
-* 
-*/ 
-@Test
-public void testGetCreditsApiRequestURL() throws Exception { 
+    /**
+     * Method: getCreditsApiRequestURL(int id)
+     */
+    @Test
+    public void testGetCreditsApiRequestURL() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getDefaultPassword() 
-* 
-*/ 
-@Test
-public void testGetDefaultPassword() throws Exception { 
+    /**
+     * Method: getDefaultPassword()
+     */
+    @Test
+    public void testGetDefaultPassword() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getPathToLogo() 
-* 
-*/ 
-@Test
-public void testGetPathToLogo() throws Exception { 
+    /**
+     * Method: getPathToLogo()
+     */
+    @Test
+    public void testGetPathToLogo() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getPathToUserIcon() 
-* 
-*/ 
-@Test
-public void testGetPathToUserIcon() throws Exception { 
+    /**
+     * Method: getPathToUserIcon()
+     */
+    @Test
+    public void testGetPathToUserIcon() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getPathToMovieIcon() 
-* 
-*/ 
-@Test
-public void testGetPathToMovieIcon() throws Exception { 
+    /**
+     * Method: getPathToMovieIcon()
+     */
+    @Test
+    public void testGetPathToMovieIcon() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getPathToMainIcon() 
-* 
-*/ 
-@Test
-public void testGetPathToMainIcon() throws Exception { 
+    /**
+     * Method: getPathToMainIcon()
+     */
+    @Test
+    public void testGetPathToMainIcon() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
 
-/** 
-* 
-* Method: getString(int id, String s) 
-* 
-*/ 
-@Test
-public void testGetString() throws Exception { 
+    /**
+     * Method: getString(int id, String s)
+     */
+    @Test
+    public void testGetString() throws Exception {
 //TODO: Test goes here... 
 /* 
 try { 
@@ -159,7 +133,7 @@ try {
 } catch(IllegalAccessException e) { 
 } catch(InvocationTargetException e) { 
 } 
-*/ 
-} 
+*/
+    }
 
 } 

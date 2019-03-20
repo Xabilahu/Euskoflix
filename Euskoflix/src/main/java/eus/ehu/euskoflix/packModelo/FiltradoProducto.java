@@ -6,16 +6,15 @@ public class FiltradoProducto extends Filtrable {
     private static FiltradoProducto ourInstance = new FiltradoProducto();
 
 
-    public static FiltradoProducto getInstance() {
-        return ourInstance;
-
-    }
-
     private FiltradoProducto() {
         //Se rellena la estructura con las similitudes entre productos
         //Meter por referencia
     }
 
+    public static FiltradoProducto getInstance() {
+        return ourInstance;
+
+    }
 
     @Override
     public Similitud[] getNMasSimilares(int pId) {

@@ -1,115 +1,97 @@
 package eus.ehu.euskoflix.packControlador;
 
-import org.junit.Test; 
-import org.junit.Before; 
-import org.junit.After; 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-/** 
-* ControladorVista Tester. 
-* 
-* @author <Authors name> 
-* @since <pre>Mar 20, 2019</pre> 
-* @version 1.0 
-*/ 
-public class ControladorVistaTest { 
+/**
+ * ControladorVista Tester.
+ *
+ * @author <Authors name>
+ * @version 1.0
+ * @since <pre>Mar 20, 2019</pre>
+ */
+public class ControladorVistaTest {
 
-@Before
-public void before() throws Exception { 
-} 
+    @Before
+    public void before() throws Exception {
+    }
 
-@After
-public void after() throws Exception { 
-} 
+    @After
+    public void after() throws Exception {
+    }
 
-/** 
-* 
-* Method: getInstance() 
-* 
-*/ 
-@Test
-public void testGetInstance() throws Exception { 
+    /**
+     * Method: getInstance()
+     */
+    @Test
+    public void testGetInstance() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: datosUsuario() 
-* 
-*/ 
-@Test
-public void testDatosUsuario() throws Exception { 
+    /**
+     * Method: datosUsuario()
+     */
+    @Test
+    public void testDatosUsuario() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getCabeceraUsers() 
-* 
-*/ 
-@Test
-public void testGetCabeceraUsers() throws Exception { 
+    /**
+     * Method: getCabeceraUsers()
+     */
+    @Test
+    public void testGetCabeceraUsers() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: datosTags(int id) 
-* 
-*/ 
-@Test
-public void testDatosTags() throws Exception { 
+    /**
+     * Method: datosTags(int id)
+     */
+    @Test
+    public void testDatosTags() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getCabeceraTags() 
-* 
-*/ 
-@Test
-public void testGetCabeceraTags() throws Exception { 
+    /**
+     * Method: getCabeceraTags()
+     */
+    @Test
+    public void testGetCabeceraTags() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: datosRatings(int id) 
-* 
-*/ 
-@Test
-public void testDatosRatings() throws Exception { 
+    /**
+     * Method: datosRatings(int id)
+     */
+    @Test
+    public void testDatosRatings() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getCabeceraRatings() 
-* 
-*/ 
-@Test
-public void testGetCabeceraRatings() throws Exception { 
+    /**
+     * Method: getCabeceraRatings()
+     */
+    @Test
+    public void testGetCabeceraRatings() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: datosPelis() 
-* 
-*/ 
-@Test
-public void testDatosPelis() throws Exception { 
+    /**
+     * Method: datosPelis()
+     */
+    @Test
+    public void testDatosPelis() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getCabeceraFilms() 
-* 
-*/ 
-@Test
-public void testGetCabeceraFilms() throws Exception { 
+    /**
+     * Method: getCabeceraFilms()
+     */
+    @Test
+    public void testGetCabeceraFilms() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
 
 } 

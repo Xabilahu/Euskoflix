@@ -1,6 +1,6 @@
 package eus.ehu.euskoflix.packModelo;
 
-import eus.ehu.euskoflix.packControlador.GestionDatos;
+import eus.ehu.euskoflix.packDatos.GestionDatos;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,18 +14,18 @@ public class MatrizValoraciones {
     private int[] columnas;
 
 
+    private MatrizValoraciones() {
+    }
+
     public static MatrizValoraciones getInstance() {
-        if (ourInstance== null) {
+        if (ourInstance == null) {
             ourInstance = new MatrizValoraciones();
         }
         return ourInstance;
 
     }
 
-    private MatrizValoraciones() {
-    }
-
-    public void cargarValoraciones(){
+    public void cargarValoraciones() {
         valores = GestionDatos.getInstance().getValoraciones();
         filas = GestionDatos.getInstance().getValoracionesUsuarios();
         columnas = GestionDatos.getInstance().getValoracionesPeliculas();
@@ -59,11 +59,11 @@ public class MatrizValoraciones {
         return valoracion;
     }
 
-    public HashMap<Integer,Float> getValoracionesByPelicula(int pId) {
+    public HashMap<Integer, Float> getValoracionesByPelicula(int pId) {
         HashMap<Integer, Float> resultado = new HashMap<>();
         //Buscamos el primer usuario que haya valorado alguna pelicula
         int usuarioActual = 0;
-        for(int i = 0; i < this.filas.length; i++) {
+        for (int i = 0; i < this.filas.length; i++) {
             if (this.filas[i] != -1) {
                 usuarioActual = i;
                 break;
@@ -71,7 +71,7 @@ public class MatrizValoraciones {
         }
         boolean ultimo = false;
         //Vamos añadiendo los usuarios y sus valoraciones
-        for(int i = 0; i < this.columnas.length; i++) {
+        for (int i = 0; i < this.columnas.length; i++) {
             if (this.columnas[i] == pId) {
                 for (int j = usuarioActual + 1; j < this.filas.length; j++) {
                     if (this.filas[j] != -1) {

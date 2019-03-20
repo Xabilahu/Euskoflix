@@ -1,15 +1,16 @@
 package eus.ehu.euskoflix.packModelo;
 
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.After;
+
 import static org.junit.Assert.*;
 
-/** 
+/**
  * Cartelera Tester.
  *
- * @since Mar 20, 2019
  * @version 1.0
+ * @since Mar 20, 2019
  */
 public class CarteleraTest {
 
@@ -23,9 +24,7 @@ public class CarteleraTest {
     }
 
     /**
-     *
      * Method: getInstance()
-     *
      */
     @Test
     public void testGetInstance() throws Exception {
@@ -33,9 +32,7 @@ public class CarteleraTest {
     }
 
     /**
-     *
      * Method: addPelicula(Pelicula pPeli)
-     *
      */
     @Test
     public void testAddPelicula() throws Exception {
@@ -47,10 +44,9 @@ public class CarteleraTest {
 
     /**
      * Method: getPeliculaPorId(int pId)
-     *
+     * <p>
      * Este método devuelve la peli con id interno pId
      * Las pelis, independientemente del id que tenga asociado, se mapean internamente por orden ascendente de llegada, empezando por 0
-     *
      */
     @Test
     public void testGetPeliculaPorId() throws Exception {
@@ -63,11 +59,9 @@ public class CarteleraTest {
     }
 
     /**
-     *
      * Method: getPeliculaPorIdSinMapeo(int pId)
-     *
+     * <p>
      * Este método devuelve la peli el id pId asociado, independientemente del id interno que se ha utilizado para mapearlo
-     *
      */
     @Test
     public void testGetPeliculaPorIdSinMapeo() throws Exception {

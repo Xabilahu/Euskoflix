@@ -1,10 +1,9 @@
-package eus.ehu.euskoflix.packControlador;
+package eus.ehu.euskoflix.packDatos;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import eus.ehu.euskoflix.packDatos.BaseDatos;
 import eus.ehu.euskoflix.packModelo.*;
 
 import javax.imageio.ImageIO;
@@ -61,25 +60,6 @@ public class GestionDatos {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public String[][] getValoracionesByPelicula(int pId) {
-        ResultSet rst = BaseDatos.getBaseDatos().getValoracionByPelicula(pId);
-        String[][] resultado = new String[BaseDatos.getBaseDatos().getNumValoracionesByPelicula(pId)][2];
-        return getStrings(rst, resultado);
-    }
-
-    private String[][] getStrings(ResultSet rst, String[][] resultado) {
-        try {
-            int i = 0;
-            while (rst.next()) {
-                resultado[i][0] = rst.getString(1);
-                resultado[i++][1] = rst.getString(2);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return resultado;
     }
 
     public float[] getValoraciones() {
@@ -170,7 +150,7 @@ public class GestionDatos {
             URL credits = new URL(PropertiesManager.getInstance().getCreditsApiRequestURL(tmdbID));
             con = (HttpURLConnection) credits.openConnection();
             con.setRequestProperty("Content-Type", "application/json");
-            in = new BufferedReader(new InputStreamReader(con.getInputStream(),StandardCharsets.UTF_8));
+            in = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
             str = new StringBuilder();
             while (in.ready()) {
                 str.append(in.readLine());
@@ -200,8 +180,8 @@ public class GestionDatos {
     public void getTags(Pelicula p) {
         ResultSet rst = BaseDatos.getBaseDatos().getTagsByPelicula(p.getId());
         try {
-            while(rst.next()){
-                Tag t = new Tag(rst.getString("etiqueta"),rst.getInt("veces"));
+            while (rst.next()) {
+                Tag t = new Tag(rst.getString("etiqueta"), rst.getInt("veces"));
                 p.addTag(t);
             }
         } catch (SQLException e) {
@@ -209,57 +189,5 @@ public class GestionDatos {
         }
 
     }
-
-  /*  public void makeTMBDRequest(int tmdbID) {
-        try {
-            //Movie general info query
-            URL mov = new URL(PropertiesManager.getInstance().getMovieApiRequestURL(tmdbID));
-            HttpURLConnection con = (HttpURLConnection) mov.openConnection();
-            con.setRequestProperty("Content-Type", "application/json");
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            StringBuilder str = new StringBuilder();
-            while (in.ready()) {
-                str.append(in.readLine());
-            }
-            in.close();
-            con.disconnect();
-            String json = str.toString();
-            JsonParser parser = new JsonParser();
-            JsonObject movie = parser.parse(json).getAsJsonObject();
-            String titulo = movie.get("title").getAsString();
-            String posterPath = movie.get("poster_path").getAsString();
-            String sinopsis = movie.get("overview").getAsString();
-            //Movie credits info query
-            //URL credits = new URL("https://api.themoviedb.org/3/movie/" + tmdbID + "/credits?api_key=e9f7e8f9f25e5afa642449f0d4a1b4a7");
-            URL credits = new URL(PropertiesManager.getInstance().getCreditsApiRequestURL(tmdbID));
-            con = (HttpURLConnection) credits.openConnection();
-            con.setRequestProperty("Content-Type", "application/json");
-            in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            str = new StringBuilder();
-            while(in.ready()) {
-                str.append(in.readLine());
-            }
-            in.close();
-            con.disconnect();
-            JsonArray crew = parser.parse(str.toString()).getAsJsonObject().get("crew").getAsJsonArray();
-            String director = "";
-            for (JsonElement obj : crew) {
-                JsonObject jObj = obj.getAsJsonObject();
-                if (jObj.get("job").getAsString().equals("Director")) {
-                    director = jObj.get("name").getAsString();
-                    break;
-                }
-            }
-            //Movie poster query
-            //URL img = new URL("https://image.tmdb.org/t/p/w154" + posterPath);
-            URL img  = new URL(PropertiesManager.getInstance().getPosterApiRequestURL(posterPath));
-            Image image = ImageIO.read(img);
-            Informacion infoExtra = new Informacion(image, sinopsis, director);
-            System.out.println("Titulo: " + titulo);
-            System.out.println(infoExtra.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
 
 }

@@ -1,124 +1,104 @@
 package eus.ehu.euskoflix.packModelo;
 
-import org.junit.Test; 
-import org.junit.Before; 
-import org.junit.After; 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-/** 
-* Pelicula Tester. 
-* 
-* @author <Authors name> 
-* @since <pre>Mar 20, 2019</pre> 
-* @version 1.0 
-*/ 
-public class PeliculaTest { 
+/**
+ * Pelicula Tester.
+ *
+ * @author <Authors name>
+ * @version 1.0
+ * @since <pre>Mar 20, 2019</pre>
+ */
+public class PeliculaTest {
 
-@Before
-public void before() throws Exception { 
-} 
+    @Before
+    public void before() throws Exception {
+    }
 
-@After
-public void after() throws Exception { 
-} 
+    @After
+    public void after() throws Exception {
+    }
 
-/** 
-* 
-* Method: addTag(Tag pTag) 
-* 
-*/ 
-@Test
-public void testAddTag() throws Exception { 
+    /**
+     * Method: addTag(Tag pTag)
+     */
+    @Test
+    public void testAddTag() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: print() 
-* 
-*/ 
-@Test
-public void testPrint() throws Exception { 
+    /**
+     * Method: print()
+     */
+    @Test
+    public void testPrint() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getId() 
-* 
-*/ 
-@Test
-public void testGetId() throws Exception { 
+    /**
+     * Method: getId()
+     */
+    @Test
+    public void testGetId() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getTitulo() 
-* 
-*/ 
-@Test
-public void testGetTitulo() throws Exception { 
+    /**
+     * Method: getTitulo()
+     */
+    @Test
+    public void testGetTitulo() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getTmdbId() 
-* 
-*/ 
-@Test
-public void testGetTmdbId() throws Exception { 
+    /**
+     * Method: getTmdbId()
+     */
+    @Test
+    public void testGetTmdbId() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: setTmdbId(int tmdbId) 
-* 
-*/ 
-@Test
-public void testSetTmdbId() throws Exception { 
+    /**
+     * Method: setTmdbId(int tmdbId)
+     */
+    @Test
+    public void testSetTmdbId() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getDirector() 
-* 
-*/ 
-@Test
-public void testGetDirector() throws Exception { 
+    /**
+     * Method: getDirector()
+     */
+    @Test
+    public void testGetDirector() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getSinopsis() 
-* 
-*/ 
-@Test
-public void testGetSinopsis() throws Exception { 
+    /**
+     * Method: getSinopsis()
+     */
+    @Test
+    public void testGetSinopsis() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: getPoster() 
-* 
-*/ 
-@Test
-public void testGetPoster() throws Exception { 
+    /**
+     * Method: getPoster()
+     */
+    @Test
+    public void testGetPoster() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
 
-/** 
-* 
-* Method: fillInfoExtra() 
-* 
-*/ 
-@Test
-public void testFillInfoExtra() throws Exception { 
+    /**
+     * Method: fillInfoExtra()
+     */
+    @Test
+    public void testFillInfoExtra() throws Exception {
 //TODO: Test goes here... 
 /* 
 try { 
@@ -129,7 +109,7 @@ try {
 } catch(IllegalAccessException e) { 
 } catch(InvocationTargetException e) { 
 } 
-*/ 
-} 
+*/
+    }
 
 } 

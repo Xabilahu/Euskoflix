@@ -2,7 +2,7 @@ package eus.ehu.euskoflix.packVista;
 
 import com.alee.laf.WebLookAndFeel;
 import eus.ehu.euskoflix.packControlador.ControladorVista;
-import eus.ehu.euskoflix.packControlador.PropertiesManager;
+import eus.ehu.euskoflix.packDatos.PropertiesManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,8 +13,8 @@ import java.io.InputStream;
 public class EuskoFlixLoader extends JFrame {
 
 
-    public EuskoFlixLoader(){
-        WebLookAndFeel.install ();
+    public EuskoFlixLoader() {
+        WebLookAndFeel.install();
         this.requestFocus();
         this.setUndecorated(true);
         this.setLayout(new BorderLayout());
@@ -26,9 +26,9 @@ public class EuskoFlixLoader extends JFrame {
             Image logo = ImageIO.read(in);
             ImageIcon icon = new ImageIcon(logo);
             JLabel icono = new JLabel(icon);
-            icono.setSize(icon.getIconWidth(),icon.getIconHeight());
+            icono.setSize(icon.getIconWidth(), icon.getIconHeight());
 
-            this.add(icono,BorderLayout.CENTER);
+            this.add(icono, BorderLayout.CENTER);
             JProgressBar progressBar = new JProgressBar();
             progressBar.setBackground(Color.white);
             progressBar.setIndeterminate(true);
@@ -37,10 +37,10 @@ public class EuskoFlixLoader extends JFrame {
             JLabel texto = new JLabel("Cargando...");
             texto.setHorizontalAlignment(JLabel.CENTER);
             texto.setVerticalAlignment(JLabel.CENTER);
-            progressBar.add(texto,BorderLayout.CENTER);
+            progressBar.add(texto, BorderLayout.CENTER);
 
-            this.add(progressBar,BorderLayout.SOUTH);
-            Dimension d = new Dimension(icon.getIconWidth(),icon.getIconHeight()+progressBar.getHeight());
+            this.add(progressBar, BorderLayout.SOUTH);
+            Dimension d = new Dimension(icon.getIconWidth(), icon.getIconHeight() + progressBar.getHeight());
             this.setMinimumSize(d);
             this.setMaximumSize(d);
             this.setPreferredSize(d);
@@ -53,7 +53,7 @@ public class EuskoFlixLoader extends JFrame {
         ControladorVista.getInstance().cargarDatos();
         this.setVisible(false);
         VentanaCargaDatos ventanaCargaDatos = new VentanaCargaDatos();
-        JOptionPane.showMessageDialog(ventanaCargaDatos,"Doble click en una película para más información",
+        JOptionPane.showMessageDialog(ventanaCargaDatos, "Doble click en una película para más información",
                 "Info",
                 JOptionPane.INFORMATION_MESSAGE);
         this.dispose();
