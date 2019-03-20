@@ -3,6 +3,7 @@ package eus.ehu.euskoflix.packModelo;
 import eus.ehu.euskoflix.packControlador.GestionDatos;
 
 import java.awt.Image;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Pelicula {
@@ -19,10 +20,15 @@ public class Pelicula {
         this.titulo = pTitulo;
         this.lista = new LinkedList<>();
         this.tmdbId = pTmdbId;
+        this.lista = new LinkedList<>();
     }
 
     public void addTag(Tag pTag) {
         this.lista.add(pTag);
+    }
+
+    public int getNumTags(){
+        return this.lista.size();
     }
 
     public void print() {
@@ -66,4 +72,16 @@ public class Pelicula {
         return  this.infoExtra.getPoster();
     }
 
+    public String[][] tagsToStringArray() {
+        String[][] resultado = new String[this.getNumTags()][2];
+        Iterator<Tag> itr = this.lista.iterator();
+        int i = 0;
+        while(itr.hasNext()){
+            Tag t = itr.next();
+            resultado[i][0] = t.getNombre();
+            resultado[i][1] = String.valueOf(t.getCantidad());
+            i++;
+        }
+        return resultado;
+    }
 }

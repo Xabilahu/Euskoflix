@@ -33,7 +33,7 @@ public void testGetUsuario() throws Exception {
 
 /** 
 * 
-* Method: getPelicula() 
+* Method: getInfoPelicula()
 * 
 */ 
 @Test

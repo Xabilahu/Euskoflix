@@ -63,12 +63,6 @@ public class GestionDatos {
         }
     }
 
-    public String[][] getTagsByPelicula(int pId) {
-        ResultSet rst = BaseDatos.getBaseDatos().getTagsByPelicula(pId);
-        String[][] resultado = new String[BaseDatos.getBaseDatos().getNumTagsByPelicula(pId)][2];
-        return getStrings(rst, resultado);
-    }
-
     public String[][] getValoracionesByPelicula(int pId) {
         ResultSet rst = BaseDatos.getBaseDatos().getValoracionByPelicula(pId);
         String[][] resultado = new String[BaseDatos.getBaseDatos().getNumValoracionesByPelicula(pId)][2];
@@ -201,6 +195,19 @@ public class GestionDatos {
             //e.printStackTrace();
         }
         return i;
+    }
+
+    public void getTags(Pelicula p) {
+        ResultSet rst = BaseDatos.getBaseDatos().getTagsByPelicula(p.getId());
+        try {
+            while(rst.next()){
+                Tag t = new Tag(rst.getString("etiqueta"),rst.getInt("veces"));
+                p.addTag(t);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
   /*  public void makeTMBDRequest(int tmdbID) {

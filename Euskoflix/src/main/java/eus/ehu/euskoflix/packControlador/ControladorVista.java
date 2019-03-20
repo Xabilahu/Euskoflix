@@ -2,6 +2,9 @@ package eus.ehu.euskoflix.packControlador;
 
 import eus.ehu.euskoflix.packModelo.*;
 
+import java.awt.*;
+import java.util.ArrayList;
+
 public class ControladorVista {
 	private static ControladorVista mControladorVista;
 	
@@ -37,7 +40,9 @@ public class ControladorVista {
 	}
 	//Pestana Tags
 	public String[][] datosTags(int id){
-		return GestionDatos.getInstance().getTagsByPelicula(id);
+		Pelicula p = Cartelera.getInstance().getPeliculaPorIdSinMapeo(id);
+		GestionDatos.getInstance().getTags(p);
+		return  p.tagsToStringArray();
 	}
 	public String[] getCabeceraTags() {
 		return new String[] {"Tag","Apariciones"};
@@ -67,8 +72,18 @@ public class ControladorVista {
 		return new String[] {"ID","Titulo"};
 	}
 
-	public Pelicula getPelicula(int pId) {
-		return Cartelera.getInstance().getPeliculaPorIdSinMapeo(pId);
+
+	/**
+	 * @return [titulo,director,sinopsis,poster]
+	 * */
+	public Object[] getInfoPelicula(int pId) {
+		Object[] result = new Object[4];
+		Pelicula p = Cartelera.getInstance().getPeliculaPorIdSinMapeo(pId);
+		result[0] = p.getTitulo();
+		result[1] = p.getDirector();
+		result[2] = p.getSinopsis();
+		result[3] = p.getPoster();
+		return result;
 	}
 
 }

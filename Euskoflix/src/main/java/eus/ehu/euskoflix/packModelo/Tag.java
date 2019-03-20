@@ -2,25 +2,19 @@ package eus.ehu.euskoflix.packModelo;
 
 public class Tag {
 
-    private int usuario;
-    private int pelicula;
-    private String etiqueta;
+    private String nombre;
+    private int cantidad;
 
-    public Tag(int pUsuario, int pPelicula, String pEtiqueta) {
-        this.usuario = pUsuario;
-        this.pelicula = pPelicula;
-        this.etiqueta = pEtiqueta;
+    public Tag(String nombre, int cantidad) {
+        this.nombre = nombre;
+        this.cantidad = cantidad;
     }
 
-    public int getUsuario() {
-        return usuario;
+    public String getNombre() {
+        return nombre;
     }
 
-    public int getPelicula() {
-        return pelicula;
-    }
-
-    public String getEtiqueta() {
-        return etiqueta;
+    public int getCantidad() {
+        return cantidad;
     }
 }
