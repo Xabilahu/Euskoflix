@@ -41,4 +41,11 @@ public class Cartelera {
         return this.lista.getPeliculaPorId(pId);
     }
 
+    /**
+     * This method is only used in jUnit
+     */
+    public void reset() {
+        mCartelera = new Cartelera();
+    }
+
 }
