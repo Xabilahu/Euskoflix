@@ -3,6 +3,7 @@ package eus.ehu.euskoflix.packModelo;
 import eus.ehu.euskoflix.packControlador.GestionDatos;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class MatrizValoraciones {
 
@@ -56,6 +57,49 @@ public class MatrizValoraciones {
             }
         }
         return valoracion;
+    }
+
+    public HashMap<Integer,Float> getValoracionesByPelicula(int pId) {
+        HashMap<Integer, Float> resultado = new HashMap<>();
+        //Buscamos el primer usuario que haya valorado alguna pelicula
+        int usuarioActual = 0;
+        for(int i = 0; i < this.filas.length; i++) {
+            if (this.filas[i] != -1) {
+                usuarioActual = i;
+                break;
+            }
+        }
+        boolean ultimo = false;
+        //Vamos añadiendo los usuarios y sus valoraciones
+        for(int i = 0; i < this.columnas.length; i++) {
+            if (this.columnas[i] == pId) {
+                for (int j = usuarioActual + 1; j < this.filas.length; j++) {
+                    if (this.filas[j] != -1) {
+                        usuarioActual = j;
+                        break;
+                    }
+                }
+                if (usuarioActual != this.filas.length) {
+                    resultado.put(usuarioActual - 1, this.valores[i]);
+                } else if (!ultimo) {
+                    ultimo = true;
+                    resultado.put(usuarioActual - 1, this.valores[i]);
+                } else {
+                    resultado.put(usuarioActual, this.valores[i]);
+                    break;
+                }
+                i = this.filas[usuarioActual] - 1;
+            } else if (this.columnas[i] > pId) {
+                for (int j = usuarioActual + 1; j < this.filas.length; j++) {
+                    if (this.filas[j] != -1) {
+                        usuarioActual = j;
+                        break;
+                    }
+                }
+                i = this.filas[usuarioActual] - 1;
+            }
+        }
+        return resultado;
     }
 
     @Override

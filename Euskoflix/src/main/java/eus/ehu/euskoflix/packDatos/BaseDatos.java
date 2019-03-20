@@ -145,8 +145,8 @@ public class BaseDatos {
 	}
 
 	private void anadirPeliculas() {
-		addIds();
 		addPeliculaYGenero();
+		addIds();
 	}
 
 	private void anadirEtiquetas() {
@@ -244,7 +244,7 @@ public class BaseDatos {
 			InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("links"));
 			BufferedReader in = new BufferedReader(new InputStreamReader(is,StandardCharsets.UTF_8));
 			in.readLine(); // skip headers
-			PreparedStatement pst = c.prepareStatement("INSERT INTO pelicula(id, idTMDB,titulo) VALUES (?,?,\"\")");
+			PreparedStatement pst = c.prepareStatement("UPDATE pelicula SET idTMDB=? WHERE id=?");
 			while(in.ready()){
 				String line = in.readLine();
 				if (line.matches("\\d+\\,\\d+\\,\\d+")){
@@ -273,7 +273,7 @@ public class BaseDatos {
 			InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("movies"));
 			BufferedReader in = new BufferedReader(new InputStreamReader(is,StandardCharsets.UTF_8));
 			in.readLine(); // skip headers
-			PreparedStatement peliculasPst = c.prepareStatement("UPDATE pelicula set titulo=? where id=?");
+			PreparedStatement peliculasPst = c.prepareStatement("INSERT INTO pelicula VALUES(?,0,?)");
 			PreparedStatement generosPst = c.prepareStatement("INSERT INTO genero(id,nombre) VALUES (?,?)");
 			PreparedStatement peliculaGeneroPst = c.prepareStatement("INSERT INTO pelicula_genero(id_pelicula,id_genero) VALUES(?,?)");
 			int genreId = 1;
@@ -282,8 +282,8 @@ public class BaseDatos {
 				StringTokenizer stringTokenizer = new StringTokenizer(line);
 				int id = Integer.parseInt(stringTokenizer.nextToken(","));
 				// añadiendo titulo
-				peliculasPst.setString(1,line.substring(line.indexOf(",")+1,line.lastIndexOf(",")));
-				peliculasPst.setInt(2,id);
+				peliculasPst.setString(2,line.substring(line.indexOf(",")+1,line.lastIndexOf(",")));
+				peliculasPst.setInt(1,id);
 				peliculasPst.addBatch();
 				//añadiendo genero
 				stringTokenizer = new StringTokenizer(line.substring(line.lastIndexOf(",")+1));

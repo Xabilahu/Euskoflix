@@ -4,6 +4,8 @@ import eus.ehu.euskoflix.packModelo.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ControladorVista {
 	private static ControladorVista mControladorVista;
@@ -48,8 +50,16 @@ public class ControladorVista {
 		return new String[] {"Tag","Apariciones"};
 	}
 	//Pestana Ratings
-	public String[][] datosRatings(int id){
-		return GestionDatos.getInstance().getValoracionesByPelicula(id);
+	public String[][] datosRatings(int pId){
+		HashMap<Integer, Float> ratings = MatrizValoraciones.getInstance().getValoracionesByPelicula(pId);
+		String[][] resultado = new String[ratings.size()][2];
+		CatalogoUsuarios cat = CatalogoUsuarios.getInstance();
+		int i = 0;
+		for (Map.Entry<Integer, Float> entry : ratings.entrySet()) {
+			resultado[i][0] = cat.getUsuarioPorId(entry.getKey()).getNombre();
+			resultado[i++][1] = entry.getValue().toString();
+		}
+		return resultado;
 	}
 	public String[] getCabeceraRatings() {
 		return new String[] {"NombreUsuario","Rating"};
