@@ -1,65 +1,60 @@
 package eus.ehu.euskoflix.packModelo;
 
-import org.junit.Test; 
-import org.junit.Before; 
-import org.junit.After; 
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /** 
-* ListaPeliculas Tester. 
-* 
-* @author <Authors name> 
-* @since <pre>Mar 20, 2019</pre> 
-* @version 1.0 
-*/ 
-public class ListaPeliculasTest { 
+ * ListaPeliculas Tester.
+ *
+ * @since Mar 20, 2019
+ * @version 1.0
+ */
+public class ListaPeliculasTest {
 
-@Before
-public void before() throws Exception { 
-} 
+    /**
+     *
+     * Method: addPelicula(Pelicula pPeli)
+     *
+     */
+    @Test
+    public void testAddPelicula() throws Exception {
+        Pelicula p = new Pelicula(2, "Prueba", 6);
+        ListaPeliculas lp = new ListaPeliculas();
+        lp.addPelicula(p);
+        assertSame(p, lp.getPeliculaPorId(2));
+        assertNull(lp.getPeliculaPorId(1));
+    }
 
-@After
-public void after() throws Exception { 
-} 
+    /**
+     *
+     * Method: getNumPeliculas()
+     *
+     */
+    @Test
+    public void testGetNumPeliculas() throws Exception {
+        ListaPeliculas lp = new ListaPeliculas();
+        assertEquals(0, lp.getNumPeliculas());
+        lp.addPelicula(new Pelicula(1, "Prueba1", 3));
+        lp.addPelicula(new Pelicula(3, "Prueba2", 6));
+        assertEquals(2, lp.getNumPeliculas());
+    }
 
-/** 
-* 
-* Method: addPelicula(Pelicula pPeli) 
-* 
-*/ 
-@Test
-public void testAddPelicula() throws Exception { 
-//TODO: Test goes here... 
-} 
-
-/** 
-* 
-* Method: print() 
-* 
-*/ 
-@Test
-public void testPrint() throws Exception { 
-//TODO: Test goes here... 
-} 
-
-/** 
-* 
-* Method: getNumPeliculas() 
-* 
-*/ 
-@Test
-public void testGetNumPeliculas() throws Exception { 
-//TODO: Test goes here... 
-} 
-
-/** 
-* 
-* Method: getPeliculaPorId(int pId) 
-* 
-*/ 
-@Test
-public void testGetPeliculaPorId() throws Exception { 
-//TODO: Test goes here... 
-} 
+    /**
+     *
+     * Method: getPeliculaPorId(int pId)
+     *
+     */
+    @Test
+    public void testGetPeliculaPorId() throws Exception {
+        ListaPeliculas lp = new ListaPeliculas();
+        Pelicula p1 = new Pelicula(1, "Prueba 1", 56);
+        Pelicula p2 = new Pelicula(3, "Prueba 2", 5);
+        lp.addPelicula(p1);
+        lp.addPelicula(p2);
+        assertNull(lp.getPeliculaPorId(10));
+        assertSame(p1, lp.getPeliculaPorId(1));
+        assertSame(p2, lp.getPeliculaPorId(3));
+    }
 
 
 } 

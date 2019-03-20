@@ -2,84 +2,53 @@ package eus.ehu.euskoflix.packModelo;
 
 import org.junit.Test; 
 import org.junit.Before; 
-import org.junit.After; 
+import org.junit.After;
+import static org.junit.Assert.*;
 
 /** 
-* MatrizValoraciones Tester. 
-* 
-* @author <Authors name> 
-* @since <pre>Mar 20, 2019</pre> 
-* @version 1.0 
-*/ 
+ * MatrizValoraciones Tester.
+ *
+ * @since Mar 20, 2019
+ * @version 1.0
+ */
 public class MatrizValoracionesTest { 
 
-@Before
-public void before() throws Exception { 
-} 
+    @Before
+    public void before() throws Exception {
+    }
 
-@After
-public void after() throws Exception { 
-} 
+    @After
+    public void after() throws Exception {
+    }
 
-/** 
-* 
-* Method: getInstance() 
-* 
-*/ 
-@Test
-public void testGetInstance() throws Exception { 
-//TODO: Test goes here... 
-} 
+    /**
+     *
+     * Method: getInstance()
+     *
+     */
+    @Test
+    public void testGetInstance() throws Exception {
+        assertNotNull(MatrizValoraciones.getInstance());
+    }
 
-/** 
-* 
-* Method: cargarValoraciones() 
-* 
-*/ 
-@Test
-public void testCargarValoraciones() throws Exception { 
-//TODO: Test goes here... 
-} 
+    /**
+     *
+     * Method: cargarValoraciones()
+     *
+     */
+    @Test
+    public void testCargarValoraciones() throws Exception {
 
-/** 
-* 
-* Method: simPersonas(int pPersona1, int pPersona2) 
-* 
-*/ 
-@Test
-public void testSimPersonas() throws Exception { 
-//TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: simPelicula(int pPelicula1, int pPelicula2) 
-* 
-*/ 
-@Test
-public void testSimPelicula() throws Exception { 
-//TODO: Test goes here... 
-} 
-
-/** 
-* 
-* Method: getValoracion(int pUsuario, int pPelicula) 
-* 
-*/ 
-@Test
-public void testGetValoracion() throws Exception { 
-//TODO: Test goes here... 
-} 
-
-/** 
-* 
-* Method: toString() 
-* 
-*/ 
-@Test
-public void testToString() throws Exception { 
-//TODO: Test goes here... 
-} 
-
+    /**
+     *
+     * Method: getValoracion(int pUsuario, int pPelicula)
+     *
+     */
+    @Test
+    public void testGetValoracion() throws Exception {
+    //TODO: Test goes here...
+    }
 
 } 
