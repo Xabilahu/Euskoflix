@@ -1,4 +1,4 @@
-package packControlador;
+package eus.ehu.euskoflix.packDatos;
 
 import static org.junit.Assert.*;
 
