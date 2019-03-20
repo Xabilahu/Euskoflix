@@ -63,7 +63,7 @@ public class MatrizValoraciones {
         HashMap<Integer, Float> resultado = new HashMap<>();
         //Buscamos el primer usuario que haya valorado alguna pelicula
         int usuarioActual = 0;
-        for (int i = 0; i < this.filas.length; i++) {
+        for (int i = 1; i < this.filas.length; i++) {
             if (this.filas[i] != -1) {
                 usuarioActual = i;
                 break;
@@ -71,7 +71,7 @@ public class MatrizValoraciones {
         }
         boolean ultimo = false;
         //Vamos añadiendo los usuarios y sus valoraciones
-        for (int i = 0; i < this.columnas.length; i++) {
+        for (int i = 1; i < this.columnas.length; i++) {
             if (this.columnas[i] == pId) {
                 for (int j = usuarioActual + 1; j < this.filas.length; j++) {
                     if (this.filas[j] != -1) {
@@ -79,7 +79,10 @@ public class MatrizValoraciones {
                         break;
                     }
                 }
-                if (usuarioActual != this.filas.length) {
+                if (usuarioActual == 7118) {
+                    System.out.println();
+                }
+                if (usuarioActual != this.filas.length - 1) {
                     resultado.put(usuarioActual - 1, this.valores[i]);
                 } else if (!ultimo) {
                     ultimo = true;
@@ -95,6 +98,9 @@ public class MatrizValoraciones {
                         usuarioActual = j;
                         break;
                     }
+                }
+                if (usuarioActual == this.filas.length - 1) {
+                    break;
                 }
                 i = this.filas[usuarioActual] - 1;
             }
