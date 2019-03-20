@@ -111,6 +111,7 @@ public class VentanaCargaDatos extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		this.setVisible(true);
 	}
 
 }

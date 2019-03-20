@@ -1,6 +1,8 @@
 package eus.ehu.euskoflix.packVista;
 
 import com.alee.laf.WebLookAndFeel;
+import eus.ehu.euskoflix.packControlador.ControladorVista;
+import eus.ehu.euskoflix.packControlador.GestionDatos;
 import eus.ehu.euskoflix.packControlador.PropertiesManager;
 
 import javax.imageio.ImageIO;
@@ -18,8 +20,10 @@ public class EuskoFlixLoader extends JFrame {
         this.setUndecorated(true);
         this.setLayout(new BorderLayout());
         InputStream in = EuskoFlixLoader.class.getResourceAsStream(PropertiesManager.getInstance().getPathToLogo());
+        Image mini = null;
         try {
-            this.setIconImage(ImageIO.read(this.getClass().getResourceAsStream(PropertiesManager.getInstance().getPathToMainIcon())));
+            mini = ImageIO.read(this.getClass().getResourceAsStream(PropertiesManager.getInstance().getPathToMainIcon()));
+            this.setIconImage(mini);
             Image logo = ImageIO.read(in);
             ImageIcon icon = new ImageIcon(logo);
             JLabel icono = new JLabel(icon);
@@ -46,6 +50,14 @@ public class EuskoFlixLoader extends JFrame {
             e.printStackTrace();
         }
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setVisible(true);
+        ControladorVista.getInstance().cargarDatos();
+        this.setVisible(false);
+        VentanaCargaDatos ventanaCargaDatos = new VentanaCargaDatos();
+        JOptionPane.showMessageDialog(ventanaCargaDatos,"Doble click en una película para más información",
+                "Info",
+                JOptionPane.INFORMATION_MESSAGE);
+        this.dispose();
     }
 
     private void centrar() {

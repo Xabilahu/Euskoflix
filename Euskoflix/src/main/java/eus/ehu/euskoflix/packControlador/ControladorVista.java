@@ -13,6 +13,11 @@ public class ControladorVista {
 		}
 		return mControladorVista;
 	}
+
+	public void cargarDatos(){
+		GestionDatos.getInstance().cargarDatos();
+	}
+
 	public String[][] datosUsuario(){
 		CatalogoUsuarios users = CatalogoUsuarios.getInstance();
 		int size = users.getNumUsuarios();
