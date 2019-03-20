@@ -67,4 +67,8 @@ public class ControladorVista {
 		return new String[] {"ID","Titulo"};
 	}
 
+	public Pelicula getPelicula(int pId) {
+		return Cartelera.getInstance().getPeliculaPorIdSinMapeo(pId);
+	}
+
 }

@@ -1,7 +1,6 @@
 package eus.ehu.euskoflix.packVista;
 
 import eus.ehu.euskoflix.packControlador.ControladorVista;
-import eus.ehu.euskoflix.packModelo.Cartelera;
 import eus.ehu.euskoflix.packModelo.Pelicula;
 
 import javax.swing.*;
@@ -39,7 +38,7 @@ public class InformacionExtraView extends javax.swing.JDialog {
 
     public InformacionExtraView(java.awt.Frame parent, boolean modal, int pPelicula) {
         super(parent, modal);
-        this.pelicula = Cartelera.getInstance().getPeliculaPorIdSinMapeo(pPelicula);
+        this.pelicula = ControladorVista.getInstance().getPelicula(pPelicula);
         initComponents();
         fillComponents();
     }
