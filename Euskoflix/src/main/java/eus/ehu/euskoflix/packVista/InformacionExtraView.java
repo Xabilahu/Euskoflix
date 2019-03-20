@@ -34,7 +34,7 @@ public class InformacionExtraView extends javax.swing.JDialog {
     private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblTituloContent;
-    private javax.swing.JScrollPane scrollSipnosis;
+    private javax.swing.JScrollPane scrollSinopsis;
     private javax.swing.JTextArea txtSinopsis;
 
     public InformacionExtraView(java.awt.Frame parent, boolean modal, int pPelicula) {
@@ -70,7 +70,7 @@ public class InformacionExtraView extends javax.swing.JDialog {
         lblDirectorContent = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         lblImagen = new javax.swing.JLabel();
-        scrollSipnosis = new javax.swing.JScrollPane();
+        scrollSinopsis = new javax.swing.JScrollPane();
         txtSinopsis = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -149,9 +149,10 @@ public class InformacionExtraView extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
         jPanel2.add(jPanel7, gridBagConstraints);
 
-        scrollSipnosis.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sinopsis", 0, 3, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
-        scrollSipnosis.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollSinopsis.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sinopsis", 0, 3, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
+        scrollSinopsis.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        txtSinopsis.setWrapStyleWord(true);
         txtSinopsis.setEditable(false);
         txtSinopsis.setColumns(20);
         txtSinopsis.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
@@ -159,7 +160,7 @@ public class InformacionExtraView extends javax.swing.JDialog {
         txtSinopsis.setRows(5);
         txtSinopsis.setFocusable(false);
         txtSinopsis.setRequestFocusEnabled(false);
-        scrollSipnosis.setViewportView(txtSinopsis);
+        scrollSinopsis.setViewportView(txtSinopsis);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -168,7 +169,7 @@ public class InformacionExtraView extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 0.6;
-        jPanel2.add(scrollSipnosis, gridBagConstraints);
+        jPanel2.add(scrollSinopsis, gridBagConstraints);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.NORTH);
 
