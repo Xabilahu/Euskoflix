@@ -1,4 +1,4 @@
-package eus.ehu.euskoflix.packControlador;
+package eus.ehu.euskoflix.packDatos;
 
 import org.junit.After;
 import org.junit.Before;

@@ -28,9 +28,9 @@ public class BaseDatos {
     //pre: -
     //post: si la base da datos no existe, se crea una nueva
     //desc: metodo para inicializar la base de datos del sistema
-    public void iniciarBD() {
+    public void iniciarBD(boolean pTest) {
         if (!comprobarExisteBD())
-            crearBD();
+            crearBD(pTest);
         else {
 			/*try {
 				Thread.sleep(6000);
@@ -46,10 +46,10 @@ public class BaseDatos {
     //pre: -
     //post: si existia una base de datos se elimina y se crea una nueva
     //desc: metodo para eliminar la base de datos existente y crear una nueva
-    public void reiniciarBD() {
+    public void reiniciarBD(boolean pTest) {
         File file = this.getBDFile();
         file.delete();
-        crearBD();
+        crearBD(pTest);
     }
 
     //pre: -
@@ -63,7 +63,7 @@ public class BaseDatos {
     //pre: -
     //post: se introducen las tablas en la base de datos
     //desc: metodo para crear la base de datos con sus tablas y claves
-    private void crearBD() {
+    private void crearBD(boolean pTest) {
         File data_dir = new File(this.getBDFile().getParent());
         data_dir.mkdir();
         try {
@@ -121,7 +121,7 @@ public class BaseDatos {
             s.executeUpdate(instruccion);
             s.close();
             c.close();
-            anadirDatos();
+            anadirDatos(pTest);
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(-1);
@@ -137,23 +137,25 @@ public class BaseDatos {
         return DriverManager.getConnection("jdbc:sqlite:" + this.getBDFile().getPath());
     }
 
-    private void anadirDatos() {
-        anadirUsuarios();
-        anadirPeliculas();
-        anadirValoraciones();
-        anadirEtiquetas();
+    private void anadirDatos(boolean pTest) {
+        anadirUsuarios(pTest);
+        anadirPeliculas(pTest);
+        anadirValoraciones(pTest);
+        anadirEtiquetas(pTest);
     }
 
-    private void anadirPeliculas() {
-        addPeliculaYGenero();
-        addIds();
+    private void anadirPeliculas(boolean pTest) {
+        addPeliculaYGenero(pTest);
+        addIds(pTest);
     }
 
-    private void anadirEtiquetas() {
+    private void anadirEtiquetas(boolean pTest) {
         try {
             Connection c = this.getConexion();
             c.setAutoCommit(false);
-            InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("tags"));
+            String fileName = "tags";
+            if (pTest) fileName = "testTags";
+            InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(fileName));
             try {
                 BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
                 in.readLine(); // skip headers
@@ -178,11 +180,13 @@ public class BaseDatos {
         }
     }
 
-    private void anadirValoraciones() {
+    private void anadirValoraciones(boolean pTest) {
         try {
             Connection c = this.getConexion();
             c.setAutoCommit(false);
-            InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("ratings"));
+            String fileName = "ratings";
+            if (pTest) fileName = "testRatings";
+            InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(fileName));
             try {
                 BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
                 in.readLine(); // skip headers
@@ -207,11 +211,13 @@ public class BaseDatos {
         }
     }
 
-    private void anadirUsuarios() {
+    private void anadirUsuarios(boolean pTest) {
         try {
             Connection c = this.getConexion();
             c.setAutoCommit(false);
-            InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("nombres"));
+            String fileName = "nombres";
+            if (pTest) fileName = "testNombres";
+            InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(fileName));
             try {
                 BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
                 PreparedStatement pst = c.prepareStatement("INSERT INTO usuario(contrasena,nombre,apellido) VALUES(?,?,?)");
@@ -237,11 +243,13 @@ public class BaseDatos {
         }
     }
 
-    private void addIds() {
+    private void addIds(boolean pTest) {
         try {
             Connection c = this.getConexion();
             c.setAutoCommit(false);
-            InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("links"));
+            String fileName = "links";
+            if (pTest) fileName = "testLinks";
+            InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(fileName));
             BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             in.readLine(); // skip headers
             PreparedStatement pst = c.prepareStatement("UPDATE pelicula SET idTMDB=? WHERE id=?");
@@ -265,12 +273,14 @@ public class BaseDatos {
 
     }
 
-    private void addPeliculaYGenero() {
+    private void addPeliculaYGenero(boolean pTest) {
         try {
             HashMap<String, Integer> genres = new HashMap<String, Integer>();
             Connection c = this.getConexion();
             c.setAutoCommit(false);
-            InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("movies"));
+            String fileName = "movies";
+            if (pTest) fileName = "testMovies";
+            InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(fileName));
             BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             in.readLine(); // skip headers
             PreparedStatement peliculasPst = c.prepareStatement("INSERT INTO pelicula VALUES(?,0,?)");
@@ -416,16 +426,21 @@ public class BaseDatos {
     /**
      * This method is only used in jUnit
      */
-    public ResultSet getValoracionesByPelicula(int pId) {
+    public ResultSet getValoracionesByPelicula(int pId) throws SQLException{
         ResultSet rst = null;
-        try {
-            PreparedStatement pst = this.getConexion().prepareStatement("SELECT id_usuario, valoracion FROM valoracion WHERE id_pelicula = ? ORDER BY id_usuario ASC");
-            pst.setInt(1, pId);
-            rst = pst.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        PreparedStatement pst = this.getConexion().prepareStatement("SELECT id_usuario, valoracion FROM valoracion WHERE id_pelicula = ? ORDER BY id_usuario ASC");
+        pst.setInt(1, pId);
+        rst = pst.executeQuery();
         return rst;
+    }
+
+    /**
+     * This method is only used in jUnit
+     */
+    public void eliminarBaseDatos() {
+        File f = new File(new File(BaseDatos.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent()
+                + File.separator + "data/basedatos.db");
+        f.delete();
     }
 
 }

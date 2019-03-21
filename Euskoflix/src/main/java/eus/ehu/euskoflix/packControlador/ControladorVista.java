@@ -19,8 +19,8 @@ public class ControladorVista {
         return mControladorVista;
     }
 
-    public void cargarDatos() {
-        GestionDatos.getInstance().cargarDatos();
+    public void cargarDatos(boolean pTest) {
+        GestionDatos.getInstance().cargarDatos(pTest);
     }
 
     public String[][] datosUsuario() {

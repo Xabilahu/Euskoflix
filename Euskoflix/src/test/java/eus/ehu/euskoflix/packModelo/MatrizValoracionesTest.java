@@ -3,10 +3,13 @@ package eus.ehu.euskoflix.packModelo;
 import eus.ehu.euskoflix.packDatos.BaseDatos;
 import eus.ehu.euskoflix.packDatos.GestionDatos;
 import org.junit.After;
-import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -18,14 +21,16 @@ import static org.junit.Assert.*;
  * @version 1.0
  * @since Mar 20, 2019
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MatrizValoracionesTest {
 
-    @Before
-    public void before() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
+        BaseDatos.getBaseDatos().reiniciarBD(false);
     }
 
     @After
-    public void after() throws Exception {
+    public void tearDown() throws Exception {
     }
 
     /**
@@ -41,10 +46,11 @@ public class MatrizValoracionesTest {
      */
     @Test
     public void testCargarValoraciones() throws Exception {
+        BaseDatos.getBaseDatos().eliminarBaseDatos();
         assertNull(MatrizValoraciones.getInstance().getColumnas());
         assertNull(MatrizValoraciones.getInstance().getFilas());
         assertNull(MatrizValoraciones.getInstance().getValoraciones());
-        GestionDatos.getInstance().cargarDatos();//Incluye una llamada al metodo MatrizValoraciones.getInstance().cargarValoraciones()
+        GestionDatos.getInstance().cargarDatos(false);//Incluye una llamada al metodo MatrizValoraciones.getInstance().cargarValoraciones()
         assertEquals(MatrizValoraciones.getInstance().getFilas().length, CatalogoUsuarios.getInstance().getNumUsuarios());
         assertEquals(MatrizValoraciones.getInstance().getColumnas().length, MatrizValoraciones.getInstance().getValoraciones().length);
         assertEquals(MatrizValoraciones.getInstance().getColumnas().length, BaseDatos.getBaseDatos().getNumValoraciones() + 1);
@@ -55,13 +61,17 @@ public class MatrizValoracionesTest {
      */
     @Test
     public void testGetValoracionesByPelicula() throws Exception{
-        GestionDatos.getInstance().cargarDatos();
+        GestionDatos.getInstance().cargarDatos(false);
         Iterator<Map.Entry<Integer,Float>> iterator = MatrizValoraciones.getInstance().getValoracionesByPelicula(1).entrySet().iterator();
-        ResultSet rst = BaseDatos.getBaseDatos().getValoracionesByPelicula(1);
-        while(rst.next()) {
-            Map.Entry<Integer,Float> valoracion = iterator.next();
-            assertEquals((Integer)rst.getInt(1), valoracion.getKey());
-            assertEquals((Float)rst.getFloat(2), valoracion.getValue());
+        try {
+            ResultSet rst = BaseDatos.getBaseDatos().getValoracionesByPelicula(1);
+            while(rst.next()) {
+                Map.Entry<Integer,Float> valoracion = iterator.next();
+                assertEquals((Integer)rst.getInt(1), valoracion.getKey());
+                assertEquals((Float)rst.getFloat(2), valoracion.getValue());
+            }
+        } catch (SQLException e) {
+            fail();
         }
 
     }

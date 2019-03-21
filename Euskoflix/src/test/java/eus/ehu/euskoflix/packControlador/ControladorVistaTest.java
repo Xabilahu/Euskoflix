@@ -26,7 +26,7 @@ public class ControladorVistaTest {
      */
     @Test
     public void testGetInstance() throws Exception {
-//TODO: Test goes here... 
+        //TODO: Test goes here...
     }
 
     /**
@@ -34,7 +34,7 @@ public class ControladorVistaTest {
      */
     @Test
     public void testDatosUsuario() throws Exception {
-//TODO: Test goes here... 
+        //TODO: Test goes here...
     }
 
     /**
@@ -42,7 +42,7 @@ public class ControladorVistaTest {
      */
     @Test
     public void testGetCabeceraUsers() throws Exception {
-//TODO: Test goes here... 
+        //TODO: Test goes here...
     }
 
     /**
@@ -50,7 +50,7 @@ public class ControladorVistaTest {
      */
     @Test
     public void testDatosTags() throws Exception {
-//TODO: Test goes here... 
+        //TODO: Test goes here...
     }
 
     /**
@@ -58,7 +58,7 @@ public class ControladorVistaTest {
      */
     @Test
     public void testGetCabeceraTags() throws Exception {
-//TODO: Test goes here... 
+        //TODO: Test goes here...
     }
 
     /**
@@ -66,7 +66,7 @@ public class ControladorVistaTest {
      */
     @Test
     public void testDatosRatings() throws Exception {
-//TODO: Test goes here... 
+        //TODO: Test goes here...
     }
 
     /**
@@ -74,7 +74,7 @@ public class ControladorVistaTest {
      */
     @Test
     public void testGetCabeceraRatings() throws Exception {
-//TODO: Test goes here... 
+        //TODO: Test goes here...
     }
 
     /**
@@ -82,7 +82,7 @@ public class ControladorVistaTest {
      */
     @Test
     public void testDatosPelis() throws Exception {
-//TODO: Test goes here... 
+        //TODO: Test goes here...
     }
 
     /**
@@ -90,7 +90,7 @@ public class ControladorVistaTest {
      */
     @Test
     public void testGetCabeceraFilms() throws Exception {
-//TODO: Test goes here... 
+        //TODO: Test goes here...
     }
 
 

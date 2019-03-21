@@ -31,8 +31,8 @@ public class GestionDatos {
         return mGestionDatos;
     }
 
-    public void cargarDatos() {
-        BaseDatos.getBaseDatos().iniciarBD();
+    public void cargarDatos(boolean pTest) {
+        BaseDatos.getBaseDatos().iniciarBD(pTest);
         this.cargarPeliculas();
         this.cargarUsuarios();
         MatrizValoraciones.getInstance().cargarValoraciones();

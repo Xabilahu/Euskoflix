@@ -50,7 +50,7 @@ public class EuskoFlixLoader extends JFrame {
         }
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
-        ControladorVista.getInstance().cargarDatos();
+        ControladorVista.getInstance().cargarDatos(false);
         this.setVisible(false);
         VentanaCargaDatos ventanaCargaDatos = new VentanaCargaDatos();
         JOptionPane.showMessageDialog(ventanaCargaDatos, "Doble click en una película para más información",
