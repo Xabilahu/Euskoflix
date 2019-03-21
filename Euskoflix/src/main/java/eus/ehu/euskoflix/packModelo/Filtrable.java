@@ -12,10 +12,11 @@ public abstract class Filtrable {
 
     public abstract ListaPeliculas recomendar(int pId, int pNum);
 
-    public void addSimilitud(Similitud pSimilitud){
+    public void addSimilitud(Similitud pSimilitud) {
 
     }
-    public void addSimilitudSimetrica(Similitud pSimilitud){
+
+    public void addSimilitudSimetrica(Similitud pSimilitud) {
 
     }
 

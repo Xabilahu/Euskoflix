@@ -1,20 +1,19 @@
 package eus.ehu.euskoflix.packModelo;
 
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
-/** 
+/**
  * ListaPeliculas Tester.
  *
- * @since Mar 20, 2019
  * @version 1.0
+ * @since Mar 20, 2019
  */
 public class ListaPeliculasTest {
 
     /**
-     *
      * Method: addPelicula(Pelicula pPeli)
-     *
      */
     @Test
     public void testAddPelicula() throws Exception {
@@ -26,9 +25,7 @@ public class ListaPeliculasTest {
     }
 
     /**
-     *
      * Method: getNumPeliculas()
-     *
      */
     @Test
     public void testGetNumPeliculas() throws Exception {
@@ -40,9 +37,7 @@ public class ListaPeliculasTest {
     }
 
     /**
-     *
      * Method: getPeliculaPorId(int pId)
-     *
      */
     @Test
     public void testGetPeliculaPorId() throws Exception {

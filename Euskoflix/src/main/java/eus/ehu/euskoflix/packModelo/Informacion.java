@@ -1,7 +1,7 @@
 package eus.ehu.euskoflix.packModelo;
 
-import eus.ehu.euskoflix.packControlador.GestionDatos;
-import eus.ehu.euskoflix.packControlador.PropertiesManager;
+import eus.ehu.euskoflix.packDatos.GestionDatos;
+import eus.ehu.euskoflix.packDatos.PropertiesManager;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -37,11 +37,13 @@ public class Informacion {
         str.append("Director: " + director + "\n");
         return str.toString();
     }
+
     public String getSinopsis() {
-    	return this.sinopsis;
+        return this.sinopsis;
     }
+
     public Image getPoster() {
-    	return this.poster;
+        return this.poster;
     }
 
     public String getDirector() {

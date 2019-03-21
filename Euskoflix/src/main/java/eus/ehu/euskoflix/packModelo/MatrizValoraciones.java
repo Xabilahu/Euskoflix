@@ -1,8 +1,9 @@
 package eus.ehu.euskoflix.packModelo;
 
-import eus.ehu.euskoflix.packControlador.GestionDatos;
+import eus.ehu.euskoflix.packDatos.GestionDatos;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 
 public class MatrizValoraciones {
 
@@ -13,18 +14,18 @@ public class MatrizValoraciones {
     private int[] columnas;
 
 
+    private MatrizValoraciones() {
+    }
+
     public static MatrizValoraciones getInstance() {
-        if (ourInstance== null) {
+        if (ourInstance == null) {
             ourInstance = new MatrizValoraciones();
         }
         return ourInstance;
 
     }
 
-    private MatrizValoraciones() {
-    }
-
-    public void cargarValoraciones(){
+    public void cargarValoraciones() {
         valores = GestionDatos.getInstance().getValoraciones();
         filas = GestionDatos.getInstance().getValoracionesUsuarios();
         columnas = GestionDatos.getInstance().getValoracionesPeliculas();
@@ -56,6 +57,73 @@ public class MatrizValoraciones {
             }
         }
         return valoracion;
+    }
+
+    public LinkedHashMap<Integer, Float> getValoracionesByPelicula(int pId) {
+        LinkedHashMap<Integer, Float> resultado = new LinkedHashMap<>();
+        //Buscamos el primer usuario que haya valorado alguna pelicula
+        int usuarioActual = 0;
+        for (int i = 1; i < this.filas.length; i++) {
+            if (this.filas[i] != -1) {
+                usuarioActual = i;
+                break;
+            }
+        }
+        boolean ultimo = false;
+        //Vamos añadiendo los usuarios y sus valoraciones
+        for (int i = 1; i < this.columnas.length; i++) {
+            if (this.columnas[i] == pId) {
+                for (int j = usuarioActual + 1; j < this.filas.length; j++) {
+                    if (this.filas[j] != -1) {
+                        usuarioActual = j;
+                        break;
+                    }
+                }
+                if (usuarioActual != this.filas.length - 1) {
+                    resultado.put(usuarioActual - 1, this.valores[i]);
+                } else if (!ultimo) {
+                    ultimo = true;
+                    resultado.put(usuarioActual - 1, this.valores[i]);
+                } else {
+                    resultado.put(usuarioActual, this.valores[i]);
+                    break;
+                }
+                i = this.filas[usuarioActual] - 1;
+            } else if (this.columnas[i] > pId) {
+                for (int j = usuarioActual + 1; j < this.filas.length; j++) {
+                    if (this.filas[j] != -1) {
+                        usuarioActual = j;
+                        break;
+                    }
+                }
+                if (usuarioActual == this.filas.length - 1) {
+                    break;
+                }
+                i = this.filas[usuarioActual] - 1;
+            }
+        }
+        return resultado;
+    }
+
+    /**
+     * This method is only used in jUnit
+     */
+    public float[] getValoraciones() {
+        return this.valores;
+    }
+
+    /**
+     * This method is only used in jUnit
+     */
+    public int[] getColumnas() {
+        return this.columnas;
+    }
+
+    /**
+     * This method is only used in jUnit
+     */
+    public int[] getFilas() {
+        return this.filas;
     }
 
     @Override
