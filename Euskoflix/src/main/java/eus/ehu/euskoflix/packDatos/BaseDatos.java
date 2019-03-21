@@ -40,6 +40,9 @@ public class BaseDatos {
         }
     }
 
+    /**
+     * This method is only used in jUnit
+     */
     //pre: -
     //post: si existia una base de datos se elimina y se crea una nueva
     //desc: metodo para eliminar la base de datos existente y crear una nueva
@@ -409,4 +412,20 @@ public class BaseDatos {
         }
         return rst;
     }
+
+    /**
+     * This method is only used in jUnit
+     */
+    public ResultSet getValoracionesByPelicula(int pId) {
+        ResultSet rst = null;
+        try {
+            PreparedStatement pst = this.getConexion().prepareStatement("SELECT id_usuario, valoracion FROM valoracion WHERE id_pelicula = ? ORDER BY id_usuario ASC");
+            pst.setInt(1, pId);
+            rst = pst.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rst;
+    }
+
 }

@@ -3,7 +3,7 @@ package eus.ehu.euskoflix.packModelo;
 import eus.ehu.euskoflix.packDatos.GestionDatos;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class MatrizValoraciones {
 
@@ -59,8 +59,8 @@ public class MatrizValoraciones {
         return valoracion;
     }
 
-    public HashMap<Integer, Float> getValoracionesByPelicula(int pId) {
-        HashMap<Integer, Float> resultado = new HashMap<>();
+    public LinkedHashMap<Integer, Float> getValoracionesByPelicula(int pId) {
+        LinkedHashMap<Integer, Float> resultado = new LinkedHashMap<>();
         //Buscamos el primer usuario que haya valorado alguna pelicula
         int usuarioActual = 0;
         for (int i = 1; i < this.filas.length; i++) {
@@ -103,6 +103,27 @@ public class MatrizValoraciones {
             }
         }
         return resultado;
+    }
+
+    /**
+     * This method is only used in jUnit
+     */
+    public float[] getValoraciones() {
+        return this.valores;
+    }
+
+    /**
+     * This method is only used in jUnit
+     */
+    public int[] getColumnas() {
+        return this.columnas;
+    }
+
+    /**
+     * This method is only used in jUnit
+     */
+    public int[] getFilas() {
+        return this.filas;
     }
 
     @Override

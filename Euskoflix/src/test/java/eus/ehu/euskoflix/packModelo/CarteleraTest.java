@@ -20,7 +20,7 @@ public class CarteleraTest {
 
     @After
     public void tearDown() throws Exception {
-        //Cartelera.getInstance().reset();
+        Cartelera.getInstance().reset();
     }
 
     /**

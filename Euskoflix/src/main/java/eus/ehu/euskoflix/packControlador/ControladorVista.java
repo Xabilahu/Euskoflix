@@ -3,7 +3,7 @@ package eus.ehu.euskoflix.packControlador;
 import eus.ehu.euskoflix.packDatos.GestionDatos;
 import eus.ehu.euskoflix.packModelo.*;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ControladorVista {
@@ -55,7 +55,7 @@ public class ControladorVista {
 
     //Pestana Ratings
     public String[][] datosRatings(int pId) {
-        HashMap<Integer, Float> ratings = MatrizValoraciones.getInstance().getValoracionesByPelicula(pId);
+        LinkedHashMap<Integer, Float> ratings = MatrizValoraciones.getInstance().getValoracionesByPelicula(pId);
         String[][] resultado = new String[ratings.size()][2];
         CatalogoUsuarios cat = CatalogoUsuarios.getInstance();
         int i = 0;
