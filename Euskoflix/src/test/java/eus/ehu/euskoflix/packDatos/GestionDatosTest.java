@@ -1,143 +1,92 @@
 package eus.ehu.euskoflix.packDatos;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
 import org.junit.Test;
+import org.junit.BeforeClass;
 
-/**
- * GestionDatos Tester.
- *
- * @author <Authors name>
- * @version 1.0
- * @since <pre>Mar 20, 2019</pre>
- */
-public class GestionDatosTest {
+import java.sql.ResultSet;
 
-    @Before
-    public void before() throws Exception {
+import static org.junit.Assert.*;
+
+/** 
+* GestionDatos Tester. 
+*
+* @since Mar 21, 2019
+* @version 1.0 
+*/ 
+public class GestionDatosTest { 
+
+    @BeforeClass
+    public static void before() throws Exception {
+        BaseDatos.getBaseDatos().eliminarBaseDatos();
+        GestionDatos.getInstance().cargarDatos(true);
     }
 
-    @After
-    public void after() throws Exception {
+    @AfterClass
+    public static void tearDown() throws Exception {
+        BaseDatos.getBaseDatos().eliminarBaseDatos();
     }
 
     /**
-     * Method: getInstance()
-     */
+    *
+    * Method: getInstance()
+    *
+    */
     @Test
     public void testGetInstance() throws Exception {
-//TODO: Test goes here... 
+        assertNotNull(GestionDatos.getInstance());
     }
 
     /**
-     * Method: cargarDatos()
-     */
-    @Test
-    public void testCargarDatos() throws Exception {
-//TODO: Test goes here... 
-    }
-
-    /**
-     * Method: getTagsByPelicula(int pId)
-     */
-    @Test
-    public void testGetTagsByPelicula() throws Exception {
-//TODO: Test goes here... 
-    }
-
-    /**
-     * Method: getValoracionesByPelicula(int pId)
-     */
-    @Test
-    public void testGetValoracionesByPelicula() throws Exception {
-//TODO: Test goes here... 
-    }
-
-    /**
-     * Method: getValoraciones()
-     */
+    *
+    * Method: getValoraciones()
+    *
+    */
     @Test
     public void testGetValoraciones() throws Exception {
-//TODO: Test goes here... 
+        float[] valoraciones = GestionDatos.getInstance().getValoraciones();
+        assertEquals(valoraciones.length, BaseDatos.getBaseDatos().getNumValoraciones() + 1);
+        ResultSet expected = BaseDatos.getBaseDatos().getValoraciones();
+        int i = 1;
+        while(expected.next()) {
+            assertEquals(expected.getFloat(3), valoraciones[i++], 0.001);
+        }
     }
 
     /**
-     * Method: getValoracionesUsuarios()
-     */
+    *
+    * Method: getValoracionesUsuarios()
+    *
+    */
     @Test
     public void testGetValoracionesUsuarios() throws Exception {
-//TODO: Test goes here... 
+        int[] usuarios = GestionDatos.getInstance().getValoracionesUsuarios();
+        assertEquals(usuarios.length, BaseDatos.getBaseDatos().getNumUsuariosQueValoran() + 1);
+        ResultSet expected = BaseDatos.getBaseDatos().getNumValoracionesUsuario();
+        expected.next();
+        for(int i = 1; i < usuarios.length; i++) {
+            if (i==1) assertEquals(usuarios[i], 1);
+            else {
+                assertEquals(usuarios[i-1] + expected.getInt("suma"), usuarios[i]);
+                expected.next();
+            }
+        }
     }
 
     /**
-     * Method: getValoracionesPeliculas()
-     */
+    *
+    * Method: getValoracionesPeliculas()
+    *
+    */
     @Test
     public void testGetValoracionesPeliculas() throws Exception {
-//TODO: Test goes here... 
-    }
-
-    /**
-     * Method: getInfoExtra(Pelicula pPelicula)
-     */
-    @Test
-    public void testGetInfoExtra() throws Exception {
-//TODO: Test goes here... 
-    }
-
-
-    /**
-     * Method: cargarPeliculas()
-     */
-    @Test
-    public void testCargarPeliculas() throws Exception {
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = GestionDatos.getClass().getMethod("cargarPeliculas"); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/
-    }
-
-    /**
-     * Method: cargarUsuarios()
-     */
-    @Test
-    public void testCargarUsuarios() throws Exception {
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = GestionDatos.getClass().getMethod("cargarUsuarios"); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/
-    }
-
-    /**
-     * Method: getStrings(ResultSet rst, String[][] resultado)
-     */
-    @Test
-    public void testGetStrings() throws Exception {
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = GestionDatos.getClass().getMethod("getStrings", ResultSet.class, String[][].class); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/
+        int[] peliculas = GestionDatos.getInstance().getValoracionesPeliculas();
+        assertEquals(peliculas.length, BaseDatos.getBaseDatos().getNumPeliculasValoradas() + 1);
+        ResultSet expected = BaseDatos.getBaseDatos().getValoraciones();
+        int i = 1;
+        while(expected.next()) {
+            assertEquals(expected.getInt("id_pelicula"), peliculas[i++]);
+        }
     }
 
 } 
