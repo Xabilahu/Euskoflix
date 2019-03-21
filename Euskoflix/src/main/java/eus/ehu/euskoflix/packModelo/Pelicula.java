@@ -84,4 +84,11 @@ public class Pelicula {
         }
         return resultado;
     }
+
+    /**
+     * This method is only used in jUnit
+     */
+    public LinkedList<Tag> getLista() {
+        return lista;
+    }
 }

@@ -1,24 +1,27 @@
 package eus.ehu.euskoflix.packControlador;
 
-import org.junit.After;
-import org.junit.Before;
+import eus.ehu.euskoflix.packDatos.BaseDatos;
+import eus.ehu.euskoflix.packDatos.GestionDatos;
+import eus.ehu.euskoflix.packModelo.*;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.Map;
+
+import static org.junit.Assert.*;
 
 /**
  * ControladorVista Tester.
  *
- * @author <Authors name>
  * @version 1.0
- * @since <pre>Mar 20, 2019</pre>
+ * @since Mar 20, 2019
  */
 public class ControladorVistaTest {
 
-    @Before
-    public void before() throws Exception {
-    }
-
-    @After
-    public void after() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
+        BaseDatos.getBaseDatos().eliminarBaseDatos();
+        GestionDatos.getInstance().cargarDatos(false);
     }
 
     /**
@@ -26,7 +29,7 @@ public class ControladorVistaTest {
      */
     @Test
     public void testGetInstance() throws Exception {
-        //TODO: Test goes here...
+        assertNotNull(ControladorVista.getInstance());
     }
 
     /**
@@ -34,31 +37,15 @@ public class ControladorVistaTest {
      */
     @Test
     public void testDatosUsuario() throws Exception {
-        //TODO: Test goes here...
-    }
+        String[][] resultado = ControladorVista.getInstance().datosUsuario();
+        for (int i = 1; i < CatalogoUsuarios.getInstance().getNumUsuarios(); i++) {
+            Usuario u = CatalogoUsuarios.getInstance().getUsuarioPorId(i);
+            assertEquals(u.getId(), Integer.parseInt(resultado[i-1][0]));
+            assertEquals(u.getNombre(), resultado[i-1][1]);
+            assertEquals(u.getApellido(), resultado[i-1][2]);
+            assertEquals(u.getPassword(), resultado[i-1][3]);
+        }
 
-    /**
-     * Method: getCabeceraUsers()
-     */
-    @Test
-    public void testGetCabeceraUsers() throws Exception {
-        //TODO: Test goes here...
-    }
-
-    /**
-     * Method: datosTags(int id)
-     */
-    @Test
-    public void testDatosTags() throws Exception {
-        //TODO: Test goes here...
-    }
-
-    /**
-     * Method: getCabeceraTags()
-     */
-    @Test
-    public void testGetCabeceraTags() throws Exception {
-        //TODO: Test goes here...
     }
 
     /**
@@ -66,15 +53,12 @@ public class ControladorVistaTest {
      */
     @Test
     public void testDatosRatings() throws Exception {
-        //TODO: Test goes here...
-    }
-
-    /**
-     * Method: getCabeceraRatings()
-     */
-    @Test
-    public void testGetCabeceraRatings() throws Exception {
-        //TODO: Test goes here...
+        String[][] resultado = ControladorVista.getInstance().datosRatings(1);
+        int i = 0;
+        for(Map.Entry<Integer,Float> entry : MatrizValoraciones.getInstance().getValoracionesByPelicula(1).entrySet()) {
+            assertEquals(resultado[i][0],CatalogoUsuarios.getInstance().getUsuarioPorId(entry.getKey()).getNombre());
+            assertEquals(resultado[i++][1],entry.getValue().toString());
+        }
     }
 
     /**
@@ -82,15 +66,12 @@ public class ControladorVistaTest {
      */
     @Test
     public void testDatosPelis() throws Exception {
-        //TODO: Test goes here...
-    }
-
-    /**
-     * Method: getCabeceraFilms()
-     */
-    @Test
-    public void testGetCabeceraFilms() throws Exception {
-        //TODO: Test goes here...
+        String[][] resultado = ControladorVista.getInstance().datosPelis();
+        for (int i = 0; i < Cartelera.getInstance().getNumPeliculas(); i++) {
+            Pelicula u = Cartelera.getInstance().getPeliculaPorId(i);
+            assertEquals(u.getId(), Integer.parseInt(resultado[i][0]));
+            assertEquals(u.getTitulo(), resultado[i][1]);
+        }
     }
 
 

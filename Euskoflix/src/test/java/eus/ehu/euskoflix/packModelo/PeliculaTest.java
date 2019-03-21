@@ -1,115 +1,36 @@
 package eus.ehu.euskoflix.packModelo;
 
-import org.junit.After;
-import org.junit.Before;
+import eus.ehu.euskoflix.packDatos.BaseDatos;
+import eus.ehu.euskoflix.packDatos.GestionDatos;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
+
+import java.util.LinkedList;
 
 /**
  * Pelicula Tester.
  *
- * @author <Authors name>
  * @version 1.0
- * @since <pre>Mar 20, 2019</pre>
+ * @since Mar 20, 2019
  */
 public class PeliculaTest {
 
-    @Before
-    public void before() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
+        BaseDatos.getBaseDatos().eliminarBaseDatos();
+        GestionDatos.getInstance().cargarDatos(false);
     }
 
-    @After
-    public void after() throws Exception {
-    }
-
-    /**
-     * Method: addTag(Tag pTag)
-     */
     @Test
-    public void testAddTag() throws Exception {
-//TODO: Test goes here... 
-    }
-
-    /**
-     * Method: print()
-     */
-    @Test
-    public void testPrint() throws Exception {
-//TODO: Test goes here... 
-    }
-
-    /**
-     * Method: getId()
-     */
-    @Test
-    public void testGetId() throws Exception {
-//TODO: Test goes here... 
-    }
-
-    /**
-     * Method: getTitulo()
-     */
-    @Test
-    public void testGetTitulo() throws Exception {
-//TODO: Test goes here... 
-    }
-
-    /**
-     * Method: getTmdbId()
-     */
-    @Test
-    public void testGetTmdbId() throws Exception {
-//TODO: Test goes here... 
-    }
-
-    /**
-     * Method: setTmdbId(int tmdbId)
-     */
-    @Test
-    public void testSetTmdbId() throws Exception {
-//TODO: Test goes here... 
-    }
-
-    /**
-     * Method: getDirector()
-     */
-    @Test
-    public void testGetDirector() throws Exception {
-//TODO: Test goes here... 
-    }
-
-    /**
-     * Method: getSinopsis()
-     */
-    @Test
-    public void testGetSinopsis() throws Exception {
-//TODO: Test goes here... 
-    }
-
-    /**
-     * Method: getPoster()
-     */
-    @Test
-    public void testGetPoster() throws Exception {
-//TODO: Test goes here... 
-    }
-
-
-    /**
-     * Method: fillInfoExtra()
-     */
-    @Test
-    public void testFillInfoExtra() throws Exception {
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = Pelicula.getClass().getMethod("fillInfoExtra"); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/
+    public void testTagsToStringArray() throws Exception {
+        LinkedList<Tag> expected = Cartelera.getInstance().getPeliculaPorId(1).getLista();
+        String[][] resultado = Cartelera.getInstance().getPeliculaPorId(1).tagsToStringArray();
+        int i = 0;
+        for(Tag t : expected) {
+            assertEquals(t.getNombre(), resultado[i][0]);
+            assertEquals(String.valueOf(t.getCantidad()), resultado[i][1]);
+        }
     }
 
 } 
