@@ -39,4 +39,28 @@ public class CatalogoUsuarios {
         return this.lista.size();
     }
 
+    public void cargarMediasDesviacionesUsuarios() {
+        boolean primero = true;
+        for (Usuario u : this.lista) {
+            if (!primero) {
+                MatrizValoraciones.getInstance().cargarValoracionesNormalizadas(u);
+            }else{
+                primero = false;
+            }
+
+        }
+    }
+
+    public void print() {
+        boolean primero = true;
+        for (Usuario u : this.lista
+             ) {
+            if (!primero) {
+                System.out.println("Usuario : media=" + u.getMedia() + ", desviacion= " + u.getDesviacionTipica());
+            }else{
+                primero = false;
+            }
+        }
+        System.out.println("\t" + MatrizValoraciones.getInstance().simPersonas(this.lista.get(1),this.lista.get(2)).getSim());
+    }
 }

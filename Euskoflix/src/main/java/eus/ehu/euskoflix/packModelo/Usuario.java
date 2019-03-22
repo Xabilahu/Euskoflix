@@ -54,12 +54,6 @@ public class Usuario extends Normalizable {
         return password;
     }
 
-    public float getValoracionNormalizada(float pValoracion){
-        return super.normalizar(pValoracion);
-    }
 
-    public float getValoracionDesnormalizada(float pValoracion){
-        return super.desnormalizar(pValoracion);
-    }
 
 }

@@ -75,5 +75,11 @@ public class MatrizValoracionesTest {
         }
 
     }
+    @Test
+    public void testSimPersonas() {
+        GestionDatos.getInstance().cargarDatos(false);
+        CatalogoUsuarios.getInstance().print();
+    }
+
 
 } 

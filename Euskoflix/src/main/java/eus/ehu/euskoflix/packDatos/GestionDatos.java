@@ -36,10 +36,7 @@ public class GestionDatos {
         this.cargarPeliculas();
         this.cargarUsuarios();
         MatrizValoraciones.getInstance().cargarValoraciones();
-    }
-
-    private void cargarNormalizaciones(){
-        MatrizValoraciones.getInstance().cargarValoracionesNormalizadas();
+        CatalogoUsuarios.getInstance().cargarMediasDesviacionesUsuarios();
     }
 
     private void cargarPeliculas() {

@@ -4,9 +4,9 @@ public class Similitud {
 
     private int i;
     private int j;
-    private float sim;
+    private double sim;
 
-    public Similitud(int i, int j, float sim) {
+    public Similitud(int i, int j, double sim) {
         this.i = i;
         this.j = j;
         this.sim = sim;
@@ -20,7 +20,7 @@ public class Similitud {
         return j;
     }
 
-    public float getSim() {
+    public double getSim() {
         return sim;
     }
 }

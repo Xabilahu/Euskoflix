@@ -2,34 +2,40 @@ package eus.ehu.euskoflix.packModelo;
 
 public abstract class Normalizable {
 
-    private float media;
-    private float desviacionTipica;
+    private double media;
+    private double desviacionTipica;
 
-    public Normalizable(){
-        this.media = 0;
-        this.desviacionTipica = 0;
+    public Normalizable() {
+        this.media = 0.0;
+        this.desviacionTipica = 0.0;
     }
 
-    private Normalizable(float pMedia,float pDesviacionTipica){
-        this.media = pMedia;
-        this.desviacionTipica = pDesviacionTipica;
+    public Normalizable(double media, double desviacionTipica) {
+        this.media = media;
+        this.desviacionTipica = desviacionTipica;
     }
 
-
-    public float normalizar(float pValor){
+    public double normalizar(double pValor){
         return (pValor-this.media)/this.desviacionTipica;
     }
 
+    public double getMedia() {
+        return media;
+    }
 
-    protected float desnormalizar(float pValor) {
+    public double getDesviacionTipica() {
+        return desviacionTipica;
+    }
+
+    public double desnormalizar(double pValor) {
         return (pValor+this.media)*this.desviacionTipica;
     }
 
-    public void setMedia(float media) {
+    public void setMedia(double media) {
         this.media = media;
     }
 
-    public void setDesviacionTipica(float desviacionTipica) {
+    public void setDesviacionTipica(double desviacionTipica) {
         this.desviacionTipica = desviacionTipica;
     }
 }
