@@ -56,7 +56,7 @@ public class CatalogoUsuarios {
         for (Usuario u : this.lista
              ) {
             if (!primero) {
-                System.out.println("Usuario : media=" + u.getMedia() + ", desviacion= " + u.getDesviacionTipica());
+                System.out.println("Usuario : media=" + u.getMedia() + ", desviacion= " + u.getCuasiDesv());
             }else{
                 primero = false;
             }

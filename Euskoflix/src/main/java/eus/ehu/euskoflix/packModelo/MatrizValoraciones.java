@@ -4,7 +4,6 @@ import eus.ehu.euskoflix.packDatos.GestionDatos;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 
 public class MatrizValoraciones {
@@ -45,7 +44,7 @@ public class MatrizValoraciones {
                         (pPersona2.normalizar(this.valores[u2]) - pPersona2.getMedia());
             }
         }
-        return new Similitud(pPersona1.getId(), pPersona2.getId(), numerador/(pPersona1.getDesviacionTipica() * pPersona2.getDesviacionTipica()));
+        return new Similitud(pPersona1.getId(), pPersona2.getId(), numerador/(pPersona1.getCuasiDesv() * pPersona2.getCuasiDesv()));
     }
 
     public Similitud simPelicula(int pPelicula1, int pPelicula2) {
@@ -163,12 +162,13 @@ public class MatrizValoraciones {
         for(i = this.filas[pUsuario.getId()]; i < limite; i++) {
             f += this.valores[i];
         }
-        double media = f/(i - this.filas[pUsuario.getId()]);
+        int n = i - this.filas[pUsuario.getId()];
+        double media = f/(n);
         pUsuario.setMedia(media);
         f = 0.0;
         for (i = this.filas[pUsuario.getId()];i < limite; i++) {
             f += Math.pow(this.valores[i] - media, 2);
         }
-        pUsuario.setDesviacionTipica(Math.sqrt(f));
+        pUsuario.setCuasiDesv(Math.sqrt(f/n));
     }
 }
