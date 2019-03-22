@@ -137,4 +137,8 @@ public class MatrizValoraciones {
         sb.append('}');
         return sb.toString();
     }
+
+    public void cargarValoracionesNormalizadas() {
+
+    }
 }

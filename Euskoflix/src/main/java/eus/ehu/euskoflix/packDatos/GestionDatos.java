@@ -38,6 +38,10 @@ public class GestionDatos {
         MatrizValoraciones.getInstance().cargarValoraciones();
     }
 
+    private void cargarNormalizaciones(){
+        MatrizValoraciones.getInstance().cargarValoracionesNormalizadas();
+    }
+
     private void cargarPeliculas() {
         ResultSet pelis = BaseDatos.getBaseDatos().getPeliculas();
         try {

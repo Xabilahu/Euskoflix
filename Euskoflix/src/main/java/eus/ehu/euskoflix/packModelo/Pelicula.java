@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class Pelicula {
+public class Pelicula{
 
     private int id;
     private String titulo;

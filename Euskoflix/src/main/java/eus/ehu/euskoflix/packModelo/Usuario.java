@@ -6,7 +6,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Usuario {
+public class Usuario extends Normalizable {
 
     private int id;
     private String nombre;
@@ -14,10 +14,12 @@ public class Usuario {
     private String password;
 
     public Usuario(int pId, String pNombre, String pApellido, String pPassword) {
+        super();
         this.id = pId;
         this.nombre = pNombre;
         this.apellido = pApellido;
         this.password = this.encriptarPassword(pPassword);
+
     }
 
     public boolean comprobarPassword(String pPassword) {
@@ -51,4 +53,13 @@ public class Usuario {
     public String getPassword() {
         return password;
     }
+
+    public float getValoracionNormalizada(float pValoracion){
+        return super.normalizar(pValoracion);
+    }
+
+    public float getValoracionDesnormalizada(float pValoracion){
+        return super.desnormalizar(pValoracion);
+    }
+
 }
