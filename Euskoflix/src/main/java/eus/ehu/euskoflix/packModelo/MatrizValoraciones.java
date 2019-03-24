@@ -36,13 +36,11 @@ public class MatrizValoraciones {
         double numerador = 0.0;
         double sumU1 = 0;
         double sumU2 = 0;
-        Set<Map.Entry<Integer,Double>> lValoraciones = this.valoraciones.get(pPersona1.getId()).entrySet();
-        if (this.valoraciones.get(pPersona2.getId()).entrySet().size() < lValoraciones.size()){
-            lValoraciones = this.valoraciones.get(pPersona2.getId()).entrySet();
-        }
-        for (Map.Entry<Integer, Double> entry: lValoraciones) {
+        for (Map.Entry<Integer, Double> entry: this.valoraciones.get(pPersona1.getId()).entrySet()) {
             if (this.valoraciones.get(pPersona2.getId()).containsKey(entry.getKey())){
                 numerador += pPersona1.normalizar(entry.getValue())*pPersona2.normalizar(this.valoraciones.get(pPersona2.getId()).get(entry.getKey()));
+              //  sumU1 += Math.pow(pPersona1.normalizar(entry.getValue()),2);
+              //  sumU2 += Math.pow(pPersona2.normalizar(this.valoraciones.get(pPersona2.getId()).get(entry.getKey())),2);
             }
         }
         for (Map.Entry<Integer, Double> entry: this.valoraciones.get(pPersona1.getId()).entrySet()){

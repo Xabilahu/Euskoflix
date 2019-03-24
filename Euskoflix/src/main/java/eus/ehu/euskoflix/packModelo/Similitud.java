@@ -23,4 +23,9 @@ public class Similitud {
     public double getSim() {
         return sim;
     }
+
+
+    public double getPorcentaje(){
+        return (this.sim+1)*(50); // y = (this.sim - (-1))*100/2
+    }
 }
