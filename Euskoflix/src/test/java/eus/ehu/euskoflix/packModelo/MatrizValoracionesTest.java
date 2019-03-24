@@ -26,7 +26,7 @@ public class MatrizValoracionesTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        BaseDatos.getBaseDatos().reiniciarBD(false);
+//        BaseDatos.getBaseDatos().reiniciarBD(false);
     }
 
     @After

@@ -83,7 +83,7 @@ public class GestionDatos {
         int[] filas = null;
         try {
             boolean primero = true;
-            filas = new int[BaseDatos.getBaseDatos().getNumUsuariosQueValoran() + 1];
+            filas = new int[CatalogoUsuarios.getInstance().getNumUsuarios()];
             rst.next();
             rst2.next();
             int id = rst.getInt("id_usuario");

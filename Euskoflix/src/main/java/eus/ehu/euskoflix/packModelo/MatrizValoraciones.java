@@ -4,7 +4,6 @@ import eus.ehu.euskoflix.packDatos.GestionDatos;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 
 public class MatrizValoraciones {
@@ -41,8 +40,13 @@ public class MatrizValoraciones {
         }
         for (int u2 = this.filas[pPersona2.getId()]; u2 < this.filas[pPersona2.getId() + 1]; u2++) {
             if (comunes.containsKey(this.columnas[u2])) {
+//                System.out.println("ID_PELICULA: " + this.columnas[u2] + "\n\t" + pPersona1.getId() + ": " + comunes.get(this.columnas[u2]) +
+////                        "\tn: " + pPersona1.normalizar(comunes.get(this.columnas[u2])) + "\n\t" + pPersona2.getId() + ": " + this.valores[u2] +
+////                        "\tn: " + pPersona2.normalizar(this.valores[u2]));
                 numerador += (pPersona1.normalizar(comunes.get(this.columnas[u2])) - pPersona1.getMedia()) *
                         (pPersona2.normalizar(this.valores[u2]) - pPersona2.getMedia());
+//                numerador += (comunes.get(this.columnas[u2]) - pPersona1.getMedia()) *
+//                        (this.valores[u2] - pPersona2.getMedia());
             }
         }
         return new Similitud(pPersona1.getId(), pPersona2.getId(), numerador/(pPersona1.getDesviacionTipica() * pPersona2.getDesviacionTipica()));
@@ -155,7 +159,7 @@ public class MatrizValoraciones {
         double f = 0.0;
         int i;
         int limite;
-        if (pUsuario.getId() != this.filas.length-1){
+        if (pUsuario.getId() < this.filas.length-1){
             limite = this.filas[pUsuario.getId()+1];
         }else{
             limite = this.valores.length;
@@ -170,5 +174,9 @@ public class MatrizValoraciones {
             f += Math.pow(this.valores[i] - media, 2);
         }
         pUsuario.setDesviacionTipica(Math.sqrt(f));
+    }
+
+    public boolean tieneValoraciones(int pId) {
+        return this.filas[pId] != -1;
     }
 }
