@@ -42,7 +42,7 @@ public class CatalogoUsuarios {
     public void cargarMediasDesviacionesUsuarios() {
         boolean primero = true;
         for (Usuario u : this.lista) {
-            if (!primero) {
+            if (!primero && MatrizValoraciones.getInstance().tieneValoraciones(u.getId())) {
                 MatrizValoraciones.getInstance().cargarValoracionesNormalizadas(u);
             }else{
                 primero = false;
@@ -53,14 +53,14 @@ public class CatalogoUsuarios {
 
     public void print() {
         boolean primero = true;
-        for (Usuario u : this.lista
+      /*  for (Usuario u : this.lista
              ) {
             if (!primero) {
                 System.out.println("Usuario : media=" + u.getMedia() + ", desviacion= " + u.getCuasiDesv());
             }else{
                 primero = false;
             }
-        }
+        }*/
         System.out.println("\t" + MatrizValoraciones.getInstance().simPersonas(this.lista.get(1),this.lista.get(2)).getSim());
     }
 }

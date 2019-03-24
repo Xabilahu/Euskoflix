@@ -55,7 +55,7 @@ public class ControladorVistaTest {
     public void testDatosRatings() throws Exception {
         String[][] resultado = ControladorVista.getInstance().datosRatings(1);
         int i = 0;
-        for(Map.Entry<Integer,Float> entry : MatrizValoraciones.getInstance().getValoracionesByPelicula(1).entrySet()) {
+        for(Map.Entry<Integer,Double> entry : MatrizValoraciones.getInstance().getValoracionesByPelicula(1).entrySet()) {
             assertEquals(resultado[i][0],CatalogoUsuarios.getInstance().getUsuarioPorId(entry.getKey()).getNombre());
             assertEquals(resultado[i++][1],entry.getValue().toString());
         }

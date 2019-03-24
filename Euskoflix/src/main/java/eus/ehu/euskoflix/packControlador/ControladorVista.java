@@ -55,11 +55,11 @@ public class ControladorVista {
 
     //Pestana Ratings
     public String[][] datosRatings(int pId) {
-        LinkedHashMap<Integer, Float> ratings = MatrizValoraciones.getInstance().getValoracionesByPelicula(pId);
+        LinkedHashMap<Integer, Double> ratings = MatrizValoraciones.getInstance().getValoracionesByPelicula(pId);
         String[][] resultado = new String[ratings.size()][2];
         CatalogoUsuarios cat = CatalogoUsuarios.getInstance();
         int i = 0;
-        for (Map.Entry<Integer, Float> entry : ratings.entrySet()) {
+        for (Map.Entry<Integer, Double> entry : ratings.entrySet()) {
             resultado[i][0] = cat.getUsuarioPorId(entry.getKey()).getNombre();
             resultado[i++][1] = entry.getValue().toString();
         }

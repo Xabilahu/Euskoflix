@@ -16,6 +16,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class GestionDatos {
 
@@ -36,6 +38,7 @@ public class GestionDatos {
         this.cargarPeliculas();
         this.cargarUsuarios();
         MatrizValoraciones.getInstance().cargarValoraciones();
+        //System.out.println(MatrizValoraciones.getInstance());
         CatalogoUsuarios.getInstance().cargarMediasDesviacionesUsuarios();
     }
 
@@ -83,7 +86,7 @@ public class GestionDatos {
         int[] filas = null;
         try {
             boolean primero = true;
-            filas = new int[BaseDatos.getBaseDatos().getNumUsuariosQueValoran() + 1];
+            filas = new int[CatalogoUsuarios.getInstance().getNumUsuarios()];
             rst.next();
             rst2.next();
             int id = rst.getInt("id_usuario");
@@ -191,4 +194,26 @@ public class GestionDatos {
 
     }
 
+    public HashMap<Integer, HashMap<Integer, Double>> cargarValoraciones() {
+        HashMap<Integer, HashMap<Integer, Double>> resultado = new HashMap<>();
+        ResultSet rst = BaseDatos.getBaseDatos().getValoraciones();
+        try {
+            while(rst.next()){
+                int usuario = rst.getInt("id_usuario");
+                int pelicula = rst.getInt("id_pelicula");
+                double valoracion = rst.getDouble("valoracion");
+                HashMap<Integer,Double> pelis = resultado.get(usuario);
+                if (pelis ==  null){
+                    pelis = new HashMap<>();
+                    pelis.put(pelicula,valoracion);
+                    resultado.put(usuario,pelis);
+                }else{
+                    pelis.put(pelicula,valoracion);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultado;
+    }
 }
