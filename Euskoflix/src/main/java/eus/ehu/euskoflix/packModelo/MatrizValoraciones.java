@@ -36,6 +36,9 @@ public class MatrizValoraciones {
         double numerador = 0.0;
         double sumU1 = 0;
         double sumU2 = 0;
+        // <- -> ?? (-1)
+        // |_ 0
+        // = 1
         for (Map.Entry<Integer, Double> entry: this.valoraciones.get(pPersona1.getId()).entrySet()) {
             if (this.valoraciones.get(pPersona2.getId()).containsKey(entry.getKey())){
                 numerador += pPersona1.normalizar(entry.getValue())*pPersona2.normalizar(this.valoraciones.get(pPersona2.getId()).get(entry.getKey()));
@@ -43,17 +46,20 @@ public class MatrizValoraciones {
               //  sumU2 += Math.pow(pPersona2.normalizar(this.valoraciones.get(pPersona2.getId()).get(entry.getKey())),2);
             }
         }
-        for (Map.Entry<Integer, Double> entry: this.valoraciones.get(pPersona1.getId()).entrySet()){
-            sumU1 += Math.pow(pPersona1.normalizar(entry.getValue()),2);
-        }
-        for (Map.Entry<Integer, Double> entry: this.valoraciones.get(pPersona2.getId()).entrySet()){
-            sumU2 += Math.pow(pPersona2.normalizar(entry.getValue()),2);
-        }
+        if (numerador != 0){
+            for (Map.Entry<Integer, Double> entry: this.valoraciones.get(pPersona1.getId()).entrySet()){
+                sumU1 += Math.pow(pPersona1.normalizar(entry.getValue()),2);
+            }
+            for (Map.Entry<Integer, Double> entry: this.valoraciones.get(pPersona2.getId()).entrySet()){
+                sumU2 += Math.pow(pPersona2.normalizar(entry.getValue()),2);
+            }
 
-        sumU1 = Math.sqrt(sumU1);
-        sumU2 = Math.sqrt(sumU2);
-
-        return new Similitud(pPersona1.getId(), pPersona2.getId(), numerador/(sumU1*sumU2));
+            sumU1 = Math.sqrt(sumU1);
+            sumU2 = Math.sqrt(sumU2);
+            return new Similitud(pPersona1.getId(), pPersona2.getId(), numerador/(sumU1*sumU2));
+        }else{
+            return new Similitud(pPersona1.getId(), pPersona2.getId(), -1);
+        }
     }
 
     public Similitud simPelicula(int pPelicula1, int pPelicula2) {
