@@ -4,6 +4,7 @@ import eus.ehu.euskoflix.packDatos.GestionDatos;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 
 public class MatrizValoraciones {
@@ -33,18 +34,30 @@ public class MatrizValoraciones {
     }
 
     public Similitud simPersonas(Usuario pPersona1, Usuario pPersona2) {
+        return coseno(pPersona1,pPersona2);
+    }
+
+
+    private Similitud coseno(Usuario pPersona1, Usuario pPersona2){
         double numerador = 0.0;
         HashMap<Integer,Float> comunes = new HashMap<>();
+        double sumU1 = 0;
+        double sumU2 = 0;
+        HashSet<Double> valoracionesU2 = new HashSet<>();
+        HashSet<Double> valoracionesU1 = new HashSet<>();
         for(int u1 = this.filas[pPersona1.getId()]; u1 < this.filas[pPersona1.getId() + 1]; u1++){
             comunes.put(this.columnas[u1], this.valores[u1]);
         }
         for (int u2 = this.filas[pPersona2.getId()]; u2 < this.filas[pPersona2.getId() + 1]; u2++) {
             if (comunes.containsKey(this.columnas[u2])) {
-                numerador += (pPersona1.normalizar(comunes.get(this.columnas[u2])) - pPersona1.getMedia()) *
-                        (pPersona2.normalizar(this.valores[u2]) - pPersona2.getMedia());
+                numerador += (pPersona1.normalizar(comunes.get(this.columnas[u2])) ) *
+                        (pPersona2.normalizar(this.valores[u2]));
+                sumU1+= Math.pow(pPersona1.normalizar(comunes.get(this.columnas[u2])),2);
+                sumU2 += Math.pow(pPersona2.normalizar(this.valores[u2]),2);
+
             }
         }
-        return new Similitud(pPersona1.getId(), pPersona2.getId(), numerador/(pPersona1.getCuasiDesv() * pPersona2.getCuasiDesv()));
+        return new Similitud(pPersona1.getId(), pPersona2.getId(), numerador/(Math.sqrt(sumU1)*Math.sqrt(sumU2)));
     }
 
     public Similitud simPelicula(int pPelicula1, int pPelicula2) {
