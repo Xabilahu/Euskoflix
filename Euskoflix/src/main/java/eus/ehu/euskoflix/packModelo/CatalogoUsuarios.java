@@ -61,7 +61,7 @@ public class CatalogoUsuarios {
                 primero = false;
             }
         }*/
-        System.out.println("\t" + MatrizValoraciones.getInstance().simPersonas(this.lista.get(1),this.lista.get(2)).getPorcentaje() + "%");
-
+        System.out.println("\t" + MatrizValoraciones.getInstance().simPersonas(this.lista.get(1),this.lista.get(2)).getSim() + "%");
+        System.out.println("\t" + (Math.toDegrees(Math.acos(MatrizValoraciones.getInstance().simPersonas(this.lista.get(1),this.lista.get(2)).getSim()))*100.0/180.0) + "%");
     }
 }

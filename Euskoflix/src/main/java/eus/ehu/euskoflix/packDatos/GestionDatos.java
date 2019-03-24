@@ -205,7 +205,7 @@ public class GestionDatos {
                 HashMap<Integer,Double> pelis = resultado.get(usuario);
                 if (pelis ==  null){
                     pelis = new HashMap<>();
-                    pelis.put(pelicula,valoracion);
+                    pelis.put(pelicula,valoracion + 1);
                     resultado.put(usuario,pelis);
                 }else{
                     pelis.put(pelicula,valoracion);

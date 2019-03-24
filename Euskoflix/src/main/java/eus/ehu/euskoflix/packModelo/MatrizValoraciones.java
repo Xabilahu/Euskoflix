@@ -127,6 +127,6 @@ public class MatrizValoraciones {
     }
 
     public boolean tieneValoraciones(int pId) {
-        return this.valoraciones.get(pId) != null || this.valoraciones.get(pId).size() != 0;
+        return this.valoraciones.get(pId) != null && this.valoraciones.get(pId).size() != 0;
     }
 }
