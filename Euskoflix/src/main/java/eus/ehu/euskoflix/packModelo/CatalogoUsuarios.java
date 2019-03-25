@@ -1,5 +1,6 @@
 package eus.ehu.euskoflix.packModelo;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class CatalogoUsuarios {
@@ -53,15 +54,24 @@ public class CatalogoUsuarios {
 
     public void print() {
         boolean primero = true;
-      /*  for (Usuario u : this.lista
-             ) {
-            if (!primero) {
-                System.out.println("Usuario : media=" + u.getMedia() + ", desviacion= " + u.getCuasiDesv());
-            }else{
-                primero = false;
+        StringBuilder sb = new StringBuilder("<html><table>");
+        sb.append("<th><td>usuario 1</td><td>Usuario 2</td><td>Similitud</td></th>");
+        for (Usuario u1 : this.lista) {
+            if (u1 != null) {
+                for (Usuario u2 : this.lista) {
+                    if (u2 != null && u1 != u2) {
+                        sb.append("<tr><td>");
+                        sb.append(u1.getId());
+                        sb.append("</td><td>");
+                        sb.append(u2.getId());
+                        sb.append("</td><td>");
+                        sb.append(MatrizValoraciones.getInstance().simPersonas(u1,u2).getSim());
+                        sb.append("</td></tr>");
+                    }
+                }
             }
-        }*/
-        System.out.println("\t" + MatrizValoraciones.getInstance().simPersonas(this.lista.get(1),this.lista.get(2)).getSim() + "%");
-        System.out.println("\t" + (Math.toDegrees(Math.acos(MatrizValoraciones.getInstance().simPersonas(this.lista.get(1),this.lista.get(2)).getSim()))*100.0/180.0) + "%");
+        }
+        sb.append("</table></html>");
+        JOptionPane.showMessageDialog(null,sb.toString());
     }
 }

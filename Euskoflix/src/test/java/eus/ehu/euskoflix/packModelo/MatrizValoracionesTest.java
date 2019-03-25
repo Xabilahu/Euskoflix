@@ -10,8 +10,10 @@ import org.junit.runners.MethodSorters;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -77,7 +79,8 @@ public class MatrizValoracionesTest {
     }
     @Test
     public void testSimPersonas() {
-        GestionDatos.getInstance().cargarDatos(true);
+        GestionDatos.getInstance().cargarDatos(false);
+//        System.out.println(MatrizValoraciones.getInstance().simPersonas(CatalogoUsuarios.getInstance().getUsuarioPorId(1),CatalogoUsuarios.getInstance().getUsuarioPorId(2)).getSim());
         CatalogoUsuarios.getInstance().print();
     }
 
