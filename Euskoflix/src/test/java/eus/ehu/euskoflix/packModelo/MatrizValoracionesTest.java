@@ -84,5 +84,9 @@ public class MatrizValoracionesTest {
         CatalogoUsuarios.getInstance().print();
     }
 
+    @Test
+    public void testSimPeliculas(){
+        Cartelera.getInstance().print();
+    }
 
 } 

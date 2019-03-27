@@ -40,6 +40,7 @@ public class GestionDatos {
         MatrizValoraciones.getInstance().cargarValoraciones();
         //System.out.println(MatrizValoraciones.getInstance());
         CatalogoUsuarios.getInstance().cargarMediasDesviacionesUsuarios();
+        Cartelera.getInstance().cargarMediasDesviacionesPeliculas();
     }
 
     private void cargarPeliculas() {

@@ -26,6 +26,6 @@ public class Similitud {
 
 
     public double getPorcentaje(){
-        return (this.sim+1)*(50); // y = (this.sim - (-1))*100/2
+        return 1-2*Math.acos(Math.abs(sim))/Math.PI;
     }
 }

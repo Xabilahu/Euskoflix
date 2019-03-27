@@ -43,7 +43,7 @@ public class CatalogoUsuarios {
     public void cargarMediasDesviacionesUsuarios() {
         boolean primero = true;
         for (Usuario u : this.lista) {
-            if (!primero && MatrizValoraciones.getInstance().tieneValoraciones(u.getId())) {
+            if (!primero && MatrizValoraciones.getInstance().tieneValoracionesUsuario(u.getId())) {
                 MatrizValoraciones.getInstance().cargarValoracionesNormalizadas(u);
             }else{
                 primero = false;
@@ -53,7 +53,7 @@ public class CatalogoUsuarios {
     }
 
     public void print() {
-        boolean primero = true;
+       /* boolean primero = true;
         StringBuilder sb = new StringBuilder("<html><table>");
         sb.append("<th><td>usuario 1</td><td>Usuario 2</td><td>Similitud</td></th>");
         for (Usuario u1 : this.lista) {
@@ -72,6 +72,6 @@ public class CatalogoUsuarios {
             }
         }
         sb.append("</table></html>");
-        JOptionPane.showMessageDialog(null,sb.toString());
+        JOptionPane.showMessageDialog(null,sb.toString());*/
     }
 }

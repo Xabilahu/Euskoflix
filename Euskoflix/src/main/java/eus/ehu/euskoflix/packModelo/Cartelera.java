@@ -48,4 +48,7 @@ public class Cartelera {
         mCartelera = new Cartelera();
     }
 
+    public void cargarMediasDesviacionesPeliculas() {
+        this.lista.cargarMediaDesviacionesPeliculas();
+    }
 }
