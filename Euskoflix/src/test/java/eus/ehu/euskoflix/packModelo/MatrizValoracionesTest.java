@@ -34,7 +34,7 @@ public class MatrizValoracionesTest {
 
     @AfterClass
     public static void tearDown() throws Exception {
-        BaseDatos.getBaseDatos().eliminarBaseDatos();
+       // BaseDatos.getBaseDatos().eliminarBaseDatos();
     }
 
     /**
@@ -88,7 +88,8 @@ public class MatrizValoracionesTest {
 
     @Test
     public void testSimPeliculas(){
-        Cartelera.getInstance().print();
+        CatalogoUsuarios.getInstance().login(new Usuario(1,"","","euskoflix"));
+        Filtrado.getInstance().recomendar(TipoRecomendacion.Pelicula,10);
     }
 
 } 

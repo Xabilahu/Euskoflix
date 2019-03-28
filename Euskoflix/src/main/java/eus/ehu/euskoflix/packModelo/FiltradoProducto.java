@@ -16,10 +16,7 @@ public class FiltradoProducto extends Filtrable {
         }*/
     }
 
-    @Override
-    public Similitud[] getNMasSimilares(int pId) {
-        return new Similitud[0];
-    }
+
 
     @Override
     public ListaPeliculas recomendar(int pId, int pNum) {

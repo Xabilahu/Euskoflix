@@ -11,7 +11,6 @@ public class MatrizValoraciones {
 
     private HashMap<Integer,HashMap<Integer,Double>> valoraciones;
 
-
     private MatrizValoraciones() {
     }
 
@@ -27,7 +26,7 @@ public class MatrizValoraciones {
         valoraciones = GestionDatos.getInstance().cargarValoraciones();
 
     }
-
+    
     public Similitud simPersonas(Usuario pPersona1, Usuario pPersona2) {
         double similitud = 0;
         List<Double> valoracionU1 = new ArrayList<>();
@@ -205,4 +204,9 @@ public class MatrizValoraciones {
         while (itr.hasNext() && !(valorada = itr.next().containsKey(id)));
         return valorada;
     }
+
+    public Set<Integer> getPeliculasValoradas(int pId){
+        return this.valoraciones.get(pId).keySet();
+    }
+
 }

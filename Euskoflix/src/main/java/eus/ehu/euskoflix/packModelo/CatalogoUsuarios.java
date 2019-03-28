@@ -80,14 +80,14 @@ public class CatalogoUsuarios {
         JOptionPane.showMessageDialog(null,sb.toString());*/
     }
 
-    public Usuario usuarioLogueado() {
+    public Usuario getUsuarioLogueado() {
         return this.logged;
     }
 
     public void cargarModeloPersona(FiltradoPersona filtradoPersona) {
         this.lista.forEach(usuario -> {
             if (usuario != null && !usuario.equals(logged)){
-                filtradoPersona.addSimilitudSimetrica(MatrizValoraciones.getInstance().simPersonas(logged,usuario));
+                filtradoPersona.addSimilitud(logged.getId(),MatrizValoraciones.getInstance().simPersonas(logged,usuario));
             }
         });
     }

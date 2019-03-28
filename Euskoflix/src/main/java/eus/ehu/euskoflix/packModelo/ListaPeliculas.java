@@ -3,6 +3,7 @@ package eus.ehu.euskoflix.packModelo;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class ListaPeliculas {
 
@@ -22,7 +23,7 @@ public class ListaPeliculas {
     public int getNumPeliculas() {
         return this.lista.size();
     }
-
+ 
     public Pelicula getPeliculaPorId(int pId) {
         if (this.lista.containsKey(pId)) {
             return this.lista.get(pId);
@@ -34,19 +35,21 @@ public class ListaPeliculas {
         for (Pelicula pelicula : this.lista.values()) {
             if (MatrizValoraciones.getInstance().tieneValoracionesPelicula(pelicula.getId())){
                 MatrizValoraciones.getInstance().cargarValoracionesNormalizadas(pelicula);
-               /* System.out.println("Pelicula :" + pelicula.getId());
-                System.out.println("\tmedia: " + pelicula.getMedia() + "\tcuasidesv: " + pelicula.getCuasiDesv());*/
             }
         }
     }
 
     public void cargarModeloProducto(FiltradoProducto filtradoProducto) {
-        final int[] cont = {0};
-        this.lista.values().forEach(pelicula -> {
-          //  System.out.println("empezado : pelicula " + pelicula.getId() );
-            this.lista.values().stream().skip(++cont[0]).forEach(pelicula1 -> {
-                filtradoProducto.addSimilitudSimetrica(MatrizValoraciones.getInstance().simPelicula(pelicula, pelicula1));
-            });
+        HashSet<Integer> valoradas = new HashSet<>();
+        valoradas.addAll(MatrizValoraciones.getInstance().getPeliculasValoradas(CatalogoUsuarios.getInstance().getUsuarioLogueado().getId()));
+        valoradas.retainAll(this.lista.keySet());
+        HashSet<Integer> noValoradas = new HashSet<>();
+        noValoradas.addAll(this.lista.keySet());
+        noValoradas.removeAll(valoradas);
+        noValoradas.parallelStream().forEach((i) -> {
+            for (Integer j : valoradas) {
+                filtradoProducto.addSimilitudSimetrica(MatrizValoraciones.getInstance().simPelicula(Cartelera.getInstance().getPeliculaPorIdSinMapeo(i), Cartelera.getInstance().getPeliculaPorIdSinMapeo(j)));
+            }
         });
     }
 }

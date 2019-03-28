@@ -39,7 +39,7 @@ public abstract class Filtrable {
     }
 
 
-    private void addSimilitud(int pID, Similitud pSimilitud) {
+    public void addSimilitud(int pID, Similitud pSimilitud) {
         if (!this.matrizSimilitudes.containsKey(pID)) {
             this.matrizSimilitudes.put(pID, new TreeSet<Similitud>((o1, o2) -> Double.compare(o1.getSim(), o2.getSim()) * -1){{
                 add(pSimilitud);
