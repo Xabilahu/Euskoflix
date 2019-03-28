@@ -17,7 +17,7 @@ public class Filtrado {
     }
 
     private void cargarModeloPersona() {
-        filtros[0] = new FiltradoPersona(CatalogoUsuarios.getInstance().usuarioLogueado().getId());
+        filtros[0] = new FiltradoPersona();
     }
 
     private void cargarModeloProductos() {

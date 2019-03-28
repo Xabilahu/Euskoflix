@@ -2,18 +2,13 @@ package eus.ehu.euskoflix.packModelo;
 
 public class FiltradoPersona extends Filtrable {
 
-    private int userID;
-
-    public FiltradoPersona(int pUserID) {
+    public FiltradoPersona() {
         //TODO: cargar filtrado
+        CatalogoUsuarios.getInstance().cargarModeloPersona(this);
+
     }
 
     public ListaPeliculas filtradoPorPersona() {
-        return null;
-    }
-
-    @Override
-    public Similitud[] getNMasSimilares(int pId) {
         return null;
     }
 

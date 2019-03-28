@@ -51,4 +51,10 @@ public class Cartelera {
     public void cargarMediasDesviacionesPeliculas() {
         this.lista.cargarMediaDesviacionesPeliculas();
     }
+
+    public void cargarModeloProductos(FiltradoProducto filtradoProducto) {
+        lista.cargarModeloProducto(filtradoProducto);
+    }
+
+
 }

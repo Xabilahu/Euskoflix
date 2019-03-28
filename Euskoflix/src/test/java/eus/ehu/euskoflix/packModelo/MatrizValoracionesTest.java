@@ -28,7 +28,7 @@ public class MatrizValoracionesTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        BaseDatos.getBaseDatos().eliminarBaseDatos();
+       // BaseDatos.getBaseDatos().eliminarBaseDatos();
         GestionDatos.getInstance().cargarDatos(false);
     }
 
@@ -81,7 +81,8 @@ public class MatrizValoracionesTest {
     }
     @Test
     public void testSimPersonas() {
-        Filtrado.getInstance().recomendar(TipoRecomendacion.Pelicula,10);
+        CatalogoUsuarios.getInstance().login(new Usuario(1,"","","euskoflix"));
+        Filtrado.getInstance().recomendar(TipoRecomendacion.Persona,10);
 
     }
 

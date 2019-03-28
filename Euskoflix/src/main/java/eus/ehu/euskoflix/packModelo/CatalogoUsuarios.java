@@ -83,4 +83,12 @@ public class CatalogoUsuarios {
     public Usuario usuarioLogueado() {
         return this.logged;
     }
+
+    public void cargarModeloPersona(FiltradoPersona filtradoPersona) {
+        this.lista.forEach(usuario -> {
+            if (usuario != null && !usuario.equals(logged)){
+                filtradoPersona.addSimilitudSimetrica(MatrizValoraciones.getInstance().simPersonas(logged,usuario));
+            }
+        });
+    }
 }

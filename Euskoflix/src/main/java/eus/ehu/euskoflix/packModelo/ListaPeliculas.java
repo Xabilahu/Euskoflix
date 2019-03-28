@@ -39,4 +39,14 @@ public class ListaPeliculas {
             }
         }
     }
+
+    public void cargarModeloProducto(FiltradoProducto filtradoProducto) {
+        final int[] cont = {0};
+        this.lista.values().forEach(pelicula -> {
+          //  System.out.println("empezado : pelicula " + pelicula.getId() );
+            this.lista.values().stream().skip(++cont[0]).forEach(pelicula1 -> {
+                filtradoProducto.addSimilitudSimetrica(MatrizValoraciones.getInstance().simPelicula(pelicula, pelicula1));
+            });
+        });
+    }
 }
