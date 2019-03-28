@@ -53,6 +53,20 @@ public class MatrizValoraciones {
             }
         }catch (Exception ex){
             similitud = this.distanciaEuclidea(this.valoraciones.get(pPersona1.getId()), this.valoraciones.get(pPersona2.getId()));
+            //COSENO NO NORMALIZADO
+//            valoracionU1.addAll(this.valoraciones.get(pPersona1.getId()).values());
+//            valoracionU2.addAll(this.valoraciones.get(pPersona2.getId()).values());
+//            for (Map.Entry<Integer, Double> entry : this.valoraciones.get(pPersona1.getId()).entrySet()) {
+//                if (this.valoraciones.get(pPersona2.getId()).containsKey(entry.getKey())) {
+//                    interseccion.add(new AbstractMap.SimpleEntry<>(
+//                            entry.getValue(),
+//                            this.valoraciones.get(pPersona2.getId()).get(entry.getKey())
+//                    ));
+//                }
+//            }
+//            if (!valoracionU1.isEmpty() && !valoracionU2.isEmpty() && !interseccion.isEmpty()){
+//                similitud = coseno(valoracionU1,valoracionU2,interseccion);
+//            }
         }
         return new Similitud(pPersona1.getId(),pPersona2.getId(),similitud);
     }
@@ -80,18 +94,35 @@ public class MatrizValoraciones {
                 similitud = coseno(valoracionP1,valoracionP2,interseccion);
             }
         } catch (Exception e) {
-            HashMap<Integer,Double> valoracionesP1 = new HashMap<>();
-            HashMap<Integer,Double> valoracionesP2 = new HashMap<>();
-
-            int idPeli1 = pPelicula1.getId();
-            int idPeli2 = pPelicula2.getId();
-
-            for(Map.Entry<Integer,HashMap<Integer,Double>> entry : this.valoraciones.entrySet()) {
-                if (entry.getValue().containsKey(idPeli1)) valoracionesP1.put(entry.getKey(),entry.getValue().get(idPeli1));
-                if (entry.getValue().containsKey(idPeli2)) valoracionesP2.put(entry.getKey(),entry.getValue().get(idPeli2));
+//            HashMap<Integer,Double> valoracionesP1 = new HashMap<>();
+//            HashMap<Integer,Double> valoracionesP2 = new HashMap<>();
+//
+//            int idPeli1 = pPelicula1.getId();
+//            int idPeli2 = pPelicula2.getId();
+//
+//            for(Map.Entry<Integer,HashMap<Integer,Double>> entry : this.valoraciones.entrySet()) {
+//                if (entry.getValue().containsKey(idPeli1)) valoracionesP1.put(entry.getKey(),entry.getValue().get(idPeli1));
+//                if (entry.getValue().containsKey(idPeli2)) valoracionesP2.put(entry.getKey(),entry.getValue().get(idPeli2));
+//            }
+//
+//            similitud = this.distanciaEuclidea(valoracionesP1,valoracionesP2);
+            //COSENO NO NORMALIZADO
+            for (HashMap<Integer,Double> usuario:this.valoraciones.values()){
+                if (usuario.containsKey(pPelicula1.getId()) && usuario.containsKey(pPelicula2.getId())){
+                    valoracionP1.add(usuario.get(pPelicula1.getId()));
+                    valoracionP2.add(usuario.get(pPelicula2.getId()));
+                    interseccion.add(new AbstractMap.SimpleEntry<>(
+                            usuario.get(pPelicula1.getId()),
+                            usuario.get(pPelicula2.getId())));
+                }else if (usuario.containsKey(pPelicula1.getId())){
+                    valoracionP1.add(usuario.get(pPelicula1.getId()));
+                }else if (usuario.containsKey(pPelicula2.getId())){
+                    valoracionP2.add(usuario.get(pPelicula2.getId()));
+                }
             }
-
-            similitud = this.distanciaEuclidea(valoracionesP1,valoracionesP2);
+            if (!valoracionP1.isEmpty() && !valoracionP2.isEmpty() && !interseccion.isEmpty()){
+                similitud = coseno(valoracionP1,valoracionP2,interseccion);
+            }
         }
 
         return new Similitud(pPelicula1.getId(),pPelicula2.getId(),similitud);
