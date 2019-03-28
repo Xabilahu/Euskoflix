@@ -19,26 +19,6 @@ public class ListaPeliculas {
         }
     }
 
-    public void print() {
-        //TODO: hacer
-        FileWriter fw =null;
-        try {
-            fw= new FileWriter("pelis1_per.csv");
-            for (Pelicula pelicula : this.lista.values()) {
-                if (pelicula != null && pelicula.getId() != 1){
-                    if (pelicula.getId()==65538){
-                        int i =0;
-                    }
-                    fw.write(pelicula.getId() + "," +String.valueOf(MatrizValoraciones.getInstance().simPelicula(Cartelera.getInstance().getPeliculaPorIdSinMapeo(1), pelicula).getPorcentaje())+"\n");
-                }
-            }
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
     public int getNumPeliculas() {
         return this.lista.size();
     }

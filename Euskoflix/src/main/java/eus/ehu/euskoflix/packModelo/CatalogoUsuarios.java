@@ -1,12 +1,12 @@
 package eus.ehu.euskoflix.packModelo;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class CatalogoUsuarios {
 
     private static CatalogoUsuarios mCatalogo;
     private ArrayList<Usuario> lista;
+    private Usuario logged;
 
     private CatalogoUsuarios() {
         this.lista = new ArrayList<Usuario>();
@@ -29,7 +29,12 @@ public class CatalogoUsuarios {
     }
 
     public Usuario login(Usuario pUsuario) {
-        return null;
+        Usuario user = null;
+        if ((user=this.getUsuarioPorId(pUsuario.getId())) != null && user.comprobarPassword(pUsuario)) {
+            this.logged = user;
+
+        }
+        return user;
     }
 
     public Usuario getUsuarioPorId(int pId) {
@@ -73,5 +78,9 @@ public class CatalogoUsuarios {
         }
         sb.append("</table></html>");
         JOptionPane.showMessageDialog(null,sb.toString());*/
+    }
+
+    public Usuario usuarioLogueado() {
+        return this.logged;
     }
 }

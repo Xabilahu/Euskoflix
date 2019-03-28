@@ -1,6 +1,6 @@
 package eus.ehu.euskoflix.packModelo;
 
-public class Similitud {
+public class Similitud{
 
     private int i;
     private int j;
@@ -23,7 +23,6 @@ public class Similitud {
     public double getSim() {
         return sim;
     }
-
 
     public double getPorcentaje(){
         return 1-2*Math.acos(Math.abs(sim))/Math.PI;

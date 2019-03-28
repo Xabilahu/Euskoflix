@@ -26,7 +26,7 @@ public class Cartelera {
     }
 
     public void print() {
-        lista.print();
+//        lista.print();
     }
 
     public int getNumPeliculas() {

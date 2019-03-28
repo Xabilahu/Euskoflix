@@ -1,13 +1,9 @@
 package eus.ehu.euskoflix.packModelo;
 
 public class FiltradoContenido extends Filtrable {
-    private static FiltradoContenido ourInstance = new FiltradoContenido();
 
-    private FiltradoContenido() {
-    }
+    public FiltradoContenido() {
 
-    public static FiltradoContenido getInstance() {
-        return ourInstance;
     }
 
     @Override

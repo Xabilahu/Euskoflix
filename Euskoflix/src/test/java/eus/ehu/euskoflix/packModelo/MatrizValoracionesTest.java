@@ -29,7 +29,7 @@ public class MatrizValoracionesTest {
     @BeforeClass
     public static void setUp() throws Exception {
         BaseDatos.getBaseDatos().eliminarBaseDatos();
-//        BaseDatos.getBaseDatos().reiniciarBD(false);
+        GestionDatos.getInstance().cargarDatos(false);
     }
 
     @AfterClass
@@ -81,19 +81,7 @@ public class MatrizValoracionesTest {
     }
     @Test
     public void testSimPersonas() {
-        GestionDatos.getInstance().cargarDatos(false);
-        try {
-            FileWriter fw = new FileWriter(new File(System.getProperty("user.dir") + File.separator + "valoracionesPelis.csv"));
-            fw.write("id,similarity\n");
-            for(int i = 2; i < Cartelera.getInstance().getNumPeliculas(); i++) {
-                fw.write(i + "," +
-                        MatrizValoraciones.getInstance().simPelicula(Cartelera.getInstance().getPeliculaPorId(1),Cartelera.getInstance().getPeliculaPorId(i)).getSim()
-                        + "\n");
-            }
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Filtrado.getInstance().recomendar(TipoRecomendacion.Pelicula,10);
 
     }
 

@@ -22,8 +22,8 @@ public class Usuario extends Normalizable {
 
     }
 
-    public boolean comprobarPassword(String pPassword) {
-        return this.password.equals(this.encriptarPassword(pPassword));
+    public boolean comprobarPassword(Usuario pUser) {
+        return this.password.equals(this.encriptarPassword(pUser.password));
     }
 
     private String encriptarPassword(String pPassword) {

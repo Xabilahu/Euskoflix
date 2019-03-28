@@ -1,13 +1,11 @@
 package eus.ehu.euskoflix.packModelo;
 
 public class FiltradoPersona extends Filtrable {
-    private static FiltradoPersona ourInstance = new FiltradoPersona();
 
-    private FiltradoPersona() {
-    }
+    private int userID;
 
-    public static FiltradoPersona getInstance() {
-        return ourInstance;
+    public FiltradoPersona(int pUserID) {
+        //TODO: cargar filtrado
     }
 
     public ListaPeliculas filtradoPorPersona() {
