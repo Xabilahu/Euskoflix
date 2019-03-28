@@ -50,11 +50,9 @@ public class MatrizValoraciones {
             }
             if (!valoracionU1.isEmpty() && !valoracionU2.isEmpty() && !interseccion.isEmpty()){
                 similitud = coseno(valoracionU1,valoracionU2,interseccion);
-            }else{
-                similitud = 0;
             }
         }catch (Exception ex){
-            similitud = -1;
+            similitud = this.distanciaEuclidea(this.valoraciones.get(pPersona1.getId()), this.valoraciones.get(pPersona2.getId()));
         }
         return new Similitud(pPersona1.getId(),pPersona2.getId(),similitud);
     }
@@ -80,13 +78,20 @@ public class MatrizValoraciones {
             }
             if (!valoracionP1.isEmpty() && !valoracionP2.isEmpty() && !interseccion.isEmpty()){
                 similitud = coseno(valoracionP1,valoracionP2,interseccion);
-            }else{
-                similitud = 0;
             }
         } catch (Exception e) {
-            //TODO bueno , ya sabes
-            similitud=-1;
-           // e.printStackTrace();
+            HashMap<Integer,Double> valoracionesP1 = new HashMap<>();
+            HashMap<Integer,Double> valoracionesP2 = new HashMap<>();
+
+            int idPeli1 = pPelicula1.getId();
+            int idPeli2 = pPelicula2.getId();
+
+            for(Map.Entry<Integer,HashMap<Integer,Double>> entry : this.valoraciones.entrySet()) {
+                if (entry.getValue().containsKey(idPeli1)) valoracionesP1.put(entry.getKey(),entry.getValue().get(idPeli1));
+                if (entry.getValue().containsKey(idPeli2)) valoracionesP2.put(entry.getKey(),entry.getValue().get(idPeli2));
+            }
+
+            similitud = this.distanciaEuclidea(valoracionesP1,valoracionesP2);
         }
 
         return new Similitud(pPelicula1.getId(),pPelicula2.getId(),similitud);
@@ -109,41 +114,24 @@ public class MatrizValoraciones {
         return numerador/(Math.sqrt(sum1)*Math.sqrt(sum2));
     }
 
-    //TODO devolver valor absoluto o no
-    private Similitud coseno(Usuario pPersona1, Usuario pPersona2){
-        double numerador = 0.0;
-        double sumU1 = 0;
-        double sumU2 = 0;
-        int peli=0;
-        try {
-            for (Map.Entry<Integer, Double> entry : this.valoraciones.get(pPersona1.getId()).entrySet()) {
-                if (this.valoraciones.get(pPersona2.getId()).containsKey(entry.getKey())) {
-                    peli = entry.getKey();
-                    numerador += pPersona1.normalizar(entry.getValue()) * pPersona2.normalizar(this.valoraciones.get(pPersona2.getId()).get(entry.getKey()));
-                }
-            }
-            if (numerador != 0) {
-                for (Map.Entry<Integer, Double> entry : this.valoraciones.get(pPersona1.getId()).entrySet()) {
-                    sumU1 += Math.pow(pPersona1.normalizar(entry.getValue()), 2);
-                }
-                for (Map.Entry<Integer, Double> entry : this.valoraciones.get(pPersona2.getId()).entrySet()) {
-                    sumU2 += Math.pow(pPersona2.normalizar(entry.getValue()), 2);
-                }
-
-                sumU1 = Math.sqrt(sumU1);
-                sumU2 = Math.sqrt(sumU2);
-                return new Similitud(pPersona1.getId(), pPersona2.getId(), Math.abs(numerador / (sumU1 * sumU2)));
+    private double distanciaEuclidea(Map<Integer,Double> vn, Map<Integer,Double> wn) {
+        double distance = 0.0;
+        HashSet<Integer> intersection = new HashSet<>();
+        intersection.addAll(vn.keySet());
+        intersection.retainAll(wn.keySet());
+        for (Map.Entry<Integer,Double> entry : vn.entrySet()) {
+            if (intersection.contains(entry.getKey())) {
+                distance += Math.pow(vn.get(entry.getKey()) - wn.get(entry.getKey()), 2);
             } else {
-                return new Similitud(pPersona1.getId(), pPersona2.getId(), 0);
+                distance += Math.pow(vn.get(entry.getKey()), 2);
             }
-        } catch (Exception e){
-            //TODO hacer algo con esto
-            return new Similitud(pPersona1.getId(), pPersona2.getId(), 0);
         }
-    }
-
-    private double mapearDistancia(double pValor) {
-        return 1-(pValor*(1.0/5));
+        for (Map.Entry<Integer, Double> entry : wn.entrySet()) {
+            if (!intersection.contains(entry.getKey())){
+                distance += Math.pow(wn.get(entry.getKey()), 2);
+            }
+        }
+        return 1-(Math.sqrt(distance)*(1.0/Math.sqrt(Math.pow(5,2)*Cartelera.getInstance().getNumPeliculas())));
     }
 
     public double getValoracion(int pUsuario, int pPelicula) {

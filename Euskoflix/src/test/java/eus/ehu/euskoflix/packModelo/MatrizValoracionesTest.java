@@ -2,10 +2,7 @@ package eus.ehu.euskoflix.packModelo;
 
 import eus.ehu.euskoflix.packDatos.BaseDatos;
 import eus.ehu.euskoflix.packDatos.GestionDatos;
-import org.junit.After;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runners.MethodSorters;
 
 import java.sql.ResultSet;
@@ -28,11 +25,13 @@ public class MatrizValoracionesTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
+        BaseDatos.getBaseDatos().eliminarBaseDatos();
 //        BaseDatos.getBaseDatos().reiniciarBD(false);
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterClass
+    public static void tearDown() throws Exception {
+        BaseDatos.getBaseDatos().eliminarBaseDatos();
     }
 
     /**
@@ -79,9 +78,9 @@ public class MatrizValoracionesTest {
     }
     @Test
     public void testSimPersonas() {
-        GestionDatos.getInstance().cargarDatos(false);
-//        System.out.println(MatrizValoraciones.getInstance().simPersonas(CatalogoUsuarios.getInstance().getUsuarioPorId(1),CatalogoUsuarios.getInstance().getUsuarioPorId(2)).getSim());
-        CatalogoUsuarios.getInstance().print();
+        GestionDatos.getInstance().cargarDatos(true);
+        System.out.println(MatrizValoraciones.getInstance().simPersonas(CatalogoUsuarios.getInstance().getUsuarioPorId(1),CatalogoUsuarios.getInstance().getUsuarioPorId(2)).getSim());
+//        CatalogoUsuarios.getInstance().print();
     }
 
     @Test
