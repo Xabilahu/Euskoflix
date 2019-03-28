@@ -5,6 +5,9 @@ import eus.ehu.euskoflix.packDatos.GestionDatos;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -78,9 +81,20 @@ public class MatrizValoracionesTest {
     }
     @Test
     public void testSimPersonas() {
-        GestionDatos.getInstance().cargarDatos(true);
-        System.out.println(MatrizValoraciones.getInstance().simPersonas(CatalogoUsuarios.getInstance().getUsuarioPorId(1),CatalogoUsuarios.getInstance().getUsuarioPorId(2)).getSim());
-//        CatalogoUsuarios.getInstance().print();
+        GestionDatos.getInstance().cargarDatos(false);
+        try {
+            FileWriter fw = new FileWriter(new File(System.getProperty("user.dir") + File.separator + "valoracionesPelis.csv"));
+            fw.write("id,similarity\n");
+            for(int i = 2; i < Cartelera.getInstance().getNumPeliculas(); i++) {
+                fw.write(i + "," +
+                        MatrizValoraciones.getInstance().simPelicula(Cartelera.getInstance().getPeliculaPorId(1),Cartelera.getInstance().getPeliculaPorId(i)).getSim()
+                        + "\n");
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Test
