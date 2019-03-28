@@ -1,9 +1,5 @@
 package eus.ehu.euskoflix.packDatos;
 
-
-
-
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
@@ -443,8 +439,8 @@ public class BaseDatos {
      */
     public void eliminarBaseDatos() {
         File f = new File(new File(BaseDatos.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent()
-                + File.separator + "data");
-        System.out.println(f.delete());
+                + File.separator + "data" + File.separator + "basedatos.db");
+        f.delete();
     }
 
 }
