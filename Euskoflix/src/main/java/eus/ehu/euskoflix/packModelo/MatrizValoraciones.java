@@ -103,7 +103,7 @@ public class MatrizValoraciones {
     }
 
     public double getValoracion(int pUsuario, int pPelicula) {
-        double valoracion = -1f;
+        double valoracion = 0;
         HashMap<Integer,Double> valoracionesUsuario = this.valoraciones.get(pUsuario);
         if (valoracionesUsuario != null){
             Double valoracionUP = valoracionesUsuario.get(pPelicula);
@@ -208,5 +208,4 @@ public class MatrizValoraciones {
     public Set<Integer> getPeliculasValoradas(int pId){
         return this.valoraciones.get(pId).keySet();
     }
-
 }

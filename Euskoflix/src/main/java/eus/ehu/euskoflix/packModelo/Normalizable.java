@@ -32,7 +32,7 @@ public abstract class Normalizable {
     }
 
     public double desnormalizar(double pValor) {
-        return (pValor+this.media);//*this.cuasiDesv;
+        return (pValor*this.cuasiDesv)+this.media;
     }
 
     public void setMedia(double media) {

@@ -31,7 +31,7 @@ public abstract class Filtrable {
         return similitudArray;
     }
 
-    public abstract ListaPeliculas recomendar(int pId, int pNum);
+    public abstract ListaPeliculas recomendar(int pNum);
 
     public void addSimilitudSimetrica(Similitud pSimilitud) {
         this.addSimilitud(pSimilitud.getI(),pSimilitud);

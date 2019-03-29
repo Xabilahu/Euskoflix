@@ -1,6 +1,7 @@
 package eus.ehu.euskoflix.packModelo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Cartelera {
 
@@ -56,5 +57,7 @@ public class Cartelera {
         lista.cargarModeloProducto(filtradoProducto);
     }
 
-
+    public HashSet<Integer> getPeliculasNoValoradas(Usuario pUsuario) {
+        return this.lista.getPeliculasNoValoradas(pUsuario);
+    }
 }

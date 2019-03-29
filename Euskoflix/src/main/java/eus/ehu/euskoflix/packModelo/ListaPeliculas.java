@@ -52,4 +52,14 @@ public class ListaPeliculas {
             }
         });
     }
+
+    public HashSet<Integer> getPeliculasNoValoradas(Usuario pUsuario) {
+        HashSet<Integer> valoradas = new HashSet<>();
+        valoradas.addAll(MatrizValoraciones.getInstance().getPeliculasValoradas(pUsuario.getId()));
+        valoradas.retainAll(this.lista.keySet());
+        HashSet<Integer> noValoradas = new HashSet<>();
+        noValoradas.addAll(this.lista.keySet());
+        noValoradas.removeAll(valoradas);
+        return noValoradas;
+    }
 }
