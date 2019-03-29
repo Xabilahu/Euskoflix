@@ -28,9 +28,9 @@ public class BaseDatos {
     //pre: -
     //post: si la base da datos no existe, se crea una nueva
     //desc: metodo para inicializar la base de datos del sistema
-    public void iniciarBD(boolean pTest) {
+    public void iniciarBD(TipoFichero pTipo) {
         if (!comprobarExisteBD())
-            crearBD(pTest);
+            crearBD(pTipo);
         else {
 			/*try {
 				Thread.sleep(6000);
@@ -46,10 +46,10 @@ public class BaseDatos {
     //pre: -
     //post: si existia una base de datos se elimina y se crea una nueva
     //desc: metodo para eliminar la base de datos existente y crear una nueva
-    public void reiniciarBD(boolean pTest) {
+    public void reiniciarBD(TipoFichero pTipo) {
         File file = this.getBDFile();
         file.delete();
-        crearBD(pTest);
+        crearBD(pTipo);
     }
 
     //pre: -
@@ -63,7 +63,7 @@ public class BaseDatos {
     //pre: -
     //post: se introducen las tablas en la base de datos
     //desc: metodo para crear la base de datos con sus tablas y claves
-    private void crearBD(boolean pTest) {
+    private void crearBD(TipoFichero pTipo) {
         File data_dir = new File(this.getBDFile().getParent());
         data_dir.mkdir();
         try {
@@ -121,7 +121,7 @@ public class BaseDatos {
             s.executeUpdate(instruccion);
             s.close();
             c.close();
-            anadirDatos(pTest);
+            anadirDatos(pTipo);
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(-1);
@@ -137,24 +137,34 @@ public class BaseDatos {
         return DriverManager.getConnection("jdbc:sqlite:" + this.getBDFile().getPath());
     }
 
-    private void anadirDatos(boolean pTest) {
-        anadirUsuarios(pTest);
-        anadirPeliculas(pTest);
-        anadirValoraciones(pTest);
-        anadirEtiquetas(pTest);
+    private void anadirDatos(TipoFichero pTipo) {
+        anadirUsuarios(pTipo);
+        anadirPeliculas(pTipo);
+        anadirValoraciones(pTipo);
+        anadirEtiquetas(pTipo);
     }
 
-    private void anadirPeliculas(boolean pTest) {
-        addPeliculaYGenero(pTest);
-        addIds(pTest);
+    private void anadirPeliculas(TipoFichero pTipo) {
+        addPeliculaYGenero(pTipo);
+        addIds(pTipo);
     }
 
-    private void anadirEtiquetas(boolean pTest) {
+    private void anadirEtiquetas(TipoFichero pTipo) {
         try {
             Connection c = this.getConexion();
             c.setAutoCommit(false);
-            String fileName = "tags";
-            if (pTest) fileName = "testTags";
+            String fileName = "";
+            switch (pTipo) {
+                case big:
+                    fileName = "tags";
+                    break;
+                case test:
+                    fileName = "testTags";
+                    break;
+                case small:
+                    fileName = "smallTags";
+                    break;
+            }
             InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(fileName));
             try {
                 BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
@@ -180,12 +190,22 @@ public class BaseDatos {
         }
     }
 
-    private void anadirValoraciones(boolean pTest) {
+    private void anadirValoraciones(TipoFichero pTipo) {
         try {
             Connection c = this.getConexion();
             c.setAutoCommit(false);
-            String fileName = "ratings";
-            if (pTest) fileName = "testRatings";
+            String fileName = "";
+            switch (pTipo) {
+                case big:
+                    fileName = "ratings";
+                    break;
+                case test:
+                    fileName = "testRatings";
+                    break;
+                case small:
+                    fileName = "smallRatings";
+                    break;
+            }
             InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(fileName));
             try {
                 BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
@@ -211,12 +231,22 @@ public class BaseDatos {
         }
     }
 
-    private void anadirUsuarios(boolean pTest) {
+    private void anadirUsuarios(TipoFichero pTipo) {
         try {
             Connection c = this.getConexion();
             c.setAutoCommit(false);
-            String fileName = "nombres";
-            if (pTest) fileName = "testNombres";
+            String fileName = "";
+            switch (pTipo) {
+                case big:
+                    fileName = "nombres";
+                    break;
+                case test:
+                    fileName = "testNombres";
+                    break;
+                case small:
+                    fileName = "nombres";
+                    break;
+            }
             InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(fileName));
             try {
                 BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
@@ -243,12 +273,22 @@ public class BaseDatos {
         }
     }
 
-    private void addIds(boolean pTest) {
+    private void addIds(TipoFichero pTipo) {
         try {
             Connection c = this.getConexion();
             c.setAutoCommit(false);
-            String fileName = "links";
-            if (pTest) fileName = "testLinks";
+            String fileName = "";
+            switch (pTipo) {
+                case big:
+                    fileName = "links";
+                    break;
+                case test:
+                    fileName = "testLinks";
+                    break;
+                case small:
+                    fileName = "smallLinks";
+                    break;
+            }
             InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(fileName));
             BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             in.readLine(); // skip headers
@@ -273,48 +313,70 @@ public class BaseDatos {
 
     }
 
-    private void addPeliculaYGenero(boolean pTest) {
+    private void addPeliculaYGenero(TipoFichero pTipo) {
         try {
             HashMap<String, Integer> genres = new HashMap<String, Integer>();
             Connection c = this.getConexion();
             c.setAutoCommit(false);
-            String fileName = "movies";
-            if (pTest) fileName = "testMovies";
+            String fileName = "";
+            switch (pTipo) {
+                case big:
+                    fileName = "movies";
+                    break;
+                case test:
+                    fileName = "testMovies";
+                    break;
+                case small:
+                    fileName = "smallMovies";
+                    break;
+            }
             InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(fileName));
             BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             in.readLine(); // skip headers
             PreparedStatement peliculasPst = c.prepareStatement("INSERT INTO pelicula VALUES(?,0,?)");
-            PreparedStatement generosPst = c.prepareStatement("INSERT INTO genero(id,nombre) VALUES (?,?)");
-            PreparedStatement peliculaGeneroPst = c.prepareStatement("INSERT INTO pelicula_genero(id_pelicula,id_genero) VALUES(?,?)");
+            PreparedStatement generosPst = null;
+            PreparedStatement peliculaGeneroPst = null;
+            if (pTipo != TipoFichero.small) {
+                generosPst = c.prepareStatement("INSERT INTO genero(id,nombre) VALUES (?,?)");
+                peliculaGeneroPst = c.prepareStatement("INSERT INTO pelicula_genero(id_pelicula,id_genero) VALUES(?,?)");
+            }
             int genreId = 1;
             while (in.ready()) {
                 String line = in.readLine();
                 StringTokenizer stringTokenizer = new StringTokenizer(line);
                 int id = Integer.parseInt(stringTokenizer.nextToken(","));
                 // añadiendo titulo
-                peliculasPst.setString(2, line.substring(line.indexOf(",") + 1, line.lastIndexOf(",")));
+                if (pTipo == TipoFichero.small) {
+                    peliculasPst.setString(2, stringTokenizer.nextToken());
+                } else {
+                    peliculasPst.setString(2, line.substring(line.indexOf(",") + 1, line.lastIndexOf(",")));
+                }
                 peliculasPst.setInt(1, id);
                 peliculasPst.addBatch();
                 //añadiendo genero
-                stringTokenizer = new StringTokenizer(line.substring(line.lastIndexOf(",") + 1));
-                while (stringTokenizer.hasMoreTokens()) {
-                    String genre = stringTokenizer.nextToken("|");
-                    if (!genres.containsKey(genre)) {
-                        //añadiendo genero si no exite
-                        genres.put(genre, genreId);
-                        generosPst.setInt(1, genreId++);
-                        generosPst.setString(2, genre);
-                        generosPst.addBatch();
+                if (pTipo != TipoFichero.small) {
+                    stringTokenizer = new StringTokenizer(line.substring(line.lastIndexOf(",") + 1));
+                    while (stringTokenizer.hasMoreTokens()) {
+                        String genre = stringTokenizer.nextToken("|");
+                        if (!genres.containsKey(genre)) {
+                            //añadiendo genero si no exite
+                            genres.put(genre, genreId);
+                            generosPst.setInt(1, genreId++);
+                            generosPst.setString(2, genre);
+                            generosPst.addBatch();
+                        }
+                        //añadiendo relacion pelicula genero
+                        peliculaGeneroPst.setInt(1, id);
+                        peliculaGeneroPst.setInt(2, genres.get(genre));
+                        peliculaGeneroPst.addBatch();
                     }
-                    //añadiendo relacion pelicula genero
-                    peliculaGeneroPst.setInt(1, id);
-                    peliculaGeneroPst.setInt(2, genres.get(genre));
-                    peliculaGeneroPst.addBatch();
                 }
             }
             peliculasPst.executeBatch();
-            generosPst.executeBatch();
-            peliculaGeneroPst.executeBatch();
+            if (pTipo != TipoFichero.small) {
+                generosPst.executeBatch();
+                peliculaGeneroPst.executeBatch();
+            }
             c.commit();
             c.close();
             in.close();

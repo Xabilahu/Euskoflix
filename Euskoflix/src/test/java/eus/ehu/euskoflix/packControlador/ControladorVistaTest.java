@@ -2,6 +2,7 @@ package eus.ehu.euskoflix.packControlador;
 
 import eus.ehu.euskoflix.packDatos.BaseDatos;
 import eus.ehu.euskoflix.packDatos.GestionDatos;
+import eus.ehu.euskoflix.packDatos.TipoFichero;
 import eus.ehu.euskoflix.packModelo.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,7 +22,7 @@ public class ControladorVistaTest {
     @BeforeClass
     public static void setUp() throws Exception {
         BaseDatos.getBaseDatos().eliminarBaseDatos();
-        GestionDatos.getInstance().cargarDatos(false);
+        GestionDatos.getInstance().cargarDatos(TipoFichero.big);
     }
 
     /**

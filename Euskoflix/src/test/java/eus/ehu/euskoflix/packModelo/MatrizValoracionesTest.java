@@ -2,6 +2,7 @@ package eus.ehu.euskoflix.packModelo;
 
 import eus.ehu.euskoflix.packDatos.BaseDatos;
 import eus.ehu.euskoflix.packDatos.GestionDatos;
+import eus.ehu.euskoflix.packDatos.TipoFichero;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 
@@ -28,8 +29,8 @@ public class MatrizValoracionesTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-       // BaseDatos.getBaseDatos().eliminarBaseDatos();
-        GestionDatos.getInstance().cargarDatos(false);
+        BaseDatos.getBaseDatos().eliminarBaseDatos();
+        GestionDatos.getInstance().cargarDatos(TipoFichero.small);
     }
 
     @AfterClass
@@ -65,7 +66,7 @@ public class MatrizValoracionesTest {
      */
     @Test
     public void testGetValoracionesByPelicula() throws Exception{
-        GestionDatos.getInstance().cargarDatos(false);
+        GestionDatos.getInstance().cargarDatos(TipoFichero.big);
         Iterator<Map.Entry<Integer,Double>> iterator = MatrizValoraciones.getInstance().getValoracionesByPelicula(1).entrySet().iterator();
         try {
             ResultSet rst = BaseDatos.getBaseDatos().getValoracionesByPelicula(1);

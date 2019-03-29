@@ -3,6 +3,7 @@ package eus.ehu.euskoflix.packVista;
 import com.alee.laf.WebLookAndFeel;
 import eus.ehu.euskoflix.packControlador.ControladorVista;
 import eus.ehu.euskoflix.packDatos.PropertiesManager;
+import eus.ehu.euskoflix.packDatos.TipoFichero;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -50,7 +51,7 @@ public class EuskoFlixLoader extends JFrame {
         }
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
-        ControladorVista.getInstance().cargarDatos(false);
+        ControladorVista.getInstance().cargarDatos();
         this.setVisible(false);
         VentanaCargaDatos ventanaCargaDatos = new VentanaCargaDatos();
         JOptionPane.showMessageDialog(ventanaCargaDatos, "Doble click en una película para más información",

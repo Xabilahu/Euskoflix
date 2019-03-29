@@ -1,6 +1,7 @@
 package eus.ehu.euskoflix.packControlador;
 
 import eus.ehu.euskoflix.packDatos.GestionDatos;
+import eus.ehu.euskoflix.packDatos.TipoFichero;
 import eus.ehu.euskoflix.packModelo.*;
 
 import java.util.LinkedHashMap;
@@ -19,8 +20,8 @@ public class ControladorVista {
         return mControladorVista;
     }
 
-    public void cargarDatos(boolean pTest) {
-        GestionDatos.getInstance().cargarDatos(pTest);
+    public void cargarDatos() {
+        GestionDatos.getInstance().cargarDatos(TipoFichero.big);
     }
 
     public String[][] datosUsuario() {

@@ -29,10 +29,10 @@ public class MatrizValoraciones {
     
     public Similitud simPersonas(Usuario pPersona1, Usuario pPersona2) {
         double similitud = 0;
-        List<Double> valoracionU1 = new ArrayList<>();
-        List<Double> valoracionU2 = new ArrayList<>(this.valoraciones.get(pPersona2.getId()).values());
-        List<AbstractMap.SimpleEntry<Double,Double>> interseccion = new ArrayList<>();
         try{
+            List<Double> valoracionU1 = new ArrayList<>();
+            List<Double> valoracionU2 = new ArrayList<>(this.valoraciones.get(pPersona2.getId()).values());
+            List<AbstractMap.SimpleEntry<Double,Double>> interseccion = new ArrayList<>();
             for (Double valoracion : this.valoraciones.get(pPersona1.getId()).values()){
                 valoracionU1.add(pPersona1.normalizar(valoracion));
             }

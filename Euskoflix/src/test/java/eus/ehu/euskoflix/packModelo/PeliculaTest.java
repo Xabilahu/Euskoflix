@@ -2,6 +2,7 @@ package eus.ehu.euskoflix.packModelo;
 
 import eus.ehu.euskoflix.packDatos.BaseDatos;
 import eus.ehu.euskoflix.packDatos.GestionDatos;
+import eus.ehu.euskoflix.packDatos.TipoFichero;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -19,7 +20,7 @@ public class PeliculaTest {
     @BeforeClass
     public static void setUp() throws Exception {
         BaseDatos.getBaseDatos().eliminarBaseDatos();
-        GestionDatos.getInstance().cargarDatos(false);
+        GestionDatos.getInstance().cargarDatos(TipoFichero.big);
     }
 
     @Test

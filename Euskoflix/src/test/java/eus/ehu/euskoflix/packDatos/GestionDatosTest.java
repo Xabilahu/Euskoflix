@@ -19,7 +19,7 @@ public class GestionDatosTest {
     @BeforeClass
     public static void before() throws Exception {
         BaseDatos.getBaseDatos().eliminarBaseDatos();
-        GestionDatos.getInstance().cargarDatos(true);
+        GestionDatos.getInstance().cargarDatos(TipoFichero.test);
     }
 
     @AfterClass
