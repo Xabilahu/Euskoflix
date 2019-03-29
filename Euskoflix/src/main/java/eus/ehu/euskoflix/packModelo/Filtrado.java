@@ -28,8 +28,8 @@ public class Filtrado {
         filtros[2] = new FiltradoContenido();
     }
 
-    public ListaPeliculas recomendar(TipoRecomendacion pTipo, int pCantidad) {
-        ListaPeliculas lp = null;
+    public ListaPeliculasRecomendadas recomendar(TipoRecomendacion pTipo, int pCantidad) {
+        ListaPeliculasRecomendadas lp = null;
         switch (pTipo) {
             case Persona:
                 if ((filtros[0] == null)) {

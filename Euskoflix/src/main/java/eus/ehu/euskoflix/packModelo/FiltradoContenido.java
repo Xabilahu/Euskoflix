@@ -12,7 +12,7 @@ public class FiltradoContenido extends Filtrable {
     }
 
     @Override
-    public ListaPeliculas recomendar(int pNum) {
+    public ListaPeliculasRecomendadas recomendar(int pNum) {
         return null;
     }
 

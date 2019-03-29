@@ -81,16 +81,19 @@ public class MatrizValoracionesTest {
 
     }
     @Test
-    public void testSimPersonas() {
+    public void testSimPersonas() throws IOException {
         CatalogoUsuarios.getInstance().login(new Usuario(1,"","","euskoflix"));
-        Filtrado.getInstance().recomendar(TipoRecomendacion.Persona,10);
-
+        FileWriter fw = new FileWriter("pelisRecomendadesSimPersonas_1");
+        fw.write(Filtrado.getInstance().recomendar(TipoRecomendacion.Persona,10).toString());
+        fw.close();
     }
 
     @Test
-    public void testSimPeliculas(){
+    public void testSimPeliculas() throws IOException {
         CatalogoUsuarios.getInstance().login(new Usuario(1,"","","euskoflix"));
-        Filtrado.getInstance().recomendar(TipoRecomendacion.Pelicula,10);
+        FileWriter fw = new FileWriter("pelisRecomendadesSimPeliculas_1");
+        fw.write(Filtrado.getInstance().recomendar(TipoRecomendacion.Pelicula,10).toString());
+        fw.close();
     }
 
 } 
