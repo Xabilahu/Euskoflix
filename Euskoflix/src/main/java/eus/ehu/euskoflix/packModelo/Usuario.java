@@ -55,5 +55,4 @@ public class Usuario extends Normalizable {
     }
 
 
-
 }

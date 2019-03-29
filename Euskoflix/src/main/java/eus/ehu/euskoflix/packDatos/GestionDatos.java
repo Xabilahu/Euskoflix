@@ -17,7 +17,6 @@ import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class GestionDatos {
 
@@ -198,18 +197,18 @@ public class GestionDatos {
         HashMap<Integer, HashMap<Integer, Double>> resultado = new HashMap<>();
         ResultSet rst = BaseDatos.getBaseDatos().getValoraciones();
         try {
-            while(rst.next()){
+            while (rst.next()) {
                 int usuario = rst.getInt("id_usuario");
                 int pelicula = rst.getInt("id_pelicula");
                 double valoracion = rst.getDouble("valoracion");
-                HashMap<Integer,Double> pelis = resultado.get(usuario);
+                HashMap<Integer, Double> pelis = resultado.get(usuario);
                 boolean par = true;
-                if (pelis ==  null){
+                if (pelis == null) {
                     pelis = new HashMap<>();
-                    pelis.put(pelicula,valoracion);
-                    resultado.put(usuario,pelis);
-                }else{
-                    pelis.put(pelicula,valoracion);
+                    pelis.put(pelicula, valoracion);
+                    resultado.put(usuario, pelis);
+                } else {
+                    pelis.put(pelicula, valoracion);
                 }
             }
         } catch (SQLException e) {

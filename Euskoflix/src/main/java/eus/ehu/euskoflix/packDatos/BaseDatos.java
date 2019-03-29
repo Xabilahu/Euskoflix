@@ -488,7 +488,7 @@ public class BaseDatos {
     /**
      * This method is only used in jUnit
      */
-    public ResultSet getValoracionesByPelicula(int pId) throws SQLException{
+    public ResultSet getValoracionesByPelicula(int pId) throws SQLException {
         ResultSet rst = null;
         PreparedStatement pst = this.getConexion().prepareStatement("SELECT id_usuario, valoracion FROM valoracion WHERE id_pelicula = ? ORDER BY id_usuario ASC");
         pst.setInt(1, pId);

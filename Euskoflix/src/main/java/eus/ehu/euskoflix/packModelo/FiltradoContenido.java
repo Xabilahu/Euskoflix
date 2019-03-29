@@ -16,6 +16,11 @@ public class FiltradoContenido extends Filtrable {
         return null;
     }
 
+    @Override
+    public void cargar() {
+
+    }
+
     //HashMap < Tag,nt>
     //HashMap <Tag,ArrayList<Pelicula,int>>
 

@@ -1,7 +1,5 @@
 package eus.ehu.euskoflix.packModelo;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -23,7 +21,7 @@ public class ListaPeliculas {
     public int getNumPeliculas() {
         return this.lista.size();
     }
- 
+
     public Pelicula getPeliculaPorId(int pId) {
         if (this.lista.containsKey(pId)) {
             return this.lista.get(pId);
@@ -33,7 +31,7 @@ public class ListaPeliculas {
 
     public void cargarMediaDesviacionesPeliculas() {
         for (Pelicula pelicula : this.lista.values()) {
-            if (MatrizValoraciones.getInstance().tieneValoracionesPelicula(pelicula.getId())){
+            if (MatrizValoraciones.getInstance().tieneValoracionesPelicula(pelicula.getId())) {
                 MatrizValoraciones.getInstance().cargarValoracionesNormalizadas(pelicula);
             }
         }
@@ -46,7 +44,7 @@ public class ListaPeliculas {
         HashSet<Integer> noValoradas = new HashSet<>();
         noValoradas.addAll(this.lista.keySet());
         noValoradas.removeAll(valoradas);
-        noValoradas.parallelStream().forEach((i) -> {
+        noValoradas.stream().forEach((i) -> {
             for (Integer j : valoradas) {
                 filtradoProducto.addSimilitudSimetrica(MatrizValoraciones.getInstance().simPelicula(Cartelera.getInstance().getPeliculaPorIdSinMapeo(i), Cartelera.getInstance().getPeliculaPorIdSinMapeo(j)));
             }

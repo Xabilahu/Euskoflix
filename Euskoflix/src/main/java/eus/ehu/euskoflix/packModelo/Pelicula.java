@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class Pelicula extends Normalizable{
+public class Pelicula extends Normalizable {
 
     private int id;
     private String titulo;

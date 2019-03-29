@@ -15,8 +15,8 @@ public abstract class Normalizable {
         this.cuasiDesv = cuasiDesv;
     }
 
-    public double normalizar(double pValor) throws Exception{
-        double normalizado = (pValor-this.media)/this.cuasiDesv;
+    public double normalizar(double pValor) throws Exception {
+        double normalizado = (pValor - this.media) / this.cuasiDesv;
         if (Double.isNaN(normalizado)) {
             throw new Exception();
         }
@@ -27,19 +27,19 @@ public abstract class Normalizable {
         return media;
     }
 
-    public double getCuasiDesv() {
-        return cuasiDesv;
-    }
-
-    public double desnormalizar(double pValor) {
-        return (pValor*this.cuasiDesv)+this.media;
-    }
-
     public void setMedia(double media) {
         this.media = media;
     }
 
+    public double getCuasiDesv() {
+        return cuasiDesv;
+    }
+
     public void setCuasiDesv(double desviacionTipica) {
         this.cuasiDesv = desviacionTipica;
+    }
+
+    public double desnormalizar(double pValor) {
+        return (pValor * this.cuasiDesv) + this.media;
     }
 }

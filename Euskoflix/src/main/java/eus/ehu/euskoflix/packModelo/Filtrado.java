@@ -1,56 +1,90 @@
 package eus.ehu.euskoflix.packModelo;
 
-import java.util.LinkedList;
-
 public class Filtrado {
 
     private static Filtrado ourInstance = new Filtrado();
-    private static Filtrable[] filtros;
 
+    private FiltradoProducto filtradoProducto;
+    private FiltradoPersona filtradoPersona;
+    private FiltradoContenido filtradoContenido;
+
+
+    private Filtrado() {
+
+    }
 
     public static Filtrado getInstance() {
         return ourInstance;
     }
 
-    private Filtrado() {
-        filtros = new Filtrable[3];
+    public void cargarModelos() {
+        this.cargarModeloPersona();
+        this.cargarModeloProductos();
+        this.cargarModeloContenido();
     }
 
     private void cargarModeloPersona() {
-        filtros[0] = new FiltradoPersona();
+        this.filtradoPersona = new FiltradoPersona();
+        filtradoPersona.cargar();
     }
 
     private void cargarModeloProductos() {
-        filtros[1] = new FiltradoProducto();
+        this.filtradoProducto = new FiltradoProducto();
+        filtradoProducto.cargar();
     }
 
     private void cargarModeloContenido() {
-        filtros[2] = new FiltradoContenido();
+        this.filtradoContenido = new FiltradoContenido();
+        filtradoContenido.cargar();
     }
 
     public ListaPeliculasRecomendadas recomendar(TipoRecomendacion pTipo, int pCantidad) {
+        if (!isModeloCargado(pTipo)) {
+            cargarModelo(pTipo);
+        }
         ListaPeliculasRecomendadas lp = null;
         switch (pTipo) {
             case Persona:
-                if ((filtros[0] == null)) {
-                    this.cargarModeloPersona();
-                }
-                lp = filtros[0].recomendar(pCantidad);
+                lp = this.filtradoPersona.recomendar(pCantidad);
                 break;
             case Pelicula:
-                if ((filtros[1] == null)) {
-                    this.cargarModeloProductos();
-                }
-                lp = filtros[1].recomendar(pCantidad);
+                lp = this.filtradoProducto.recomendar(pCantidad);
                 break;
             case Contenido:
-                if ((filtros[2] == null)) {
-                    this.cargarModeloContenido();
-                }
-                lp = filtros[2].recomendar(pCantidad);
+                lp = this.filtradoContenido.recomendar(pCantidad);
                 break;
         }
         return lp;
+    }
+
+    private void cargarModelo(TipoRecomendacion pTipo) {
+        switch (pTipo) {
+            case Persona:
+                cargarModeloPersona();
+                break;
+            case Pelicula:
+                cargarModeloProductos();
+                break;
+            case Contenido:
+                cargarModeloContenido();
+                break;
+        }
+    }
+
+    private boolean isModeloCargado(TipoRecomendacion pTipo) {
+        boolean resultado = false;
+        switch (pTipo) {
+            case Persona:
+                resultado = this.filtradoPersona != null;
+                break;
+            case Pelicula:
+                resultado = this.filtradoProducto != null;
+                break;
+            case Contenido:
+                resultado = this.filtradoContenido != null;
+                break;
+        }
+        return resultado;
     }
 
 }

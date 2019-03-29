@@ -30,9 +30,9 @@ public class CatalogoUsuarios {
 
     public Usuario login(Usuario pUsuario) {
         Usuario user = null;
-        if ((user=this.getUsuarioPorId(pUsuario.getId())) != null && user.comprobarPassword(pUsuario)) {
+        if ((user = this.getUsuarioPorId(pUsuario.getId())) != null && user.comprobarPassword(pUsuario)) {
             this.logged = user;
-
+            Filtrado.getInstance().cargarModelos();
         }
         return user;
     }
@@ -50,7 +50,7 @@ public class CatalogoUsuarios {
         for (Usuario u : this.lista) {
             if (!primero && MatrizValoraciones.getInstance().tieneValoracionesUsuario(u.getId())) {
                 MatrizValoraciones.getInstance().cargarValoracionesNormalizadas(u);
-            }else{
+            } else {
                 primero = false;
             }
 
@@ -85,9 +85,9 @@ public class CatalogoUsuarios {
     }
 
     public void cargarModeloPersona(FiltradoPersona filtradoPersona) {
-        this.lista.forEach(usuario -> {
-            if (usuario != null && !usuario.equals(logged)){
-                filtradoPersona.addSimilitud(logged.getId(),MatrizValoraciones.getInstance().simPersonas(logged,usuario));
+        this.lista.stream().forEach(usuario -> {
+            if (usuario != null && !usuario.equals(logged)) {
+                filtradoPersona.addSimilitud(logged.getId(), MatrizValoraciones.getInstance().simPersonas(logged, usuario));
             }
         });
     }
