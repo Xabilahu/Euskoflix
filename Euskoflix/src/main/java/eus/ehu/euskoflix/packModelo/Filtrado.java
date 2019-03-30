@@ -1,5 +1,7 @@
 package eus.ehu.euskoflix.packModelo;
 
+import java.util.HashMap;
+
 public class Filtrado {
 
     private static Filtrado ourInstance = new Filtrado();
@@ -35,7 +37,6 @@ public class Filtrado {
 
     private void cargarModeloContenido() {
         this.filtradoContenido = new FiltradoContenido();
-        filtradoContenido.cargar();
     }
 
     public ListaPeliculasRecomendadas recomendar(TipoRecomendacion pTipo, int pCantidad) {
@@ -87,4 +88,12 @@ public class Filtrado {
         return resultado;
     }
 
+    public void cargarTf(HashMap<Integer, HashMap<Tag, Double>> pTf) {
+        this.cargarModeloContenido();
+        this.filtradoContenido.cargarTF(pTf);
+    }
+
+    public void cargarIDF() {
+        this.filtradoContenido.cargar();
+    }
 }

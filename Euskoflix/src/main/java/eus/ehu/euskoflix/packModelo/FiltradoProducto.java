@@ -26,9 +26,7 @@ public class FiltradoProducto extends Filtrable {
     @Override
     public void cargar() {
         Cartelera.getInstance().cargarModeloProductos(this);
-        int id = CatalogoUsuarios.getInstance().getUsuarioLogueado().getId();
         HashSet<Integer> noValoradas = Cartelera.getInstance().getPeliculasNoValoradas(CatalogoUsuarios.getInstance().getUsuarioLogueado());
-
         for (Integer noValorada : noValoradas) {
             double numerador = 0.0;
             double denominador = 0.0;

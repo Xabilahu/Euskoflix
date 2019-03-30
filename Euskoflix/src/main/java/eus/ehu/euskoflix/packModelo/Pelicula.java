@@ -3,6 +3,7 @@ package eus.ehu.euskoflix.packModelo;
 import eus.ehu.euskoflix.packDatos.GestionDatos;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -10,7 +11,7 @@ public class Pelicula extends Normalizable {
 
     private int id;
     private String titulo;
-    private LinkedList<Tag> lista;
+    private ListaTags lista;
     private int tmdbId;
     private Informacion infoExtra;
 
@@ -18,17 +19,16 @@ public class Pelicula extends Normalizable {
     public Pelicula(int pId, String pTitulo, int pTmdbId) {
         this.id = pId;
         this.titulo = pTitulo;
-        this.lista = new LinkedList<>();
         this.tmdbId = pTmdbId;
-        this.lista = new LinkedList<>();
+        this.lista = new ListaTags();
     }
 
     public void addTag(Tag pTag) {
-        this.lista.add(pTag);
+        this.lista.addTag(pTag);
     }
 
     public int getNumTags() {
-        return this.lista.size();
+        return this.lista.numTags();
     }
 
     public void print() {
@@ -73,22 +73,14 @@ public class Pelicula extends Normalizable {
     }
 
     public String[][] tagsToStringArray() {
-        String[][] resultado = new String[this.getNumTags()][2];
-        Iterator<Tag> itr = this.lista.iterator();
-        int i = 0;
-        while (itr.hasNext()) {
-            Tag t = itr.next();
-            resultado[i][0] = t.getNombre();
-            resultado[i][1] = String.valueOf(t.getCantidad());
-            i++;
-        }
-        return resultado;
+        return this.lista.tagsToStringArray();
     }
 
     /**
      * This method is only used in jUnit
      */
-    public LinkedList<Tag> getLista() {
+    public ListaTags getLista() {
         return lista;
     }
+
 }

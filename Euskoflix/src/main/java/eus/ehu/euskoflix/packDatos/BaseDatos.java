@@ -505,4 +505,15 @@ public class BaseDatos {
         f.delete();
     }
 
+    public ResultSet getNt() {
+        ResultSet rst = null;
+        try {
+            PreparedStatement pst = this.getConexion().prepareStatement("SELECT etiqueta,count(distinct id_pelicula) FROM etiqueta GROUP BY etiqueta");
+            rst = pst.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rst;
+    }
+
 }

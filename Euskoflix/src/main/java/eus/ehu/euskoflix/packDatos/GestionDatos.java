@@ -34,20 +34,25 @@ public class GestionDatos {
 
     public void cargarDatos(TipoFichero pTipo) {
         BaseDatos.getBaseDatos().iniciarBD(pTipo);
-        this.cargarPeliculas();
+        this.cargarPeliculasTagsTf();
         this.cargarUsuarios();
         MatrizValoraciones.getInstance().cargarValoraciones();
         CatalogoUsuarios.getInstance().cargarMediasDesviacionesUsuarios();
         Cartelera.getInstance().cargarMediasDesviacionesPeliculas();
     }
 
-    private void cargarPeliculas() {
+    private void cargarPeliculasTagsTf() {
         ResultSet pelis = BaseDatos.getBaseDatos().getPeliculas();
+        HashMap<Integer,HashMap<Tag,Double>> tf = new HashMap<>();
         try {
             while (pelis.next()) {
                 Pelicula p = new Pelicula(pelis.getInt("id"), pelis.getString("titulo"), pelis.getInt("idTMDB"));
                 Cartelera.getInstance().addPelicula(p);
+                this.getTags(p);
+                tf.put(p.getId(), new HashMap<>());
+                p.getLista().rellenarTf(tf.get(p.getId()));
             }
+            Filtrado.getInstance().cargarTf(tf);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -216,4 +221,18 @@ public class GestionDatos {
         }
         return resultado;
     }
+
+    public HashMap<Tag, Integer> cargarNt() {
+        ResultSet rst = BaseDatos.getBaseDatos().getNt();
+        HashMap<Tag, Integer> nt = new HashMap<>();
+        try {
+            while (rst.next()) {
+                nt.put(new Tag(rst.getString(1)), rst.getInt(2));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nt;
+    }
+
 }
