@@ -43,14 +43,14 @@ public class GestionDatos {
 
     private void cargarPeliculasTagsTf() {
         ResultSet pelis = BaseDatos.getBaseDatos().getPeliculas();
-        HashMap<Integer,HashMap<Tag,Double>> tf = new HashMap<>();
+        ListaEtiquetasFiltrado tf = new ListaEtiquetasFiltrado();
         try {
             while (pelis.next()) {
                 Pelicula p = new Pelicula(pelis.getInt("id"), pelis.getString("titulo"), pelis.getInt("idTMDB"));
                 Cartelera.getInstance().addPelicula(p);
                 this.getTags(p);
-                tf.put(p.getId(), new HashMap<>());
-                p.getLista().rellenarTf(tf.get(p.getId()));
+                tf.add(p.getId());
+                p.getLista().rellenarTf(tf,p.getId());
             }
             Filtrado.getInstance().cargarTf(tf);
         } catch (SQLException e) {

@@ -31,24 +31,10 @@ public class FiltradoProducto extends Filtrable {
             double numerador = 0.0;
             double denominador = 0.0;
             Similitud[] similitudes = super.getNMasSimilares(noValorada);
-            for (Similitud similitud : similitudes) {
-                try {
-                    //No hay que desnormalizar ni normalizar la valoracion porque la valoracion ya se encuentra en la muestra
-                    //Solo en el coseno se normaliza para conseguir el ángulo de similitud teniendo en cuenta un dos muestras parecidas
-                    numerador += Math.abs(
-                            MatrizValoraciones.getInstance().getValoracion(similitud.getJ(), noValorada)
-                                    * similitud.getSim());
-                    denominador += similitud.getSim();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-            super.addRecomendacion(noValorada,
-                    //CatalogoUsuarios.getInstance().getUsuarioLogueado().desnormalizar(numerador/denominador)
-                    numerador / denominador
-            );
+            generacionRecomendaciones(noValorada, numerador, denominador, similitudes);
         }
     }
+
+
 
 }

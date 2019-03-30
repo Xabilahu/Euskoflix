@@ -88,7 +88,7 @@ public class Filtrado {
         return resultado;
     }
 
-    public void cargarTf(HashMap<Integer, HashMap<Tag, Double>> pTf) {
+    public void cargarTf(ListaEtiquetasFiltrado pTf) {
         this.cargarModeloContenido();
         this.filtradoContenido.cargarTF(pTf);
     }

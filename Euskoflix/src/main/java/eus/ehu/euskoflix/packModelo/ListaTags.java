@@ -28,9 +28,15 @@ public class ListaTags {
         return resultado;
     }
 
-    public void rellenarTf(HashMap<Tag, Double> pTf) {
+    public void rellenarTf(ListaEtiquetasFiltrado pTf,int pIdPelicula) {
+        double denominador = 0.0;
+        for (Tag tag : this.lista.keySet()) {
+            denominador += tag.getCantidad()*tag.getCantidad();
+        }
+        denominador = Math.sqrt(denominador);
+        final double tmp = denominador;
         this.lista.keySet().forEach(tag -> {
-            pTf.put(tag, (double) tag.getCantidad());
+            pTf.add(pIdPelicula,tag,(double) tag.getCantidad() /  tmp);
         });
     }
 }
