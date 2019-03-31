@@ -31,7 +31,7 @@ public class FiltradoProducto extends Filtrable {
             double numerador = 0.0;
             double denominador = 0.0;
             Similitud[] similitudes = super.getNMasSimilares(noValorada);
-            generacionRecomendaciones(noValorada, numerador, denominador, similitudes);
+            generarValoracionRecomendada(noValorada, numerador, denominador, similitudes);
         }
     }
 

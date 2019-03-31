@@ -57,7 +57,7 @@ public abstract class Filtrable {
         return this.recomendados.getNRecomendaciones(pNum);
     }
 
-    public void generacionRecomendaciones(Integer noValorada, double numerador, double denominador, Similitud[] similitudes) {
+    public void generarValoracionRecomendada(Integer noValorada, double numerador, double denominador, Similitud[] similitudes) {
         for (Similitud similitud : similitudes) {
             try {
                 //No hay que desnormalizar ni normalizar la valoracion porque la valoracion ya se encuentra en la muestra
