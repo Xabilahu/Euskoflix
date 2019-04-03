@@ -1,19 +1,20 @@
 package eus.ehu.euskoflix.packVista;
 
-import eus.ehu.euskoflix.packControlador.ControladorVista;
-
 import javax.swing.*;
+
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * @author kaecius
  */
 public class InformacionExtraView extends javax.swing.JDialog {
 
+	private static final long serialVersionUID = 1L;
+	
     /**
      * Creates new form InformacionExtra
      */
-
 
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
@@ -37,13 +38,10 @@ public class InformacionExtraView extends javax.swing.JDialog {
 
     public InformacionExtraView(java.awt.Frame parent, boolean modal, int pPelicula) {
         super(parent, modal);
-        initComponents(pPelicula);
-        fillComponents(pPelicula);
     }
 
 
-    private void fillComponents(int pPelicula) {
-        Object[] info = ControladorVista.getInstance().getInfoPelicula(pPelicula);
+    public void fillComponents(Object[] info) {
         lblTituloContent.setText((String) info[0]);
         lblDirectorContent.setText((String) info[1]);
         lblImagen.setText("");
@@ -58,7 +56,7 @@ public class InformacionExtraView extends javax.swing.JDialog {
      *
      * @param pPelicula
      */
-    private void initComponents(int pPelicula) {
+    public void initComponents(int pPelicula, String[][] pDatosTags, String[] pCabeceraTags, String[][] pDatosRatings, String[] pCabeceraRatings) {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
@@ -181,8 +179,11 @@ public class InformacionExtraView extends javax.swing.JDialog {
         jTable1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jTable1.setRowSelectionAllowed(false);
         jTable1.getTableHeader().setReorderingAllowed(false);
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(ControladorVista.getInstance().datosTags(pPelicula), ControladorVista.getInstance().getCabeceraTags()) {
-            @Override
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(pDatosTags, pCabeceraTags) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -201,7 +202,8 @@ public class InformacionExtraView extends javax.swing.JDialog {
 
         jTable2.setRowSelectionAllowed(false);
         jTable2.getTableHeader().setReorderingAllowed(false);
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(ControladorVista.getInstance().datosRatings(pPelicula), ControladorVista.getInstance().getCabeceraRatings()) {
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(pDatosRatings, pCabeceraRatings) {
+			private static final long serialVersionUID = 1L;
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -224,11 +226,7 @@ public class InformacionExtraView extends javax.swing.JDialog {
 
         jButton1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jButton1.setText("Cerrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        
         jPanel6.add(jButton1);
 
         getContentPane().add(jPanel6, java.awt.BorderLayout.SOUTH);
@@ -237,8 +235,8 @@ public class InformacionExtraView extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        InformacionExtraView.this.dispose();
+    public void addCerrarListener(ActionListener pListenForCerrar) {
+    	this.jButton1.addActionListener(pListenForCerrar);
     }
 
 }

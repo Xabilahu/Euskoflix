@@ -3,14 +3,38 @@ package eus.ehu.euskoflix.packControlador;
 import eus.ehu.euskoflix.packDatos.GestionDatos;
 import eus.ehu.euskoflix.packDatos.TipoFichero;
 import eus.ehu.euskoflix.packModelo.*;
+import eus.ehu.euskoflix.packVista.EuskoFlixLoader;
+import eus.ehu.euskoflix.packVista.InformacionExtraView;
+import eus.ehu.euskoflix.packVista.VentanaCargaDatos;
 
+import java.awt.Cursor;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+
 public class ControladorVista {
+	
     private static ControladorVista mControladorVista;
 
+    /* Controlador */
+    private GestionDatos gestionDatos;
+    
+    /* Vista */
+    private EuskoFlixLoader euskoFlixLoader;
+    private VentanaCargaDatos ventanaCargaDatos;
+    private InformacionExtraView informacionExtraView;
+    
     private ControladorVista() {
+    	this.gestionDatos = GestionDatos.getInstance();
+    	gestionDatos.cargarDatos(TipoFichero.test);
+    	this.euskoFlixLoader = new EuskoFlixLoader();
     }
 
     public static ControladorVista getInstance() {
@@ -19,9 +43,39 @@ public class ControladorVista {
         }
         return mControladorVista;
     }
+    
+    public void iniciarAplicacion() {
+    	this.mostrarLoader();
+    	this.gestionDatos.cargarDatos(TipoFichero.test);
+    	this.cerrarLoader();
+    	this.mostrarCargaDatos();
+    }
+    
+    private void mostrarLoader() {
+    	this.euskoFlixLoader.setVisible(true);    	
+    }
+    
+    private void cerrarLoader() {
+    	this.euskoFlixLoader.setVisible(false);
+    	this.euskoFlixLoader.dispose();
+    }
+    
+    private void mostrarCargaDatos() {
+
+    	this.ventanaCargaDatos = new VentanaCargaDatos(datosUsuario(), getCabeceraUsers(), datosPelis(), getCabeceraFilms());
+    	
+    	/* Listeners VentanaCargaDatos*/
+    	this.ventanaCargaDatos.addInfoExtraListener(new InfoExtraListener());
+    	
+    	this.ventanaCargaDatos.setVisible(true);
+    	JOptionPane.showMessageDialog(ventanaCargaDatos,
+    			"Doble click en una película para más información", "Info",
+    			JOptionPane.INFORMATION_MESSAGE);
+    }
+
 
     public void cargarDatos() {
-        GestionDatos.getInstance().cargarDatos(TipoFichero.big);
+        GestionDatos.getInstance().cargarDatos(TipoFichero.test);
     }
 
     public String[][] datosUsuario() {
@@ -66,6 +120,17 @@ public class ControladorVista {
         }
         return resultado;
     }
+    
+    public void crearInfoExtraView(int pId) {
+   	 informacionExtraView = new InformacionExtraView(ventanaCargaDatos, true, pId);
+        Object[] info = getInfoPelicula(pId);
+        informacionExtraView.initComponents(pId, datosTags(pId), getCabeceraTags(), datosRatings(pId), getCabeceraRatings());
+        informacionExtraView.fillComponents(info);
+        
+        informacionExtraView.addCerrarListener(new CerrarInfoExtraListener());
+        ventanaCargaDatos.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        informacionExtraView.setVisible(true);
+   }
 
     public String[] getCabeceraRatings() {
         return new String[]{"NombreUsuario", "Rating"};
@@ -101,6 +166,45 @@ public class ControladorVista {
         result[2] = p.getSinopsis();
         result[3] = p.getPoster();
         return result;
+    }
+    
+    /* Implementaciones de los listeners */
+    
+    class InfoExtraListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) { }
+
+		@Override
+		public void mousePressed(MouseEvent mouseEvent) {
+            JTable table = (JTable) mouseEvent.getSource();
+            Point point = mouseEvent.getPoint();
+            int row = table.rowAtPoint(point);
+            if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+                int id = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
+                ventanaCargaDatos.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                crearInfoExtraView(id);       
+                
+            }
+        }
+
+		@Override
+		public void mouseReleased(MouseEvent e) { }
+
+		@Override
+		public void mouseEntered(MouseEvent e) { }
+		
+		@Override
+		public void mouseExited(MouseEvent e) {	}
+	}
+
+    class CerrarInfoExtraListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			informacionExtraView.dispose();
+			
+		}    	
     }
 
 }

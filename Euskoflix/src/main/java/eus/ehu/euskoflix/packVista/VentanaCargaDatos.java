@@ -1,7 +1,7 @@
 package eus.ehu.euskoflix.packVista;
 
 import com.alee.laf.WebLookAndFeel;
-import eus.ehu.euskoflix.packControlador.ControladorVista;
+
 import eus.ehu.euskoflix.packDatos.PropertiesManager;
 
 import javax.imageio.ImageIO;
@@ -10,20 +10,20 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 public class VentanaCargaDatos extends JFrame {
 
-    private JPanel contentPane;
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
     private JTable tableUsers;
     private JTable tableFilms;
 
     /**
      * Create the frame.
      */
-    public VentanaCargaDatos() {
+    public VentanaCargaDatos(String[][] pDatosUsuario, String[] pCabeceraUsers, String[][] pDatosPelis, String[] pCabeceraPelis) {
         if (!WebLookAndFeel.isInstalled()) {
             WebLookAndFeel.install();
         }
@@ -42,8 +42,10 @@ public class VentanaCargaDatos extends JFrame {
         setContentPane(contentPane);
 
         //Tab Usuarios
-        TableModel modelUser = new DefaultTableModel(ControladorVista.getInstance().datosUsuario(), ControladorVista.getInstance().getCabeceraUsers()) {
-            @Override
+        TableModel modelUser = new DefaultTableModel(pDatosUsuario, pCabeceraUsers) {
+        	private static final long serialVersionUID = 1L;
+        	
+        	@Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -72,8 +74,11 @@ public class VentanaCargaDatos extends JFrame {
         this.setMinimumSize(new Dimension(450, 300));
 
         //Tab Pelis
-        TableModel modelPeli = new DefaultTableModel(ControladorVista.getInstance().datosPelis(), ControladorVista.getInstance().getCabeceraFilms()) {
-            @Override
+        TableModel modelPeli = new DefaultTableModel(pDatosPelis, pCabeceraPelis) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -84,20 +89,7 @@ public class VentanaCargaDatos extends JFrame {
         tableFilms.getColumnModel().getColumn(1).setPreferredWidth(330);
         tableFilms.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         tableFilms.getTableHeader().setReorderingAllowed(false);
-        tableFilms.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent mouseEvent) {
-                JTable table = (JTable) mouseEvent.getSource();
-                Point point = mouseEvent.getPoint();
-                int row = table.rowAtPoint(point);
-                if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
-                    int id = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
-                    VentanaCargaDatos.this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                    InformacionExtraView i = new InformacionExtraView(VentanaCargaDatos.this, true, id);
-                    VentanaCargaDatos.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-                    i.setVisible(true);
-                }
-            }
-        });
+        
         JPanel panelFilm = new JPanel();
         panelFilm.setLayout(new BorderLayout());
         JScrollPane scrollPane1 = new JScrollPane(tableFilms);
@@ -108,6 +100,10 @@ public class VentanaCargaDatos extends JFrame {
             e.printStackTrace();
         }
         this.setVisible(true);
+    }
+    
+    public void addInfoExtraListener(MouseListener pListenForInfoExtra) {
+        tableFilms.addMouseListener(pListenForInfoExtra);
     }
 
 }
