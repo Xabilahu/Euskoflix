@@ -32,9 +32,8 @@ public class ControladorVista {
     private InformacionExtraView informacionExtraView;
     
     private ControladorVista() {
-    	this.gestionDatos = GestionDatos.getInstance();
-    	gestionDatos.cargarDatos(TipoFichero.test);
     	this.euskoFlixLoader = new EuskoFlixLoader();
+    	this.gestionDatos = GestionDatos.getInstance();
     }
 
     public static ControladorVista getInstance() {
