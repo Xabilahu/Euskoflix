@@ -31,7 +31,7 @@ public class MatrizValoracionesTest {
     public static void setUp() throws Exception {
         BaseDatos.getBaseDatos().eliminarBaseDatos();
         GestionDatos.getInstance().cargarDatos(TipoFichero.small);
-        CatalogoUsuarios.getInstance().login(new Usuario(2,"","","euskoflix"));
+        CatalogoUsuarios.getInstance().login(new Usuario(2048,"","","euskoflix"));
     }
 
     @AfterClass
@@ -83,9 +83,10 @@ public class MatrizValoracionesTest {
     }
     @Test
     public void testSimPersonas() throws IOException {
-        FileWriter fw = new FileWriter("pelisRecomendadesSimPersonas_" + CatalogoUsuarios.getInstance().getUsuarioLogueado().getId());
+        FileWriter fw = new FileWriter("pelisRecomendadesSimPersonas_" + CatalogoUsuarios.getInstance().getUsuarioLogueado().getId() + "_norm");
         fw.write(Filtrado.getInstance().recomendar(TipoRecomendacion.Persona,10).toString());
         fw.close();
+//        MatrizValoraciones.getInstance().pepe();
     }
 
     @Test

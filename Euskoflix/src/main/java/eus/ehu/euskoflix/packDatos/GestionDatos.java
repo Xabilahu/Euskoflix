@@ -207,7 +207,6 @@ public class GestionDatos {
                 int pelicula = rst.getInt("id_pelicula");
                 double valoracion = rst.getDouble("valoracion");
                 HashMap<Integer, Double> pelis = resultado.get(usuario);
-                boolean par = true;
                 if (pelis == null) {
                     pelis = new HashMap<>();
                     pelis.put(pelicula, valoracion);

@@ -6,7 +6,7 @@ import java.util.TreeSet;
 
 public abstract class Filtrable {
 
-    public static final int N = 50;
+    public static final int N = 30;
     private HashMap<Integer, TreeSet<Similitud>> matrizSimilitudes;
     private ListaPeliculasRecomendadas recomendados;
 
@@ -18,13 +18,11 @@ public abstract class Filtrable {
     public Similitud[] getNMasSimilares(int pId) {
         Similitud[] similitudArray;
         TreeSet<Similitud> similitudes = this.matrizSimilitudes.get(pId);
-
         similitudArray = new Similitud[(similitudes.size() < N) ? similitudes.size() : N];
         Iterator itr = similitudes.iterator();
         for (int i = 0; i < similitudArray.length; i++) {
             similitudArray[i] = (Similitud) itr.next();
         }
-
         return similitudArray;
     }
 
@@ -51,29 +49,35 @@ public abstract class Filtrable {
         this.recomendados.add(pPelicula, pValoracion);
     }
 
-    public abstract void cargar();
+    public abstract void calcularRecomendaciones();
 
     public ListaPeliculasRecomendadas getNRecomendaciones(int pNum) {
         return this.recomendados.getNRecomendaciones(pNum);
     }
 
-    public void generarValoracionRecomendada(Integer noValorada, double numerador, double denominador, Similitud[] similitudes) {
+    public void generarValoracionRecomendada(boolean filtradoPersona, Integer noValorada, Similitud[] similitudes) {
+        double numerador = 0.0, denominador = 0.0;
+        double x;
         for (Similitud similitud : similitudes) {
             try {
                 //No hay que desnormalizar ni normalizar la valoracion porque la valoracion ya se encuentra en la muestra
                 //Solo en el coseno se normaliza para conseguir el ángulo de similitud teniendo en cuenta un dos muestras parecidas
-                numerador += Math.abs(
-                        MatrizValoraciones.getInstance().getValoracion(similitud.getJ(), noValorada)
-                                * similitud.getSim());
+                if (filtradoPersona) {
+                    x = MatrizValoraciones.getInstance().getValoracion(similitud.getJ(), noValorada);
+                }else {
+                    x = MatrizValoraciones.getInstance().getValoracion(CatalogoUsuarios.getInstance().getUsuarioLogueado().getId(),similitud.getJ());
+                }
+                numerador += Math.abs(x * similitud.getSim());
                 denominador += similitud.getSim();
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
         }
+        System.out.println("\tPeli: " + noValorada + "\tValoración: " + CatalogoUsuarios.getInstance().getUsuarioLogueado().desnormalizar(numerador/denominador) + "\tNum: " + numerador + "\tDenom: " + denominador);
         this.addRecomendacion(noValorada,
-                //CatalogoUsuarios.getInstance().getUsuarioLogueado().desnormalizar(numerador/denominador)
-                numerador / denominador
+                CatalogoUsuarios.getInstance().getUsuarioLogueado().desnormalizar(numerador/denominador)
+//                numerador / denominador
         );
     }
 }

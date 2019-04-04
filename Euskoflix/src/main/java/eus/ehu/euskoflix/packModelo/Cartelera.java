@@ -8,7 +8,7 @@ public class Cartelera {
 
     private static Cartelera mCartelera;
     private ListaPeliculas lista;
-    private ArrayList<Integer> idMapping;
+    public ArrayList<Integer> idMapping;
 
     private Cartelera() {
         this.lista = new ListaPeliculas();

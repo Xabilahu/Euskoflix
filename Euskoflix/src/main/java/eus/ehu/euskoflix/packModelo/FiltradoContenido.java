@@ -1,10 +1,5 @@
 package eus.ehu.euskoflix.packModelo;
 
-import eus.ehu.euskoflix.packDatos.GestionDatos;
-
-import java.util.HashMap;
-import java.util.Set;
-
 public class FiltradoContenido extends Filtrable {
 
 
@@ -28,7 +23,7 @@ public class FiltradoContenido extends Filtrable {
     }
 
     @Override
-    public void cargar() {
+    public void calcularRecomendaciones() {
         this.tfidf.cargarIdfs();
     }
 

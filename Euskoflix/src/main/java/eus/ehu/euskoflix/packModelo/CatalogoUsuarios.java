@@ -49,7 +49,7 @@ public class CatalogoUsuarios {
         boolean primero = true;
         for (Usuario u : this.lista) {
             if (!primero && MatrizValoraciones.getInstance().tieneValoracionesUsuario(u.getId())) {
-                MatrizValoraciones.getInstance().cargarValoracionesNormalizadas(u);
+                MatrizValoraciones.getInstance().cargarMediasDesv(u);
             } else {
                 primero = false;
             }

@@ -2,6 +2,8 @@ package eus.ehu.euskoflix.packModelo;
 
 import eus.ehu.euskoflix.packDatos.GestionDatos;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class MatrizValoraciones {
@@ -26,11 +28,33 @@ public class MatrizValoraciones {
 
     }
 
+//    public void pepe() throws Exception {
+//        FileWriter fw = new FileWriter("pelisRecomendadesSim_" + CatalogoUsuarios.getInstance().getUsuarioLogueado().getId() + "_norm",true);
+//        ArrayList<Integer> pelis = Cartelera.getInstance().idMapping;
+//        fw.write("User 1: [");
+//        for (Integer i : pelis) {
+//            if (this.valoraciones.get(2048).get(i) == null) {
+//                fw.write("0,");
+//            } else {
+//                fw.write(CatalogoUsuarios.getInstance().getUsuarioPorId(2048).normalizar(this.valoraciones.get(2048).get(i)) + ",");
+//            }
+//        }
+//        fw.write("\nUser 2: [");
+//        for (Integer i : pelis) {
+//            if (this.valoraciones.get(1).get(i) == null) {
+//                fw.write("0,");
+//            } else {
+//                fw.write(CatalogoUsuarios.getInstance().getUsuarioPorId(1).normalizar(this.valoraciones.get(1).get(i)) + ",");
+//            }
+//        }
+//        fw.close();
+//    }
+
     public Similitud simPersonas(Usuario pPersona1, Usuario pPersona2) {
         double similitud = 0;
         try {
             List<Double> valoracionU1 = new ArrayList<>();
-            List<Double> valoracionU2 = new ArrayList<>(this.valoraciones.get(pPersona2.getId()).values());
+            List<Double> valoracionU2 = new ArrayList<>();
             List<AbstractMap.SimpleEntry<Double, Double>> interseccion = new ArrayList<>();
             for (Double valoracion : this.valoraciones.get(pPersona1.getId()).values()) {
                 valoracionU1.add(pPersona1.normalizar(valoracion));
@@ -45,6 +69,10 @@ public class MatrizValoraciones {
                             pPersona2.normalizar(this.valoraciones.get(pPersona2.getId()).get(entry.getKey()))
                     ));
                 }
+            }
+            if (pPersona2.getId() == 1127) {
+
+            System.out.println();
             }
             if (!valoracionU1.isEmpty() && !valoracionU2.isEmpty() && !interseccion.isEmpty()) {
                 similitud = coseno(valoracionU1, valoracionU2, interseccion);
@@ -80,7 +108,6 @@ public class MatrizValoraciones {
         } catch (Exception e) {
             similitud = 0.0;
         }
-
         return new Similitud(pPelicula1.getId(), pPelicula2.getId(), similitud);
     }
 
@@ -155,29 +182,29 @@ public class MatrizValoraciones {
         return resultado;
     }
 
-    public void cargarValoracionesNormalizadas(Usuario pUsuario) {
+    public void cargarMediasDesv(Usuario pUsuario) {
         double media = 0;
         double desvTipica = 0;
 
-        int n = this.valoraciones.get(pUsuario.getId()).size();
-        for (Double d : this.valoraciones.get(pUsuario.getId()).values()) {
-            media += d;
-        }
-        if (this.valoraciones.get(pUsuario.getId()) != null) {
-            media = media / n;
+        double n = this.valoraciones.get(pUsuario.getId()).size();
+        if (n != 0) {
+            for (Double d : this.valoraciones.get(pUsuario.getId()).values()) {
+                media += d;
+            }
+            media /= n;
         }
         pUsuario.setMedia(media);
         for (Double d : this.valoraciones.get(pUsuario.getId()).values()) {
             desvTipica += Math.pow(d - media, 2);
         }
-        pUsuario.setCuasiDesv(Math.sqrt(desvTipica / n));
+        pUsuario.setCuasiDesv(Math.sqrt(desvTipica / (n-1)));
     }
 
     public boolean tieneValoracionesUsuario(int pId) {
         return this.valoraciones.get(pId) != null && this.valoraciones.get(pId).size() != 0;
     }
 
-    public void cargarValoracionesNormalizadas(Pelicula pelicula) {
+    public void cargarMediasDesv(Pelicula pelicula) {
         double media = 0;
         double desvTipica = 0;
         ArrayList<Double> valoraciones = new ArrayList<>();
@@ -194,7 +221,7 @@ public class MatrizValoraciones {
         for (Double valoracion : valoraciones) {
             desvTipica += Math.pow(valoracion - pelicula.getMedia(), 2);
         }
-        pelicula.setCuasiDesv(desvTipica / numUsuariosPelicula);
+        pelicula.setCuasiDesv(Math.sqrt(desvTipica / numUsuariosPelicula));
     }
 
     public boolean tieneValoracionesPelicula(int id) {
