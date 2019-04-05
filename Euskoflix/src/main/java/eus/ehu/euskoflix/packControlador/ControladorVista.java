@@ -6,11 +6,14 @@ import eus.ehu.euskoflix.packModelo.*;
 import eus.ehu.euskoflix.packVista.EuskoFlixLoader;
 import eus.ehu.euskoflix.packVista.InformacionExtraView;
 import eus.ehu.euskoflix.packVista.VentanaCargaDatos;
+import eus.ehu.euskoflix.packVista.VentanaLogin;
 
 import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.LinkedHashMap;
@@ -30,8 +33,10 @@ public class ControladorVista {
     private EuskoFlixLoader euskoFlixLoader;
     private VentanaCargaDatos ventanaCargaDatos;
     private InformacionExtraView informacionExtraView;
+    private VentanaLogin ventanaLogin;
     
     private ControladorVista() {
+    	this.ventanaLogin = new VentanaLogin();
     	this.euskoFlixLoader = new EuskoFlixLoader();
     	this.gestionDatos = GestionDatos.getInstance();
     }
@@ -52,6 +57,11 @@ public class ControladorVista {
     
     private void mostrarLoader() {
     	this.euskoFlixLoader.setVisible(true);    	
+    }
+    
+    public void mostrarLogin() {
+    	this.ventanaLogin.anadirFocusListener(new VentanaLoginListenerUser(), new VentanaLoginListenerPass());
+    	this.ventanaLogin.setVisible(true);
     }
     
     private void cerrarLoader() {
@@ -204,6 +214,22 @@ public class ControladorVista {
 			informacionExtraView.dispose();
 			
 		}    	
+    }
+    
+    class VentanaLoginListenerUser implements FocusListener{
+    	@Override
+		public void focusGained(FocusEvent e) {ventanaLogin.getTxtUser().setText("");}
+
+		@Override
+		public void focusLost(FocusEvent e) {	}
+    }
+    
+    class VentanaLoginListenerPass implements FocusListener{
+    	@Override
+		public void focusGained(FocusEvent e) {ventanaLogin.getTxtPass().setText("");}
+
+		@Override
+		public void focusLost(FocusEvent e) {	}
     }
 
 }

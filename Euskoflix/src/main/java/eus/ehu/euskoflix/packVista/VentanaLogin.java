@@ -7,7 +7,6 @@ import eus.ehu.euskoflix.packDatos.PropertiesManager;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -60,31 +59,12 @@ public class VentanaLogin extends JFrame {
         txtUser = new JTextField();
         txtUser.setBounds(25, 100, 150, 25);
         txtUser.setText("Nombre de usuario");
-        txtUser.setHorizontalAlignment(JTextField.CENTER);
-        txtUser.addFocusListener(new FocusListener(){
-        
-			@Override
-			public void focusGained(FocusEvent e) {txtUser.setText("");}
-			
-			@Override
-			public void focusLost(FocusEvent e) {	}
-			
-        });
-        
+        txtUser.setHorizontalAlignment(JTextField.CENTER);       
         
         txtPass = new JTextField();
         txtPass.setBounds(225, 100, 150, 25);
         txtPass.setText("Contraseña");
         txtPass.setHorizontalAlignment(JTextField.CENTER);
-        txtPass.addFocusListener(new FocusListener(){
-
-			@Override
-			public void focusGained(FocusEvent e) {txtPass.setText("");}
-			
-			@Override
-			public void focusLost(FocusEvent e) {	}
-			
-        });
         
         entrar = new JButton("Entrar");
         entrar.setBounds(150, 135, 100, 25);
@@ -107,5 +87,14 @@ public class VentanaLogin extends JFrame {
         }
         setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
     }
+	
+	public void anadirFocusListener(FocusListener pListenForFocusUser, FocusListener pListenForFocusPass) {
+		this.txtUser.addFocusListener(pListenForFocusUser);
+    	this.txtPass.addFocusListener(pListenForFocusPass);
+    }
+	
+	public JTextField getTxtUser() { return this.txtUser; }
+	
+	public JTextField getTxtPass() { return this.txtPass; }
 	
 }
