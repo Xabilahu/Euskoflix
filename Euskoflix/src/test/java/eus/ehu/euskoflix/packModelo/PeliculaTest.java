@@ -5,9 +5,6 @@ import eus.ehu.euskoflix.packDatos.GestionDatos;
 import eus.ehu.euskoflix.packDatos.TipoFichero;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-
-import java.util.LinkedList;
 
 /**
  * Pelicula Tester.

@@ -244,7 +244,7 @@ public class BaseDatos {
                     fileName = "testNombres";
                     break;
                 case small:
-                    fileName = "nombres";
+                    fileName = "smallNombres";
                     break;
             }
             InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(fileName));

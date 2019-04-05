@@ -1,14 +1,13 @@
 package eus.ehu.euskoflix.packModelo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 public class Cartelera {
 
     private static Cartelera mCartelera;
     private ListaPeliculas lista;
-    private ArrayList<Integer> idMapping;
+    public ArrayList<Integer> idMapping;
 
     private Cartelera() {
         this.lista = new ListaPeliculas();

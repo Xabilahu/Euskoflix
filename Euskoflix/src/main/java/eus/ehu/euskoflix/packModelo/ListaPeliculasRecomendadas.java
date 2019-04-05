@@ -30,7 +30,7 @@ public class ListaPeliculasRecomendadas {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        DecimalFormat df = new DecimalFormat("##0.00");
+        DecimalFormat df = new DecimalFormat("##0.0000");
         this.recomendaciones.forEach(parPeliValor -> {
             sb.append("Pelicula : ");
             sb.append(parPeliValor.getKey());

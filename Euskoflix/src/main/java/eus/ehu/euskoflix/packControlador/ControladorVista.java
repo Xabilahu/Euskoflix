@@ -82,6 +82,7 @@ public class ControladorVista {
         int size = users.getNumUsuarios();
         String[][] resulUsers = new String[size][4];
         Usuario userNew;
+        //TODO: usersToArrayString
         for (int i = 0; i < size - 1; i++) {
             userNew = users.getUsuarioPorId(i + 1);
             resulUsers[i][0] = String.valueOf(userNew.getId());
