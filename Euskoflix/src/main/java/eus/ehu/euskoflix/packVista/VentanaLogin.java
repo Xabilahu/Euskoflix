@@ -7,6 +7,8 @@ import eus.ehu.euskoflix.packDatos.PropertiesManager;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -45,15 +47,38 @@ public class VentanaLogin extends JFrame {
         ImageIcon icon = new ImageIcon(logo);
         JLabel icono = new JLabel(icon);
         icono.setBounds(60, 10, icon.getIconWidth(), icon.getIconHeight());
+        
         this.add(icono);
+        
         txtUser = new JTextField();
         txtUser.setBounds(25, 100, 150, 25);
         txtUser.setText("Nombre de usuario");
         txtUser.setHorizontalAlignment(JTextField.CENTER);
+        txtUser.addFocusListener(new FocusListener(){
+
+			@Override
+			public void focusGained(FocusEvent e) {txtUser.setText("");}
+			
+			@Override
+			public void focusLost(FocusEvent e) {	}
+			
+        });
+        
+        
         txtPass = new JTextField();
         txtPass.setBounds(225, 100, 150, 25);
         txtPass.setText("Contraseña");
         txtPass.setHorizontalAlignment(JTextField.CENTER);
+        txtPass.addFocusListener(new FocusListener(){
+
+			@Override
+			public void focusGained(FocusEvent e) {txtPass.setText("");}
+			
+			@Override
+			public void focusLost(FocusEvent e) {	}
+			
+        });
+        
         entrar = new JButton("Entrar");
         entrar.setBounds(150, 135, 100, 25);
         panel.add(txtUser);
