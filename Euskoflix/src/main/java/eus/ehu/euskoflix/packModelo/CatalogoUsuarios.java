@@ -1,16 +1,15 @@
 package eus.ehu.euskoflix.packModelo;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CatalogoUsuarios {
 
     private static CatalogoUsuarios mCatalogo;
-    private ArrayList<Usuario> lista;
+    private HashMap<Integer, Usuario> lista;
     private Usuario logged;
 
     private CatalogoUsuarios() {
-        this.lista = new ArrayList<Usuario>();
-        this.lista.add(0, null);
+        this.lista = new HashMap<Integer, Usuario>();
     }
 
     public static CatalogoUsuarios getInstance() {
@@ -25,7 +24,7 @@ public class CatalogoUsuarios {
     }
 
     public void addUsuario(Usuario pUser) {
-        this.lista.add(pUser);
+        this.lista.put(pUser.getId(), pUser);
     }
 
     public Usuario login(Usuario pUsuario) {
@@ -46,14 +45,10 @@ public class CatalogoUsuarios {
     }
 
     public void cargarMediasDesviacionesUsuarios() {
-        boolean primero = true;
-        for (Usuario u : this.lista) {
-            if (!primero && MatrizValoraciones.getInstance().tieneValoracionesUsuario(u.getId())) {
+        for (Usuario u : this.lista.values()) {
+            if (MatrizValoraciones.getInstance().tieneValoracionesUsuario(u.getId())) {
                 MatrizValoraciones.getInstance().cargarMediasDesv(u);
-            } else {
-                primero = false;
             }
-
         }
     }
 
@@ -85,7 +80,7 @@ public class CatalogoUsuarios {
     }
 
     public void cargarModeloPersona(FiltradoPersona filtradoPersona) {
-        this.lista.stream().forEach(usuario -> {
+        this.lista.values().stream().forEach(usuario -> {
             if (usuario != null && !usuario.equals(logged)) {
                 filtradoPersona.addSimilitud(logged.getId(), MatrizValoraciones.getInstance().simPersonas(logged, usuario));
             }

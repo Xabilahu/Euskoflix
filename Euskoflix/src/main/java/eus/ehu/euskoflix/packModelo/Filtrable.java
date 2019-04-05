@@ -60,24 +60,22 @@ public abstract class Filtrable {
         double x;
         for (Similitud similitud : similitudes) {
             try {
-                //No hay que desnormalizar ni normalizar la valoracion porque la valoracion ya se encuentra en la muestra
-                //Solo en el coseno se normaliza para conseguir el ángulo de similitud teniendo en cuenta un dos muestras parecidas
                 if (filtradoPersona) {
                     x = MatrizValoraciones.getInstance().getValoracion(similitud.getJ(), noValorada);
-                }else {
-                    x = MatrizValoraciones.getInstance().getValoracion(CatalogoUsuarios.getInstance().getUsuarioLogueado().getId(),similitud.getJ());
+                } else {
+                    x = MatrizValoraciones.getInstance().getValoracion(CatalogoUsuarios.getInstance().getUsuarioLogueado().getId(), similitud.getJ());
                 }
                 numerador += Math.abs(x * similitud.getSim());
-                denominador += similitud.getSim();
+                denominador += Math.abs(similitud.getSim());
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
         }
-        System.out.println("\tPeli: " + noValorada + "\tValoración: " + CatalogoUsuarios.getInstance().getUsuarioLogueado().desnormalizar(numerador/denominador) + "\tNum: " + numerador + "\tDenom: " + denominador);
+        System.out.println("\tPeli: " + noValorada + "\tValoración: " + (numerador / denominador) + "\tNum: " + numerador + "\tDenom: " + denominador);
         this.addRecomendacion(noValorada,
-                CatalogoUsuarios.getInstance().getUsuarioLogueado().desnormalizar(numerador/denominador)
-//                numerador / denominador
+//                CatalogoUsuarios.getInstance().getUsuarioLogueado().desnormalizar(numerador/denominador)
+                numerador / denominador
         );
     }
 }

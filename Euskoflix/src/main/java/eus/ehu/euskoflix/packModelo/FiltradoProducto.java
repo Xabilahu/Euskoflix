@@ -25,5 +25,4 @@ public class FiltradoProducto extends Filtrable {
     }
 
 
-
 }

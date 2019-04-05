@@ -50,7 +50,7 @@ public class GestionDatos {
                 Cartelera.getInstance().addPelicula(p);
                 this.getTags(p);
                 tf.add(p.getId());
-                p.getLista().rellenarTf(tf,p.getId());
+                p.getLista().rellenarTf(tf, p.getId());
             }
             Filtrado.getInstance().cargarTf(tf);
         } catch (SQLException e) {

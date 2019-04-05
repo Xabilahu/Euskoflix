@@ -22,7 +22,7 @@ public class FiltradoPersona extends Filtrable {
         Similitud[] similitudes = super.getNMasSimilares(id);
         HashSet<Integer> noValoradas = Cartelera.getInstance().getPeliculasNoValoradas(CatalogoUsuarios.getInstance().getUsuarioLogueado());
         for (Integer noValorada : noValoradas) {
-            super.generarValoracionRecomendada(true,noValorada,similitudes);
+            super.generarValoracionRecomendada(true, noValorada, similitudes);
         }
     }
 }
