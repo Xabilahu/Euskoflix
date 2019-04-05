@@ -9,7 +9,8 @@ import org.junit.Test;
 
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * ControladorVista Tester.
@@ -41,10 +42,10 @@ public class ControladorVistaTest {
         String[][] resultado = ControladorVista.getInstance().datosUsuario();
         for (int i = 1; i < CatalogoUsuarios.getInstance().getNumUsuarios(); i++) {
             Usuario u = CatalogoUsuarios.getInstance().getUsuarioPorId(i);
-            assertEquals(u.getId(), Integer.parseInt(resultado[i-1][0]));
-            assertEquals(u.getNombre(), resultado[i-1][1]);
-            assertEquals(u.getApellido(), resultado[i-1][2]);
-            assertEquals(u.getPassword(), resultado[i-1][3]);
+            assertEquals(u.getId(), Integer.parseInt(resultado[i - 1][0]));
+            assertEquals(u.getNombre(), resultado[i - 1][1]);
+            assertEquals(u.getApellido(), resultado[i - 1][2]);
+            assertEquals(u.getPassword(), resultado[i - 1][3]);
         }
 
     }
@@ -56,9 +57,9 @@ public class ControladorVistaTest {
     public void testDatosRatings() throws Exception {
         String[][] resultado = ControladorVista.getInstance().datosRatings(1);
         int i = 0;
-        for(Map.Entry<Integer,Double> entry : MatrizValoraciones.getInstance().getValoracionesByPelicula(1).entrySet()) {
-            assertEquals(resultado[i][0],CatalogoUsuarios.getInstance().getUsuarioPorId(entry.getKey()).getNombre());
-            assertEquals(resultado[i++][1],entry.getValue().toString());
+        for (Map.Entry<Integer, Double> entry : MatrizValoraciones.getInstance().getValoracionesByPelicula(1).entrySet()) {
+            assertEquals(resultado[i][0], CatalogoUsuarios.getInstance().getUsuarioPorId(entry.getKey()).getNombre());
+            assertEquals(resultado[i++][1], entry.getValue().toString());
         }
     }
 

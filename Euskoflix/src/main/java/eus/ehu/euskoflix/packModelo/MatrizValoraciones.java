@@ -26,30 +26,51 @@ public class MatrizValoraciones {
 
     }
 
+//    public void pepe() throws Exception {
+//        FileWriter fw = new FileWriter("pelisRecomendadesSim_" + CatalogoUsuarios.getInstance().getUsuarioLogueado().getId() + "_norm",true);
+//        ArrayList<Integer> pelis = Cartelera.getInstance().idMapping;
+//        fw.write("User 1: [");
+//        for (Integer i : pelis) {
+//            if (this.valoraciones.get(2048).get(i) == null) {
+//                fw.write("0,");
+//            } else {
+//                fw.write(CatalogoUsuarios.getInstance().getUsuarioPorId(2048).normalizar(this.valoraciones.get(2048).get(i)) + ",");
+//            }
+//        }
+//        fw.write("\nUser 2: [");
+//        for (Integer i : pelis) {
+//            if (this.valoraciones.get(1).get(i) == null) {
+//                fw.write("0,");
+//            } else {
+//                fw.write(CatalogoUsuarios.getInstance().getUsuarioPorId(1).normalizar(this.valoraciones.get(1).get(i)) + ",");
+//            }
+//        }
+//        fw.close();
+//    }
+
     public Similitud simPersonas(Usuario pPersona1, Usuario pPersona2) {
         double similitud = 0;
-        try {
-            List<Double> valoracionU1 = new ArrayList<>();
-            List<Double> valoracionU2 = new ArrayList<>(this.valoraciones.get(pPersona2.getId()).values());
-            List<AbstractMap.SimpleEntry<Double, Double>> interseccion = new ArrayList<>();
-            for (Double valoracion : this.valoraciones.get(pPersona1.getId()).values()) {
-                valoracionU1.add(pPersona1.normalizar(valoracion));
+        List<Double> valoracionU1 = new ArrayList<>();
+        List<Double> valoracionU2 = new ArrayList<>();
+        List<AbstractMap.SimpleEntry<Double, Double>> interseccion = new ArrayList<>();
+        for (Double valoracion : this.valoraciones.get(pPersona1.getId()).values()) {
+            valoracionU1.add(CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona1.getId()).normalizar(valoracion));
+        }
+        for (Double valoracion : this.valoraciones.get(pPersona2.getId()).values()) {
+            valoracionU2.add(CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona2.getId()).normalizar(valoracion));
+        }
+        for (Map.Entry<Integer, Double> entry : this.valoraciones.get(pPersona1.getId()).entrySet()) {
+            if (this.valoraciones.get(pPersona2.getId()).containsKey(entry.getKey())) {
+                interseccion.add(new AbstractMap.SimpleEntry<>(
+                        CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona1.getId()).normalizar(entry.getValue()),
+                        CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona2.getId()).normalizar(this.valoraciones.get(pPersona2.getId()).get(entry.getKey()))
+                ));
             }
-            for (Double valoracion : this.valoraciones.get(pPersona2.getId()).values()) {
-                valoracionU2.add(pPersona2.normalizar(valoracion));
-            }
-            for (Map.Entry<Integer, Double> entry : this.valoraciones.get(pPersona1.getId()).entrySet()) {
-                if (this.valoraciones.get(pPersona2.getId()).containsKey(entry.getKey())) {
-                    interseccion.add(new AbstractMap.SimpleEntry<>(
-                            pPersona1.normalizar(entry.getValue()),
-                            pPersona2.normalizar(this.valoraciones.get(pPersona2.getId()).get(entry.getKey()))
-                    ));
-                }
-            }
-            if (!valoracionU1.isEmpty() && !valoracionU2.isEmpty() && !interseccion.isEmpty()) {
-                similitud = coseno(valoracionU1, valoracionU2, interseccion);
-            }
-        } catch (Exception ex) {
+        }
+        if (!valoracionU1.isEmpty() && !valoracionU2.isEmpty() && !interseccion.isEmpty()) {
+            similitud = coseno(valoracionU1, valoracionU2, interseccion);
+        }
+        if (Double.isNaN(similitud)) {
             similitud = 0.0;
         }
         return new Similitud(pPersona1.getId(), pPersona2.getId(), similitud);
@@ -60,27 +81,25 @@ public class MatrizValoraciones {
         List<Double> valoracionP1 = new ArrayList<>();
         List<Double> valoracionP2 = new ArrayList<>();
         List<AbstractMap.SimpleEntry<Double, Double>> interseccion = new ArrayList<>();
-        try {
-            for (HashMap<Integer, Double> usuario : this.valoraciones.values()) {
-                if (usuario.containsKey(pPelicula1.getId()) && usuario.containsKey(pPelicula2.getId())) {
-                    valoracionP1.add(pPelicula1.normalizar(usuario.get(pPelicula1.getId())));
-                    valoracionP2.add(pPelicula2.normalizar(usuario.get(pPelicula2.getId())));
-                    interseccion.add(new AbstractMap.SimpleEntry<>(
-                            pPelicula1.normalizar(usuario.get(pPelicula1.getId())),
-                            pPelicula2.normalizar(usuario.get(pPelicula2.getId()))));
-                } else if (usuario.containsKey(pPelicula1.getId())) {
-                    valoracionP1.add(pPelicula1.normalizar(usuario.get(pPelicula1.getId())));
-                } else if (usuario.containsKey(pPelicula2.getId())) {
-                    valoracionP2.add(pPelicula2.normalizar(usuario.get(pPelicula2.getId())));
-                }
+        for (HashMap<Integer, Double> usuario : this.valoraciones.values()) {
+            if (usuario.containsKey(pPelicula1.getId()) && usuario.containsKey(pPelicula2.getId())) {
+                valoracionP1.add(pPelicula1.normalizar(usuario.get(pPelicula1.getId())));
+                valoracionP2.add(pPelicula2.normalizar(usuario.get(pPelicula2.getId())));
+                interseccion.add(new AbstractMap.SimpleEntry<>(
+                        pPelicula1.normalizar(usuario.get(pPelicula1.getId())),
+                        pPelicula2.normalizar(usuario.get(pPelicula2.getId()))));
+            } else if (usuario.containsKey(pPelicula1.getId())) {
+                valoracionP1.add(pPelicula1.normalizar(usuario.get(pPelicula1.getId())));
+            } else if (usuario.containsKey(pPelicula2.getId())) {
+                valoracionP2.add(pPelicula2.normalizar(usuario.get(pPelicula2.getId())));
             }
-            if (!valoracionP1.isEmpty() && !valoracionP2.isEmpty() && !interseccion.isEmpty()) {
-                similitud = coseno(valoracionP1, valoracionP2, interseccion);
-            }
-        } catch (Exception e) {
+        }
+        if (!valoracionP1.isEmpty() && !valoracionP2.isEmpty() && !interseccion.isEmpty()) {
+            similitud = coseno(valoracionP1, valoracionP2, interseccion);
+        }
+        if (Double.isNaN(similitud)) {
             similitud = 0.0;
         }
-
         return new Similitud(pPelicula1.getId(), pPelicula2.getId(), similitud);
     }
 
@@ -155,29 +174,29 @@ public class MatrizValoraciones {
         return resultado;
     }
 
-    public void cargarValoracionesNormalizadas(Usuario pUsuario) {
+    public void cargarMediasDesv(Usuario pUsuario) {
         double media = 0;
         double desvTipica = 0;
 
-        int n = this.valoraciones.get(pUsuario.getId()).size();
-        for (Double d : this.valoraciones.get(pUsuario.getId()).values()) {
-            media += d;
-        }
-        if (this.valoraciones.get(pUsuario.getId()) != null) {
-            media = media / n;
+        double n = this.valoraciones.get(pUsuario.getId()).size();
+        if (n != 0) {
+            for (Double d : this.valoraciones.get(pUsuario.getId()).values()) {
+                media += d;
+            }
+            media /= n;
         }
         pUsuario.setMedia(media);
         for (Double d : this.valoraciones.get(pUsuario.getId()).values()) {
             desvTipica += Math.pow(d - media, 2);
         }
-        pUsuario.setCuasiDesv(Math.sqrt(desvTipica / n));
+        pUsuario.setCuasiDesv(Math.sqrt(desvTipica / (n - 1)));
     }
 
     public boolean tieneValoracionesUsuario(int pId) {
         return this.valoraciones.get(pId) != null && this.valoraciones.get(pId).size() != 0;
     }
 
-    public void cargarValoracionesNormalizadas(Pelicula pelicula) {
+    public void cargarMediasDesv(Pelicula pelicula) {
         double media = 0;
         double desvTipica = 0;
         ArrayList<Double> valoraciones = new ArrayList<>();
@@ -194,7 +213,7 @@ public class MatrizValoraciones {
         for (Double valoracion : valoraciones) {
             desvTipica += Math.pow(valoracion - pelicula.getMedia(), 2);
         }
-        pelicula.setCuasiDesv(desvTipica / numUsuariosPelicula);
+        pelicula.setCuasiDesv(Math.sqrt(desvTipica / numUsuariosPelicula));
     }
 
     public boolean tieneValoracionesPelicula(int id) {

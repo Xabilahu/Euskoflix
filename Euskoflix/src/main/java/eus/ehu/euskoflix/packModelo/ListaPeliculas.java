@@ -32,7 +32,7 @@ public class ListaPeliculas {
     public void cargarMediaDesviacionesPeliculas() {
         for (Pelicula pelicula : this.lista.values()) {
             if (MatrizValoraciones.getInstance().tieneValoracionesPelicula(pelicula.getId())) {
-                MatrizValoraciones.getInstance().cargarValoracionesNormalizadas(pelicula);
+                MatrizValoraciones.getInstance().cargarMediasDesv(pelicula);
             }
         }
     }

@@ -3,9 +3,6 @@ package eus.ehu.euskoflix.packModelo;
 import eus.ehu.euskoflix.packDatos.GestionDatos;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 
 public class Pelicula extends Normalizable {
 

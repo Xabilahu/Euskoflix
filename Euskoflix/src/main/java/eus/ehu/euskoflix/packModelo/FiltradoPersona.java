@@ -6,7 +6,7 @@ public class FiltradoPersona extends Filtrable {
 
 
     public FiltradoPersona() {
-        //TODO: cargar filtrado
+        super();
         CatalogoUsuarios.getInstance().cargarModeloPersona(this);
     }
 
@@ -16,12 +16,13 @@ public class FiltradoPersona extends Filtrable {
     }
 
     @Override
-    public void cargar() {
+    public void calcularRecomendaciones() {
+        System.out.println("-------Filtrado Persona--------");
         int id = CatalogoUsuarios.getInstance().getUsuarioLogueado().getId();
         Similitud[] similitudes = super.getNMasSimilares(id);
         HashSet<Integer> noValoradas = Cartelera.getInstance().getPeliculasNoValoradas(CatalogoUsuarios.getInstance().getUsuarioLogueado());
         for (Integer noValorada : noValoradas) {
-            super.generarValoracionRecomendada(noValorada,0.0,0.0,similitudes);
+            super.generarValoracionRecomendada(true, noValorada, similitudes);
         }
     }
 }
