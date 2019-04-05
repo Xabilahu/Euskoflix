@@ -50,28 +50,32 @@ public class MatrizValoraciones {
 
     public Similitud simPersonas(Usuario pPersona1, Usuario pPersona2) {
         double similitud = 0;
-        List<Double> valoracionU1 = new ArrayList<>();
-        List<Double> valoracionU2 = new ArrayList<>();
-        List<AbstractMap.SimpleEntry<Double, Double>> interseccion = new ArrayList<>();
-        for (Double valoracion : this.valoraciones.get(pPersona1.getId()).values()) {
-            valoracionU1.add(CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona1.getId()).normalizar(valoracion));
-        }
-        for (Double valoracion : this.valoraciones.get(pPersona2.getId()).values()) {
-            valoracionU2.add(CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona2.getId()).normalizar(valoracion));
-        }
-        for (Map.Entry<Integer, Double> entry : this.valoraciones.get(pPersona1.getId()).entrySet()) {
-            if (this.valoraciones.get(pPersona2.getId()).containsKey(entry.getKey())) {
-                interseccion.add(new AbstractMap.SimpleEntry<>(
-                        CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona1.getId()).normalizar(entry.getValue()),
-                        CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona2.getId()).normalizar(this.valoraciones.get(pPersona2.getId()).get(entry.getKey()))
-                ));
+        try {
+            List<Double> valoracionU1 = new ArrayList<>();
+            List<Double> valoracionU2 = new ArrayList<>();
+            List<AbstractMap.SimpleEntry<Double, Double>> interseccion = new ArrayList<>();
+            for (Double valoracion : this.valoraciones.get(pPersona1.getId()).values()) {
+                valoracionU1.add(CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona1.getId()).normalizar(valoracion));
             }
-        }
-        if (!valoracionU1.isEmpty() && !valoracionU2.isEmpty() && !interseccion.isEmpty()) {
-            similitud = coseno(valoracionU1, valoracionU2, interseccion);
-        }
-        if (Double.isNaN(similitud)) {
-            similitud = 0.0;
+            for (Double valoracion : this.valoraciones.get(pPersona2.getId()).values()) {
+                valoracionU2.add(CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona2.getId()).normalizar(valoracion));
+            }
+            for (Map.Entry<Integer, Double> entry : this.valoraciones.get(pPersona1.getId()).entrySet()) {
+                if (this.valoraciones.get(pPersona2.getId()).containsKey(entry.getKey())) {
+                    interseccion.add(new AbstractMap.SimpleEntry<>(
+                            CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona1.getId()).normalizar(entry.getValue()),
+                            CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona2.getId()).normalizar(this.valoraciones.get(pPersona2.getId()).get(entry.getKey()))
+                    ));
+                }
+            }
+            if (!valoracionU1.isEmpty() && !valoracionU2.isEmpty() && !interseccion.isEmpty()) {
+                similitud = coseno(valoracionU1, valoracionU2, interseccion);
+            }
+            if (Double.isNaN(similitud)) {
+                similitud = 0.0;
+            }
+        } catch (Exception e) {
+            System.out.println();
         }
         return new Similitud(pPersona1.getId(), pPersona2.getId(), similitud);
     }
