@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -48,6 +50,11 @@ public class VentanaLogin extends JFrame {
         JLabel icono = new JLabel(icon);
         icono.setBounds(60, 10, icon.getIconWidth(), icon.getIconHeight());
         
+        this.addWindowListener(new WindowAdapter(){
+        	   public void windowOpened( WindowEvent e ){
+        		   icono.requestFocus();
+        	     }
+        	   } );
         this.add(icono);
         
         txtUser = new JTextField();
@@ -55,7 +62,7 @@ public class VentanaLogin extends JFrame {
         txtUser.setText("Nombre de usuario");
         txtUser.setHorizontalAlignment(JTextField.CENTER);
         txtUser.addFocusListener(new FocusListener(){
-
+        
 			@Override
 			public void focusGained(FocusEvent e) {txtUser.setText("");}
 			
