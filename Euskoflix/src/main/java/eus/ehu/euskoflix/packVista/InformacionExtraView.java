@@ -1,7 +1,6 @@
 package eus.ehu.euskoflix.packVista;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -10,8 +9,8 @@ import java.awt.event.ActionListener;
  */
 public class InformacionExtraView extends javax.swing.JDialog {
 
-	private static final long serialVersionUID = 1L;
-	
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates new form InformacionExtra
      */
@@ -181,9 +180,9 @@ public class InformacionExtraView extends javax.swing.JDialog {
         jTable1.getTableHeader().setReorderingAllowed(false);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(pDatosTags, pCabeceraTags) {
 
-			private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-			@Override
+            @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -203,7 +202,8 @@ public class InformacionExtraView extends javax.swing.JDialog {
         jTable2.setRowSelectionAllowed(false);
         jTable2.getTableHeader().setReorderingAllowed(false);
         jTable2.setModel(new javax.swing.table.DefaultTableModel(pDatosRatings, pCabeceraRatings) {
-			private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
+
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -226,7 +226,7 @@ public class InformacionExtraView extends javax.swing.JDialog {
 
         jButton1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jButton1.setText("Cerrar");
-        
+
         jPanel6.add(jButton1);
 
         getContentPane().add(jPanel6, java.awt.BorderLayout.SOUTH);
@@ -236,7 +236,7 @@ public class InformacionExtraView extends javax.swing.JDialog {
     }
 
     public void addCerrarListener(ActionListener pListenForCerrar) {
-    	this.jButton1.addActionListener(pListenForCerrar);
+        this.jButton1.addActionListener(pListenForCerrar);
     }
 
 }

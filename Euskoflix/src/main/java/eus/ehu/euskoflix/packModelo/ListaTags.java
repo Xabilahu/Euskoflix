@@ -1,5 +1,7 @@
 package eus.ehu.euskoflix.packModelo;
 
+import eus.ehu.euskoflix.packModelo.packFiltro.ListaEtiquetasFiltrado;
+
 import java.util.HashMap;
 
 public class ListaTags {

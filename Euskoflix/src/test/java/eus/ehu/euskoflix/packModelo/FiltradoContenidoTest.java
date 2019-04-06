@@ -3,6 +3,8 @@ package eus.ehu.euskoflix.packModelo;
 import eus.ehu.euskoflix.packDatos.BaseDatos;
 import eus.ehu.euskoflix.packDatos.GestionDatos;
 import eus.ehu.euskoflix.packDatos.TipoFichero;
+import eus.ehu.euskoflix.packModelo.packFiltro.Filtrado;
+import eus.ehu.euskoflix.packModelo.packFiltro.TipoRecomendacion;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

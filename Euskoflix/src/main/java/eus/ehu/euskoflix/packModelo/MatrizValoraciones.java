@@ -1,6 +1,7 @@
 package eus.ehu.euskoflix.packModelo;
 
 import eus.ehu.euskoflix.packDatos.GestionDatos;
+import eus.ehu.euskoflix.packModelo.packFiltro.Similitud;
 
 import java.util.*;
 
@@ -136,9 +137,9 @@ public class MatrizValoraciones {
         return sb.toString();
     }
 
-    public HashMap<Integer,LinkedList<Integer>> getValoracionesByLimite(double pLim) {
-        HashMap<Integer,LinkedList<Integer>> resultado = new HashMap<>();
-        this.valoraciones.forEach((i,map) -> {
+    public HashMap<Integer, LinkedList<Integer>> getValoracionesByLimite(double pLim) {
+        HashMap<Integer, LinkedList<Integer>> resultado = new HashMap<>();
+        this.valoraciones.forEach((i, map) -> {
             resultado.put(i, new LinkedList<>());
             map.forEach((p, val) -> {
                 if (Double.compare(val, pLim) >= 0) {

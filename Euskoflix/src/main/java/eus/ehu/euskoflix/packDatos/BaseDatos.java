@@ -138,7 +138,7 @@ public class BaseDatos {
     }
 
     private void anadirDatos(TipoFichero pTipo) {
-      //  anadirUsuarios(pTipo);
+        //  anadirUsuarios(pTipo);
         anadirPeliculas(pTipo);
         anadirUsuariosYValoraciones(pTipo);
         anadirEtiquetas(pTipo);
@@ -227,7 +227,7 @@ public class BaseDatos {
                     pst.setInt(2, Integer.parseInt(stringTokenizer.nextToken(",")));
                     pst.setFloat(3, Float.parseFloat(stringTokenizer.nextToken(",")));
                     pst.addBatch();
-                    if (lastIdUsurio != idUsuario){
+                    if (lastIdUsurio != idUsuario) {
                         StringTokenizer stringTokenizerU = new StringTokenizer(inUsuario.readLine());
                         pstUsuarios.setInt(1, idUsuario);
                         pstUsuarios.setString(2, defaultPass);

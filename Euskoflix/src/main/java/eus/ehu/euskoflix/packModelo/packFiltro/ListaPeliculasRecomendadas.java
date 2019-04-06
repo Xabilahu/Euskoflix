@@ -1,4 +1,4 @@
-package eus.ehu.euskoflix.packModelo;
+package eus.ehu.euskoflix.packModelo.packFiltro;
 
 import java.text.DecimalFormat;
 import java.util.AbstractMap;

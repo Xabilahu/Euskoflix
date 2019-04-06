@@ -11,9 +11,9 @@ import java.io.InputStream;
 
 public class EuskoFlixLoader extends JFrame {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public EuskoFlixLoader() {
+    public EuskoFlixLoader() {
         WebLookAndFeel.install();
         this.requestFocus();
         this.setUndecorated(true);

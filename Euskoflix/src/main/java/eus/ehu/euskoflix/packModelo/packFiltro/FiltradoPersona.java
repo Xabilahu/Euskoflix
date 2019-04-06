@@ -1,4 +1,7 @@
-package eus.ehu.euskoflix.packModelo;
+package eus.ehu.euskoflix.packModelo.packFiltro;
+
+import eus.ehu.euskoflix.packModelo.Cartelera;
+import eus.ehu.euskoflix.packModelo.CatalogoUsuarios;
 
 import java.util.HashSet;
 

@@ -1,6 +1,10 @@
-package eus.ehu.euskoflix.packModelo;
+package eus.ehu.euskoflix.packModelo.packFiltro;
 
 import eus.ehu.euskoflix.packDatos.GestionDatos;
+import eus.ehu.euskoflix.packModelo.Cartelera;
+import eus.ehu.euskoflix.packModelo.CatalogoUsuarios;
+import eus.ehu.euskoflix.packModelo.MatrizValoraciones;
+import eus.ehu.euskoflix.packModelo.Tag;
 
 import java.util.*;
 
@@ -42,23 +46,23 @@ public class ListaEtiquetasFiltrado {
         HashMap<Tag, Double> esqueleto = new HashMap<>(relevanciasLogged);
         int idLogged = CatalogoUsuarios.getInstance().getUsuarioLogueado().getId();
         usersPelisACalcular.get(idLogged).forEach(i ->
-            this.tfidf.get(i).forEach((tag,tf) -> relevanciasLogged.put(tag,relevanciasLogged.get(tag) + tf))
+                this.tfidf.get(i).forEach((tag, tf) -> relevanciasLogged.put(tag, relevanciasLogged.get(tag) + tf))
         );
-        usersPelisACalcular.forEach((i,lista) -> {
+        usersPelisACalcular.forEach((i, lista) -> {
             if (i != idLogged) {
-                HashMap<Tag,Double> relevancias = new HashMap<>(esqueleto);
-                lista.forEach(peli -> this.tfidf.get(peli).forEach((tag,tf) -> relevancias.put(tag, relevancias.get(tag) + tf)));
+                HashMap<Tag, Double> relevancias = new HashMap<>(esqueleto);
+                lista.forEach(peli -> this.tfidf.get(peli).forEach((tag, tf) -> relevancias.put(tag, relevancias.get(tag) + tf)));
                 List<Double> rLogged = new LinkedList<>();
                 List<Double> rOtro = new LinkedList<>();
-                List<AbstractMap.SimpleEntry<Double,Double>> rIntersec = new LinkedList<>();
-                relevanciasLogged.forEach((tag,r) -> {
+                List<AbstractMap.SimpleEntry<Double, Double>> rIntersec = new LinkedList<>();
+                relevanciasLogged.forEach((tag, r) -> {
                     if (r != 0.0 && relevancias.get(tag) != 0.0) {
                         rLogged.add(r);
                         rOtro.add(relevancias.get(tag));
                         rIntersec.add(new AbstractMap.SimpleEntry<Double, Double>(
-                                r,relevancias.get(tag)
+                                r, relevancias.get(tag)
                         ));
-                    } else if (r != 0.0 ) {
+                    } else if (r != 0.0) {
                         rLogged.add(r);
                     } else if (relevancias.get(tag) != 0.0) {
                         rOtro.add(relevancias.get(tag));

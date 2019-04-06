@@ -1,5 +1,7 @@
 package eus.ehu.euskoflix.packModelo;
 
+import eus.ehu.euskoflix.packModelo.packFiltro.FiltradoProducto;
+
 import java.util.HashMap;
 import java.util.HashSet;
 

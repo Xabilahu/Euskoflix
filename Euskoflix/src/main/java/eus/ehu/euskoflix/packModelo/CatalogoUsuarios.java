@@ -1,5 +1,8 @@
 package eus.ehu.euskoflix.packModelo;
 
+import eus.ehu.euskoflix.packModelo.packFiltro.Filtrado;
+import eus.ehu.euskoflix.packModelo.packFiltro.FiltradoPersona;
+
 import java.util.HashMap;
 
 public class CatalogoUsuarios {

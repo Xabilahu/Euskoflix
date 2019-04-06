@@ -5,6 +5,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import eus.ehu.euskoflix.packModelo.*;
+import eus.ehu.euskoflix.packModelo.packFiltro.Filtrado;
+import eus.ehu.euskoflix.packModelo.packFiltro.ListaEtiquetasFiltrado;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

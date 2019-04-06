@@ -1,7 +1,6 @@
 package eus.ehu.euskoflix.packVista;
 
 import com.alee.laf.WebLookAndFeel;
-
 import eus.ehu.euskoflix.packDatos.PropertiesManager;
 
 import javax.imageio.ImageIO;
@@ -15,8 +14,8 @@ import java.io.IOException;
 
 public class VentanaCargaDatos extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
     private JTable tableUsers;
     private JTable tableFilms;
 
@@ -43,9 +42,9 @@ public class VentanaCargaDatos extends JFrame {
 
         //Tab Usuarios
         TableModel modelUser = new DefaultTableModel(pDatosUsuario, pCabeceraUsers) {
-        	private static final long serialVersionUID = 1L;
-        	
-        	@Override
+            private static final long serialVersionUID = 1L;
+
+            @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -76,9 +75,9 @@ public class VentanaCargaDatos extends JFrame {
         //Tab Pelis
         TableModel modelPeli = new DefaultTableModel(pDatosPelis, pCabeceraPelis) {
 
-			private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-			@Override
+            @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -89,7 +88,7 @@ public class VentanaCargaDatos extends JFrame {
         tableFilms.getColumnModel().getColumn(1).setPreferredWidth(330);
         tableFilms.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         tableFilms.getTableHeader().setReorderingAllowed(false);
-        
+
         JPanel panelFilm = new JPanel();
         panelFilm.setLayout(new BorderLayout());
         JScrollPane scrollPane1 = new JScrollPane(tableFilms);
@@ -101,7 +100,7 @@ public class VentanaCargaDatos extends JFrame {
         }
         this.setVisible(true);
     }
-    
+
     public void addInfoExtraListener(MouseListener pListenForInfoExtra) {
         tableFilms.addMouseListener(pListenForInfoExtra);
     }

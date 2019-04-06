@@ -1,4 +1,4 @@
-package eus.ehu.euskoflix.packModelo;
+package eus.ehu.euskoflix.packModelo.packFiltro;
 
 public class Similitud {
 

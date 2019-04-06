@@ -65,7 +65,7 @@ public class PropertiesManager {
     public String getPathToLogo() {
         return this.properties.getProperty("path.to.logo");
     }
-    
+
     public String getPathToLoginLogo() {
         return this.properties.getProperty("path.to.login.logo");
     }
