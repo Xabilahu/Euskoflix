@@ -53,6 +53,8 @@ public class ListaEtiquetasFiltrado {
                 List<AbstractMap.SimpleEntry<Double,Double>> rIntersec = new LinkedList<>();
                 relevanciasLogged.forEach((tag,r) -> {
                     if (r != 0.0 && relevancias.get(tag) != 0.0) {
+                        rLogged.add(r);
+                        rOtro.add(relevancias.get(tag));
                         rIntersec.add(new AbstractMap.SimpleEntry<Double, Double>(
                                 r,relevancias.get(tag)
                         ));

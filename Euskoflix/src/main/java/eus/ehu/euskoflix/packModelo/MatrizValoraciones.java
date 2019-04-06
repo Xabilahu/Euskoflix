@@ -46,9 +46,6 @@ public class MatrizValoraciones {
         if (!valoracionU1.isEmpty() && !valoracionU2.isEmpty() && !interseccion.isEmpty()) {
             similitud = coseno(valoracionU1, valoracionU2, interseccion);
         }
-        if (Double.isNaN(similitud)) {
-            similitud = 0.0;
-        }
         return new Similitud(pPersona1.getId(), pPersona2.getId(), similitud);
     }
 
@@ -73,9 +70,6 @@ public class MatrizValoraciones {
         if (!valoracionP1.isEmpty() && !valoracionP2.isEmpty() && !interseccion.isEmpty()) {
             similitud = coseno(valoracionP1, valoracionP2, interseccion);
         }
-        if (Double.isNaN(similitud)) {
-            similitud = 0.0;
-        }
         return new Similitud(pPelicula1.getId(), pPelicula2.getId(), similitud);
     }
 
@@ -93,7 +87,11 @@ public class MatrizValoraciones {
         for (Double val : wn) {
             sum2 += val * val;
         }
-        return numerador / (Math.sqrt(sum1) * Math.sqrt(sum2));
+        double res = numerador / (Math.sqrt(sum1) * Math.sqrt(sum2));
+        if (Double.isNaN(res)) {
+            res = 0.0;
+        }
+        return res;
     }
 
     public double getValoracion(int pUsuario, int pPelicula) {

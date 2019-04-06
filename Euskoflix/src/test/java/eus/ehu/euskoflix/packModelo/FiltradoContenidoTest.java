@@ -13,7 +13,7 @@ public class FiltradoContenidoTest {
     public void setUp() throws Exception {
         BaseDatos.getBaseDatos().eliminarBaseDatos();
         GestionDatos.getInstance().cargarDatos(TipoFichero.small);
-        CatalogoUsuarios.getInstance().login(new Usuario(2048,"","","euskoflix"));
+        CatalogoUsuarios.getInstance().login(new Usuario(4045,"","","euskoflix"));
     }
 
     @After
@@ -34,6 +34,11 @@ public class FiltradoContenidoTest {
 
     @Test
     public void cargar() {
-        System.out.println("Done");
+        System.out.println("--------Filtrado Persona----------");
+        System.out.println(Filtrado.getInstance().recomendar(TipoRecomendacion.Persona, 100).toString());
+        System.out.println("--------Filtrado Pelicula----------");
+        System.out.println(Filtrado.getInstance().recomendar(TipoRecomendacion.Pelicula, 100).toString());
+        System.out.println("--------Filtrado Contenido----------");
+        System.out.println(Filtrado.getInstance().recomendar(TipoRecomendacion.Contenido, 100).toString());
     }
 }
