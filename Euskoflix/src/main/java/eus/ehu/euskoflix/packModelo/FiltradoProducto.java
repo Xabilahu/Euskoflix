@@ -15,7 +15,6 @@ public class FiltradoProducto extends Filtrable {
 
     @Override
     public void calcularRecomendaciones() {
-        System.out.println("---------Filtrado Producto---------");
         Cartelera.getInstance().cargarModeloProductos(this);
         HashSet<Integer> noValoradas = Cartelera.getInstance().getPeliculasNoValoradas(CatalogoUsuarios.getInstance().getUsuarioLogueado());
         for (Integer noValorada : noValoradas) {

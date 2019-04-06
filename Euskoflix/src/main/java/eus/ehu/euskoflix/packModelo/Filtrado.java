@@ -20,7 +20,7 @@ public class Filtrado {
     public void cargarModelos() {
         this.cargarModeloPersona();
         this.cargarModeloProductos();
-        this.cargarModeloContenido();
+        this.calcularRecomendacionesContenido();
     }
 
     private void cargarModeloPersona() {
@@ -91,7 +91,7 @@ public class Filtrado {
         this.filtradoContenido.cargarTF(pTf);
     }
 
-    public void cargarIDF() {
+    private void calcularRecomendacionesContenido() {
         this.filtradoContenido.calcularRecomendaciones();
     }
 }

@@ -4,7 +4,6 @@ import java.util.HashSet;
 
 public class FiltradoPersona extends Filtrable {
 
-
     public FiltradoPersona() {
         super();
         CatalogoUsuarios.getInstance().cargarModeloPersona(this);
@@ -17,7 +16,6 @@ public class FiltradoPersona extends Filtrable {
 
     @Override
     public void calcularRecomendaciones() {
-        System.out.println("-------Filtrado Persona--------");
         int id = CatalogoUsuarios.getInstance().getUsuarioLogueado().getId();
         Similitud[] similitudes = super.getNMasSimilares(id);
         HashSet<Integer> noValoradas = Cartelera.getInstance().getPeliculasNoValoradas(CatalogoUsuarios.getInstance().getUsuarioLogueado());

@@ -1,11 +1,13 @@
 package eus.ehu.euskoflix.packModelo;
 
-public class FiltradoContenido extends Filtrable {
+import java.util.HashSet;
 
+public class FiltradoContenido extends Filtrable {
 
     private ListaEtiquetasFiltrado tfidf;
 
     public FiltradoContenido() {
+        super();
     }
 
     public void cargarTF(ListaEtiquetasFiltrado pTf) {
@@ -19,12 +21,18 @@ public class FiltradoContenido extends Filtrable {
 
     @Override
     public ListaPeliculasRecomendadas recomendar(int pNum) {
-        return null;
+        return super.getNRecomendaciones(pNum);
     }
 
     @Override
     public void calcularRecomendaciones() {
         this.tfidf.cargarIdfs();
+        this.tfidf.calcularRelevanciasSimilitudes(this);
+        Similitud[] similitudes = super.getNMasSimilares(CatalogoUsuarios.getInstance().getUsuarioLogueado().getId());
+        HashSet<Integer> noValoradas = Cartelera.getInstance().getPeliculasNoValoradas(CatalogoUsuarios.getInstance().getUsuarioLogueado());
+        for (Integer noValorada : noValoradas) {
+            super.generarValoracionRecomendada(true, noValorada, similitudes);
+        }
     }
 
 }

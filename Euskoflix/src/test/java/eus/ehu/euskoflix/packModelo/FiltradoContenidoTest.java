@@ -13,6 +13,7 @@ public class FiltradoContenidoTest {
     public void setUp() throws Exception {
         BaseDatos.getBaseDatos().eliminarBaseDatos();
         GestionDatos.getInstance().cargarDatos(TipoFichero.small);
+        CatalogoUsuarios.getInstance().login(new Usuario(2048,"","","euskoflix"));
     }
 
     @After
@@ -33,6 +34,6 @@ public class FiltradoContenidoTest {
 
     @Test
     public void cargar() {
-        Filtrado.getInstance().cargarIDF();
+        System.out.println("Done");
     }
 }

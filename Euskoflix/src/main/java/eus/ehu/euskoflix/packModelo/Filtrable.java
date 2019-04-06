@@ -33,7 +33,6 @@ public abstract class Filtrable {
         this.addSimilitud(pSimilitud.getJ(), pSimilitud);
     }
 
-
     public void addSimilitud(int pID, Similitud pSimilitud) {
         if (!this.matrizSimilitudes.containsKey(pID)) {
             this.matrizSimilitudes.put(pID, new TreeSet<Similitud>((o1, o2) -> Double.compare(o1.getSim(), o2.getSim()) * -1) {{
@@ -43,7 +42,6 @@ public abstract class Filtrable {
             this.matrizSimilitudes.get(pID).add(pSimilitud);
         }
     }
-
 
     public void addRecomendacion(int pPelicula, double pValoracion) {
         this.recomendados.add(pPelicula, pValoracion);
@@ -72,7 +70,6 @@ public abstract class Filtrable {
             }
 
         }
-        System.out.println("\tPeli: " + noValorada + "\tValoración: " + (numerador / denominador) + "\tNum: " + numerador + "\tDenom: " + denominador);
         this.addRecomendacion(noValorada,
 //                CatalogoUsuarios.getInstance().getUsuarioLogueado().desnormalizar(numerador/denominador)
                 numerador / denominador

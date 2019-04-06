@@ -7,7 +7,6 @@ import java.util.*;
 public class MatrizValoraciones {
 
     private static MatrizValoraciones ourInstance;
-
     private HashMap<Integer, HashMap<Integer, Double>> valoraciones;
 
     private MatrizValoraciones() {
@@ -23,59 +22,32 @@ public class MatrizValoraciones {
 
     public void cargarValoraciones() {
         valoraciones = GestionDatos.getInstance().cargarValoraciones();
-
     }
-
-//    public void pepe() throws Exception {
-//        FileWriter fw = new FileWriter("pelisRecomendadesSim_" + CatalogoUsuarios.getInstance().getUsuarioLogueado().getId() + "_norm",true);
-//        ArrayList<Integer> pelis = Cartelera.getInstance().idMapping;
-//        fw.write("User 1: [");
-//        for (Integer i : pelis) {
-//            if (this.valoraciones.get(2048).get(i) == null) {
-//                fw.write("0,");
-//            } else {
-//                fw.write(CatalogoUsuarios.getInstance().getUsuarioPorId(2048).normalizar(this.valoraciones.get(2048).get(i)) + ",");
-//            }
-//        }
-//        fw.write("\nUser 2: [");
-//        for (Integer i : pelis) {
-//            if (this.valoraciones.get(1).get(i) == null) {
-//                fw.write("0,");
-//            } else {
-//                fw.write(CatalogoUsuarios.getInstance().getUsuarioPorId(1).normalizar(this.valoraciones.get(1).get(i)) + ",");
-//            }
-//        }
-//        fw.close();
-//    }
 
     public Similitud simPersonas(Usuario pPersona1, Usuario pPersona2) {
         double similitud = 0;
-        try {
-            List<Double> valoracionU1 = new ArrayList<>();
-            List<Double> valoracionU2 = new ArrayList<>();
-            List<AbstractMap.SimpleEntry<Double, Double>> interseccion = new ArrayList<>();
-            for (Double valoracion : this.valoraciones.get(pPersona1.getId()).values()) {
-                valoracionU1.add(CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona1.getId()).normalizar(valoracion));
+        List<Double> valoracionU1 = new ArrayList<>();
+        List<Double> valoracionU2 = new ArrayList<>();
+        List<AbstractMap.SimpleEntry<Double, Double>> interseccion = new ArrayList<>();
+        for (Double valoracion : this.valoraciones.get(pPersona1.getId()).values()) {
+            valoracionU1.add(CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona1.getId()).normalizar(valoracion));
+        }
+        for (Double valoracion : this.valoraciones.get(pPersona2.getId()).values()) {
+            valoracionU2.add(CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona2.getId()).normalizar(valoracion));
+        }
+        for (Map.Entry<Integer, Double> entry : this.valoraciones.get(pPersona1.getId()).entrySet()) {
+            if (this.valoraciones.get(pPersona2.getId()).containsKey(entry.getKey())) {
+                interseccion.add(new AbstractMap.SimpleEntry<>(
+                        CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona1.getId()).normalizar(entry.getValue()),
+                        CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona2.getId()).normalizar(this.valoraciones.get(pPersona2.getId()).get(entry.getKey()))
+                ));
             }
-            for (Double valoracion : this.valoraciones.get(pPersona2.getId()).values()) {
-                valoracionU2.add(CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona2.getId()).normalizar(valoracion));
-            }
-            for (Map.Entry<Integer, Double> entry : this.valoraciones.get(pPersona1.getId()).entrySet()) {
-                if (this.valoraciones.get(pPersona2.getId()).containsKey(entry.getKey())) {
-                    interseccion.add(new AbstractMap.SimpleEntry<>(
-                            CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona1.getId()).normalizar(entry.getValue()),
-                            CatalogoUsuarios.getInstance().getUsuarioPorId(pPersona2.getId()).normalizar(this.valoraciones.get(pPersona2.getId()).get(entry.getKey()))
-                    ));
-                }
-            }
-            if (!valoracionU1.isEmpty() && !valoracionU2.isEmpty() && !interseccion.isEmpty()) {
-                similitud = coseno(valoracionU1, valoracionU2, interseccion);
-            }
-            if (Double.isNaN(similitud)) {
-                similitud = 0.0;
-            }
-        } catch (Exception e) {
-            System.out.println();
+        }
+        if (!valoracionU1.isEmpty() && !valoracionU2.isEmpty() && !interseccion.isEmpty()) {
+            similitud = coseno(valoracionU1, valoracionU2, interseccion);
+        }
+        if (Double.isNaN(similitud)) {
+            similitud = 0.0;
         }
         return new Similitud(pPersona1.getId(), pPersona2.getId(), similitud);
     }
@@ -107,7 +79,7 @@ public class MatrizValoraciones {
         return new Similitud(pPelicula1.getId(), pPelicula2.getId(), similitud);
     }
 
-    private double coseno(List<Double> vn, List<Double> wn, List<AbstractMap.SimpleEntry<Double, Double>> interseccion) {
+    public double coseno(List<Double> vn, List<Double> wn, List<AbstractMap.SimpleEntry<Double, Double>> interseccion) {
         double numerador = 0.0;
         double sum1 = 0.0;
         double sum2 = 0.0;
@@ -166,15 +138,16 @@ public class MatrizValoraciones {
         return sb.toString();
     }
 
-    public HashMap<Integer, Double> getValoracionesByUsuario(int pId) {
-        HashMap<Integer, Double> resultado = new HashMap<>();
-        this.valoraciones.get(pId).forEach(((integer, aDouble) -> {
-            try {
-                resultado.put(integer, CatalogoUsuarios.getInstance().getUsuarioPorId(pId).normalizar(aDouble));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }));
+    public HashMap<Integer,LinkedList<Integer>> getValoracionesByLimite(double pLim) {
+        HashMap<Integer,LinkedList<Integer>> resultado = new HashMap<>();
+        this.valoraciones.forEach((i,map) -> {
+            resultado.put(i, new LinkedList<>());
+            map.forEach((p, val) -> {
+                if (Double.compare(val, pLim) >= 0) {
+                    resultado.get(i).add(p);
+                }
+            });
+        });
         return resultado;
     }
 
