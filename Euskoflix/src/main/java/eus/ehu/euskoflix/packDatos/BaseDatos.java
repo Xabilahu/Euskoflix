@@ -138,9 +138,9 @@ public class BaseDatos {
     }
 
     private void anadirDatos(TipoFichero pTipo) {
-        anadirUsuarios(pTipo);
+      //  anadirUsuarios(pTipo);
         anadirPeliculas(pTipo);
-        anadirValoraciones(pTipo);
+        anadirUsuariosYValoraciones(pTipo);
         anadirEtiquetas(pTipo);
     }
 
@@ -190,38 +190,59 @@ public class BaseDatos {
         }
     }
 
-    private void anadirValoraciones(TipoFichero pTipo) {
+    private void anadirUsuariosYValoraciones(TipoFichero pTipo) {
         try {
             Connection c = this.getConexion();
             c.setAutoCommit(false);
             String fileName = "";
+            String userFileName = "";
             switch (pTipo) {
                 case big:
                     fileName = "ratings";
+                    userFileName = "nombres";
                     break;
                 case test:
                     fileName = "testRatings";
+                    userFileName = "testNombres";
                     break;
                 case small:
                     fileName = "smallRatings";
+                    userFileName = "smallNombres";
                     break;
             }
             InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(fileName));
+            InputStream is1 = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(userFileName));
             try {
+                String defaultPass = PropertiesManager.getInstance().getDefaultPassword();
                 BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+                BufferedReader inUsuario = new BufferedReader(new InputStreamReader(is1, StandardCharsets.UTF_8));
                 in.readLine(); // skip headers
                 PreparedStatement pst = c.prepareStatement("INSERT INTO valoracion(id_usuario, id_pelicula, valoracion) VALUES (?,?,?)");
+                PreparedStatement pstUsuarios = c.prepareStatement("INSERT INTO usuario(id,contrasena,nombre,apellido) VALUES(?,?,?,?)");
+                int lastIdUsurio = -1;
                 while (in.ready()) {
                     StringTokenizer stringTokenizer = new StringTokenizer(in.readLine());
-                    pst.setInt(1, Integer.parseInt(stringTokenizer.nextToken(",")));
+                    int idUsuario = Integer.parseInt(stringTokenizer.nextToken(","));
+                    pst.setInt(1, idUsuario);
                     pst.setInt(2, Integer.parseInt(stringTokenizer.nextToken(",")));
                     pst.setFloat(3, Float.parseFloat(stringTokenizer.nextToken(",")));
                     pst.addBatch();
+                    if (lastIdUsurio != idUsuario){
+                        StringTokenizer stringTokenizerU = new StringTokenizer(inUsuario.readLine());
+                        pstUsuarios.setInt(1, idUsuario);
+                        pstUsuarios.setString(2, defaultPass);
+                        pstUsuarios.setString(3, stringTokenizerU.nextToken(","));
+                        pstUsuarios.setString(4, stringTokenizerU.nextToken(","));
+                        pstUsuarios.addBatch();
+                        lastIdUsurio = idUsuario;
+                    }
                 }
+                pstUsuarios.executeBatch();
                 pst.executeBatch();
                 c.commit();
                 c.close();
                 in.close();
+                inUsuario.close();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(-1);
@@ -231,7 +252,7 @@ public class BaseDatos {
         }
     }
 
-    private void anadirUsuarios(TipoFichero pTipo) {
+   /* private void anadirUsuarios(TipoFichero pTipo) {
         try {
             Connection c = this.getConexion();
             c.setAutoCommit(false);
@@ -271,7 +292,7 @@ public class BaseDatos {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     private void addIds(TipoFichero pTipo) {
         try {
