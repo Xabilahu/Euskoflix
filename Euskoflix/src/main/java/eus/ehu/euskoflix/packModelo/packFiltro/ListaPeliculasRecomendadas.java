@@ -41,4 +41,10 @@ public class ListaPeliculasRecomendadas {
         return sb.toString();
     }
 
+    /**
+     * This method is only used in jUnit
+     */
+    public TreeSet<Map.Entry<Integer, Double>> getRecomendaciones() {
+        return recomendaciones;
+    }
 }

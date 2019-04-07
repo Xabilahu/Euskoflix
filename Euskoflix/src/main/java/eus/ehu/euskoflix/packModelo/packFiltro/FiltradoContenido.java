@@ -18,11 +18,6 @@ public class FiltradoContenido extends Filtrable {
     }
 
     @Override
-    public Similitud[] getNMasSimilares(int pId) {
-        return null;
-    }
-
-    @Override
     public ListaPeliculasRecomendadas recomendar(int pNum) {
         return super.getNRecomendaciones(pNum);
     }
@@ -38,4 +33,10 @@ public class FiltradoContenido extends Filtrable {
         }
     }
 
+    /**
+     * This method is only used in jUnit
+     */
+    public ListaEtiquetasFiltrado getTfidf() {
+        return tfidf;
+    }
 }

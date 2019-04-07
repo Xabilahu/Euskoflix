@@ -1,13 +1,18 @@
-package eus.ehu.euskoflix.packModelo;
+package eus.ehu.euskoflix.packModelo.packFiltro;
 
 import eus.ehu.euskoflix.packDatos.BaseDatos;
 import eus.ehu.euskoflix.packDatos.GestionDatos;
 import eus.ehu.euskoflix.packDatos.TipoFichero;
+import eus.ehu.euskoflix.packModelo.CatalogoUsuarios;
+import eus.ehu.euskoflix.packModelo.Usuario;
 import eus.ehu.euskoflix.packModelo.packFiltro.Filtrado;
+import eus.ehu.euskoflix.packModelo.packFiltro.FiltradoContenido;
+import eus.ehu.euskoflix.packModelo.packFiltro.ListaEtiquetasFiltrado;
 import eus.ehu.euskoflix.packModelo.packFiltro.TipoRecomendacion;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class FiltradoContenidoTest {
 
@@ -24,23 +29,13 @@ public class FiltradoContenidoTest {
 
     @Test
     public void cargarTF() {
+        assertNull(Filtrado.getInstance().getFiltradoContenido().getTfidf());
+        Filtrado.getInstance().getFiltradoContenido().cargarTF(new ListaEtiquetasFiltrado());
+        assertNotNull(Filtrado.getInstance().getFiltradoContenido().getTfidf());
     }
 
     @Test
-    public void getNMasSimilares() {
-    }
+    public void cargar() throws Exception{
 
-    @Test
-    public void recomendar() {
-    }
-
-    @Test
-    public void cargar() {
-        System.out.println("--------Filtrado Persona----------");
-        System.out.println(Filtrado.getInstance().recomendar(TipoRecomendacion.Persona, 100).toString());
-        System.out.println("--------Filtrado Pelicula----------");
-        System.out.println(Filtrado.getInstance().recomendar(TipoRecomendacion.Pelicula, 100).toString());
-        System.out.println("--------Filtrado Contenido----------");
-        System.out.println(Filtrado.getInstance().recomendar(TipoRecomendacion.Contenido, 100).toString());
     }
 }

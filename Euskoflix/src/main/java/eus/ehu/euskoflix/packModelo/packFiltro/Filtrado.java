@@ -94,4 +94,25 @@ public class Filtrado {
     private void calcularRecomendacionesContenido() {
         this.filtradoContenido.calcularRecomendaciones();
     }
+
+    /**
+     * This method is only used in jUnit
+     */
+    public FiltradoProducto getFiltradoProducto() {
+        return filtradoProducto;
+    }
+
+    /**
+     * This method is only used in jUnit
+     */
+    public FiltradoPersona getFiltradoPersona() {
+        return filtradoPersona;
+    }
+
+    /**
+     * This method is only used in jUnit
+     */
+    public FiltradoContenido getFiltradoContenido() {
+        return filtradoContenido;
+    }
 }

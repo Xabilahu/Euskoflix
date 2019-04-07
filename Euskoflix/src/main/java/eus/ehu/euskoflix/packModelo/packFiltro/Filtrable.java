@@ -9,7 +9,7 @@ import java.util.TreeSet;
 
 public abstract class Filtrable {
 
-    public static final int N = 30;
+    private static final int N = 30;
     private HashMap<Integer, TreeSet<Similitud>> matrizSimilitudes;
     private ListaPeliculasRecomendadas recomendados;
 
@@ -77,5 +77,26 @@ public abstract class Filtrable {
 //                CatalogoUsuarios.getInstance().getUsuarioLogueado().desnormalizar(numerador/denominador)
                 numerador / denominador
         );
+    }
+
+    /**
+     * This method is only used in jUnit
+     */
+    public static int getN() {
+        return N;
+    }
+
+    /**
+     * This method is only used in jUnit
+     */
+    public HashMap<Integer, TreeSet<Similitud>> getMatrizSimilitudes() {
+        return matrizSimilitudes;
+    }
+
+    /**
+     * This method is only used in jUnit
+     */
+    public ListaPeliculasRecomendadas getRecomendados() {
+        return recomendados;
     }
 }
