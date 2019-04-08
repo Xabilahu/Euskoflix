@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class GestionDatos {
 
@@ -37,10 +38,29 @@ public class GestionDatos {
     public void cargarDatos(TipoFichero pTipo) {
         BaseDatos.getBaseDatos().iniciarBD(pTipo);
         this.cargarPeliculasTagsTf();
+        this.cargarEstructuraEtiquetas();
         this.cargarUsuarios();
         MatrizValoraciones.getInstance().cargarValoraciones();
         CatalogoUsuarios.getInstance().cargarMediasDesviacionesUsuarios();
         Cartelera.getInstance().cargarMediasDesviacionesPeliculas();
+    }
+
+    private void cargarEstructuraEtiquetas() {
+        ResultSet rst = BaseDatos.getBaseDatos().getTagsPeliculas();
+        HashMap<Tag, HashSet<Integer>> peliculasPorTag = new HashMap<>();
+        try {
+            while(rst.next()) {
+                int peli = rst.getInt("id_pelicula");
+                Tag t = new Tag(rst.getString("etiqueta"));
+                if (!peliculasPorTag.containsKey(t)) {
+                    peliculasPorTag.put(t, new HashSet<>());
+                }
+                peliculasPorTag.get(t).add(peli);
+            }
+            Filtrado.getInstance().cargarEstructuraEtiquetas(peliculasPorTag);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void cargarPeliculasTagsTf() {

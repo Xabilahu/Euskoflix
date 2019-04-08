@@ -537,4 +537,15 @@ public class BaseDatos {
         return rst;
     }
 
+    public ResultSet getTagsPeliculas() {
+        ResultSet rst = null;
+        try {
+            PreparedStatement pst = this.getConexion().prepareStatement("SELECT DISTINCT etiqueta, id_pelicula FROM etiqueta");
+            rst = pst.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rst;
+    }
+
 }

@@ -2,7 +2,9 @@ package eus.ehu.euskoflix.packModelo.packFiltro;
 
 import eus.ehu.euskoflix.packModelo.Cartelera;
 import eus.ehu.euskoflix.packModelo.CatalogoUsuarios;
+import eus.ehu.euskoflix.packModelo.Tag;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class FiltradoContenido extends Filtrable {
@@ -38,5 +40,9 @@ public class FiltradoContenido extends Filtrable {
      */
     public ListaEtiquetasFiltrado getTfidf() {
         return tfidf;
+    }
+
+    public void cargarEstructuraEtiquetas(HashMap<Tag, HashSet<Integer>> pEstruct) {
+        this.tfidf.cargarEstructuraEtiquetas(pEstruct);
     }
 }

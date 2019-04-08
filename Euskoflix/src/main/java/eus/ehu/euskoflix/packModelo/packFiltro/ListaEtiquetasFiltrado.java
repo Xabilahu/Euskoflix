@@ -13,6 +13,7 @@ public class ListaEtiquetasFiltrado {
     private HashMap<Tag, Integer> vecesTags;
     //Por cada peli, almacenamos los tags que aparecen junto con su tfidf
     private HashMap<Integer, HashMap<Tag, Double>> tfidf;
+    private HashMap<Tag, HashSet<Integer>> peliculasPorEtiqueta;
 
     public ListaEtiquetasFiltrado() {
         this.vecesTags = GestionDatos.getInstance().cargarNt();
@@ -87,13 +88,13 @@ public class ListaEtiquetasFiltrado {
             if (almacenadas.containsKey(tag) && almacenadas.get(tag) != 0.0) {
                 relevancias.put(tag, almacenadas.get(tag));
             } else {
-                this.tfidf.values().forEach(map -> map.forEach((t,val) -> {
-                    if (tag.equals(t)) {
-                        relevancias.put(tag, relevancias.get(tag) + val);
-                    }
-                }));
+                this.peliculasPorEtiqueta.get(tag).forEach(j -> relevancias.put(tag, relevancias.get(tag) + this.tfidf.get(j).get(tag)));
             }
         });
         almacenadas.putAll(relevancias);
+    }
+
+    public void cargarEstructuraEtiquetas(HashMap<Tag, HashSet<Integer>> pEstruct) {
+        this.peliculasPorEtiqueta = pEstruct;
     }
 }
