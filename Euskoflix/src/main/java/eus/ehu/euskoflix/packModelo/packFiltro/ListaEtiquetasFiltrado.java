@@ -37,6 +37,14 @@ public class ListaEtiquetasFiltrado {
         double totalTags = Cartelera.getInstance().getNumPeliculas();
         Set<Tag> tags = map.keySet();
         tags.forEach(tag -> map.put(tag, map.get(tag) * Math.log(totalTags / this.vecesTags.get(tag))));
+        double x = 0.0;
+        for (Double v : map.values()){
+            x += Math.pow(v,2);
+        }
+        x = Math.sqrt(x);
+        for (Tag t : map.keySet()) {
+            map.put(t, map.get(t) / x);
+        }
     }
 
     public void calcularRelevanciasSimilitudes(FiltradoContenido fc) {
@@ -45,13 +53,11 @@ public class ListaEtiquetasFiltrado {
         vecesTags.keySet().forEach(tag -> relevanciasLogged.put(tag, 0.0));
         HashMap<Tag, Double> esqueleto = new HashMap<>(relevanciasLogged);
         int idLogged = CatalogoUsuarios.getInstance().getUsuarioLogueado().getId();
-        usersPelisACalcular.get(idLogged).forEach(i ->
-                this.tfidf.get(i).forEach((tag, tf) -> relevanciasLogged.put(tag, relevanciasLogged.get(tag) + tf))
-        );
+        this.calcularRelevancias(usersPelisACalcular,idLogged,relevanciasLogged);
         usersPelisACalcular.forEach((i, lista) -> {
             if (i != idLogged) {
                 HashMap<Tag, Double> relevancias = new HashMap<>(esqueleto);
-                lista.forEach(peli -> this.tfidf.get(peli).forEach((tag, tf) -> relevancias.put(tag, relevancias.get(tag) + tf)));
+                this.calcularRelevancias(usersPelisACalcular, i, relevancias);
                 List<Double> rLogged = new LinkedList<>();
                 List<Double> rOtro = new LinkedList<>();
                 List<AbstractMap.SimpleEntry<Double, Double>> rIntersec = new LinkedList<>();
@@ -71,5 +77,15 @@ public class ListaEtiquetasFiltrado {
                 fc.addSimilitud(idLogged, new Similitud(idLogged, i, MatrizValoraciones.getInstance().coseno(rLogged, rOtro, rIntersec)));
             }
         });
+    }
+
+    private void calcularRelevancias(HashMap<Integer, LinkedList<Integer>> usersPelisACalcular, Integer i, HashMap<Tag, Double> relevancias) {
+        HashSet<Tag> aCalcular = new HashSet<>();
+        usersPelisACalcular.get(i).forEach(j -> aCalcular.addAll(this.tfidf.get(j).keySet()));
+        aCalcular.forEach(tag -> this.tfidf.values().forEach(map -> map.forEach((t,val) -> {
+            if (tag.equals(t)) {
+                relevancias.put(tag, relevancias.get(tag) + val);
+            }
+        })));
     }
 }

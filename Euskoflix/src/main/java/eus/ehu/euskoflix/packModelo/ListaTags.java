@@ -31,14 +31,6 @@ public class ListaTags {
     }
 
     public void rellenarTf(ListaEtiquetasFiltrado pTf, int pIdPelicula) {
-        double denominador = 0.0;
-        for (Tag tag : this.lista.keySet()) {
-            denominador += tag.getCantidad() * tag.getCantidad();
-        }
-        denominador = Math.sqrt(denominador);
-        final double tmp = denominador;
-        this.lista.keySet().forEach(tag -> {
-            pTf.add(pIdPelicula, tag, (double) tag.getCantidad() / tmp);
-        });
+        this.lista.keySet().forEach(tag -> pTf.add(pIdPelicula, tag,tag.getCantidad()));
     }
 }
