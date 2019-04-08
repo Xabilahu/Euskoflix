@@ -19,8 +19,8 @@ public class FiltradoContenidoTest {
     @Before
     public void setUp() throws Exception {
         BaseDatos.getBaseDatos().eliminarBaseDatos();
-        GestionDatos.getInstance().cargarDatos(TipoFichero.small);
-        CatalogoUsuarios.getInstance().login(new Usuario(4045,"","","euskoflix"));
+        GestionDatos.getInstance().cargarDatos(TipoFichero.test);
+        CatalogoUsuarios.getInstance().login(new Usuario(1,"","","euskoflix"));
     }
 
     @After

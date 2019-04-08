@@ -31,6 +31,6 @@ public class ListaTags {
     }
 
     public void rellenarTf(ListaEtiquetasFiltrado pTf, int pIdPelicula) {
-        this.lista.keySet().forEach(tag -> pTf.add(pIdPelicula, tag,tag.getCantidad()));
+        this.lista.keySet().forEach(tag -> pTf.add(pIdPelicula, tag, tag.getCantidad()));
     }
 }

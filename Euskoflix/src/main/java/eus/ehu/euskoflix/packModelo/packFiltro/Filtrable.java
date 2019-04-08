@@ -18,6 +18,13 @@ public abstract class Filtrable {
         this.recomendados = new ListaPeliculasRecomendadas();
     }
 
+    /**
+     * This method is only used in jUnit
+     */
+    public static int getN() {
+        return N;
+    }
+
     public Similitud[] getNMasSimilares(int pId) {
         Similitud[] similitudArray;
         TreeSet<Similitud> similitudes = this.matrizSimilitudes.get(pId);
@@ -27,6 +34,16 @@ public abstract class Filtrable {
             similitudArray[i] = (Similitud) itr.next();
         }
         return similitudArray;
+    }
+
+    public Similitud[] getSimilares(int pId){
+        TreeSet<Similitud> similitudTreeSet = this.matrizSimilitudes.get(pId);
+        Similitud[]  similitudes = new Similitud[similitudTreeSet.size()];
+        Iterator itr = similitudTreeSet.iterator();
+        for (int i = 0; i < similitudes.length; i++) {
+            similitudes[i] = (Similitud) itr.next();
+        }
+        return similitudes;
     }
 
     public abstract ListaPeliculasRecomendadas recomendar(int pNum);
@@ -77,13 +94,6 @@ public abstract class Filtrable {
 //                CatalogoUsuarios.getInstance().getUsuarioLogueado().desnormalizar(numerador/denominador)
                 numerador / denominador
         );
-    }
-
-    /**
-     * This method is only used in jUnit
-     */
-    public static int getN() {
-        return N;
     }
 
     /**

@@ -1,10 +1,5 @@
 package eus.ehu.euskoflix.packModelo.packFiltro;
 
-import eus.ehu.euskoflix.packModelo.Tag;
-
-import java.util.HashMap;
-import java.util.HashSet;
-
 public class Filtrado {
 
     private static Filtrado ourInstance = new Filtrado();
@@ -96,9 +91,13 @@ public class Filtrado {
         this.filtradoContenido.cargarTF(pTf);
     }
 
-    public void cargarEstructuraEtiquetas(HashMap<Tag, HashSet<Integer>> pEstruct) {
+    /*public void addEtiquetaContenido(Tag pTag, int pValor){
+        this.filtradoContenido.addEtiquetaContenido(pTag,pValor);
+    }*/
+
+    /*public void cargarEstructuraEtiquetas(ListaEtiquetasFiltrado pEstruct) {
         this.filtradoContenido.cargarEstructuraEtiquetas(pEstruct);
-    }
+    }*/
 
     private void calcularRecomendacionesContenido() {
         this.filtradoContenido.calcularRecomendaciones();

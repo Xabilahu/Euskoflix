@@ -18,6 +18,7 @@ public class ListaEtiquetasFiltrado {
     public ListaEtiquetasFiltrado() {
         this.vecesTags = GestionDatos.getInstance().cargarNt();
         this.tfidf = new HashMap<>();
+        this.peliculasPorEtiqueta = new HashMap<>();
     }
 
     public void add(int pId) {
@@ -32,6 +33,7 @@ public class ListaEtiquetasFiltrado {
 
     public void cargarIdfs() {
         this.tfidf.values().forEach(this::completarIDF);
+        int i = 0;
     }
 
     private void completarIDF(HashMap<Tag, Double> map) {
@@ -39,8 +41,8 @@ public class ListaEtiquetasFiltrado {
         Set<Tag> tags = map.keySet();
         tags.forEach(tag -> map.put(tag, map.get(tag) * Math.log(totalTags / this.vecesTags.get(tag))));
         double x = 0.0;
-        for (Double v : map.values()){
-            x += Math.pow(v,2);
+        for (Double v : map.values()) {
+            x += Math.pow(v, 2);
         }
         x = Math.sqrt(x);
         for (Tag t : map.keySet()) {
@@ -54,12 +56,12 @@ public class ListaEtiquetasFiltrado {
         vecesTags.keySet().forEach(tag -> relevanciasLogged.put(tag, 0.0));
         HashMap<Tag, Double> esqueleto = new HashMap<>(relevanciasLogged);
         int idLogged = CatalogoUsuarios.getInstance().getUsuarioLogueado().getId();
-        HashMap<Tag,Double> almacenadas = new HashMap<>();
-        this.calcularRelevancias(usersPelisACalcular,idLogged,relevanciasLogged,almacenadas);
+        HashMap<Tag, Double> almacenadas = new HashMap<>();
+        this.calcularRelevancias(usersPelisACalcular, idLogged, relevanciasLogged, almacenadas);
         usersPelisACalcular.forEach((i, lista) -> {
             if (i != idLogged) {
                 HashMap<Tag, Double> relevancias = new HashMap<>(esqueleto);
-                this.calcularRelevancias(usersPelisACalcular, i, relevancias,almacenadas);
+                this.calcularRelevancias(usersPelisACalcular, i, relevancias, almacenadas);
                 List<Double> rLogged = new LinkedList<>();
                 List<Double> rOtro = new LinkedList<>();
                 List<AbstractMap.SimpleEntry<Double, Double>> rIntersec = new LinkedList<>();
@@ -81,7 +83,7 @@ public class ListaEtiquetasFiltrado {
         });
     }
 
-    private void calcularRelevancias(HashMap<Integer, LinkedList<Integer>> usersPelisACalcular, Integer i, HashMap<Tag, Double> relevancias, HashMap<Tag,Double> almacenadas) {
+    private void calcularRelevancias(HashMap<Integer, LinkedList<Integer>> usersPelisACalcular, Integer i, HashMap<Tag, Double> relevancias, HashMap<Tag, Double> almacenadas) {
         HashSet<Tag> aCalcular = new HashSet<>();
         usersPelisACalcular.get(i).forEach(j -> aCalcular.addAll(this.tfidf.get(j).keySet()));
         aCalcular.forEach(tag -> {
@@ -94,7 +96,11 @@ public class ListaEtiquetasFiltrado {
         almacenadas.putAll(relevancias);
     }
 
-    public void cargarEstructuraEtiquetas(HashMap<Tag, HashSet<Integer>> pEstruct) {
-        this.peliculasPorEtiqueta = pEstruct;
+    public void addPeliculaAEtiqueta(Tag pTag, int idPelicula) {
+        if (!this.peliculasPorEtiqueta.containsKey(pTag)) {
+            this.peliculasPorEtiqueta.put(pTag, new HashSet<>());
+        }
+        this.peliculasPorEtiqueta.get(pTag).add(idPelicula);
     }
+
 }

@@ -19,7 +19,6 @@ import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class GestionDatos {
 
@@ -47,17 +46,13 @@ public class GestionDatos {
 
     private void cargarEstructuraEtiquetas() {
         ResultSet rst = BaseDatos.getBaseDatos().getTagsPeliculas();
-        HashMap<Tag, HashSet<Integer>> peliculasPorTag = new HashMap<>();
+        ListaEtiquetasFiltrado lef = Filtrado.getInstance().getFiltradoContenido().getTfidf();
         try {
-            while(rst.next()) {
+            while (rst.next()) {
                 int peli = rst.getInt("id_pelicula");
                 Tag t = new Tag(rst.getString("etiqueta"));
-                if (!peliculasPorTag.containsKey(t)) {
-                    peliculasPorTag.put(t, new HashSet<>());
-                }
-                peliculasPorTag.get(t).add(peli);
+                lef.addPeliculaAEtiqueta(t, peli);
             }
-            Filtrado.getInstance().cargarEstructuraEtiquetas(peliculasPorTag);
         } catch (SQLException e) {
             e.printStackTrace();
         }
