@@ -127,7 +127,7 @@ public class FiltrableTest {
     @Test
     public void testGenerarValoracionRecomendada() throws Exception {
         BaseDatos.getBaseDatos().eliminarBaseDatos();
-        GestionDatos.getInstance().cargarDatos(TipoFichero.test);
+        GestionDatos.getInstance().cargarDatos(TipoFichero.small);
         CatalogoUsuarios.getInstance().login(new Usuario(1, "", "", "euskoflix"));
         System.out.println("-------Filtro Persona-------");
         System.out.println(Filtrado.getInstance().recomendar(TipoRecomendacion.Persona, 100).toString());

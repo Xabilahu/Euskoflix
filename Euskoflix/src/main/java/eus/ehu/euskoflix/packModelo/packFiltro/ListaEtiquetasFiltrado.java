@@ -53,11 +53,12 @@ public class ListaEtiquetasFiltrado {
         vecesTags.keySet().forEach(tag -> relevanciasLogged.put(tag, 0.0));
         HashMap<Tag, Double> esqueleto = new HashMap<>(relevanciasLogged);
         int idLogged = CatalogoUsuarios.getInstance().getUsuarioLogueado().getId();
-        this.calcularRelevancias(usersPelisACalcular,idLogged,relevanciasLogged);
+        HashMap<Tag,Double> almacenadas = new HashMap<>();
+        this.calcularRelevancias(usersPelisACalcular,idLogged,relevanciasLogged,almacenadas);
         usersPelisACalcular.forEach((i, lista) -> {
             if (i != idLogged) {
                 HashMap<Tag, Double> relevancias = new HashMap<>(esqueleto);
-                this.calcularRelevancias(usersPelisACalcular, i, relevancias);
+                this.calcularRelevancias(usersPelisACalcular, i, relevancias,almacenadas);
                 List<Double> rLogged = new LinkedList<>();
                 List<Double> rOtro = new LinkedList<>();
                 List<AbstractMap.SimpleEntry<Double, Double>> rIntersec = new LinkedList<>();
@@ -79,13 +80,20 @@ public class ListaEtiquetasFiltrado {
         });
     }
 
-    private void calcularRelevancias(HashMap<Integer, LinkedList<Integer>> usersPelisACalcular, Integer i, HashMap<Tag, Double> relevancias) {
+    private void calcularRelevancias(HashMap<Integer, LinkedList<Integer>> usersPelisACalcular, Integer i, HashMap<Tag, Double> relevancias, HashMap<Tag,Double> almacenadas) {
         HashSet<Tag> aCalcular = new HashSet<>();
         usersPelisACalcular.get(i).forEach(j -> aCalcular.addAll(this.tfidf.get(j).keySet()));
-        aCalcular.forEach(tag -> this.tfidf.values().forEach(map -> map.forEach((t,val) -> {
-            if (tag.equals(t)) {
-                relevancias.put(tag, relevancias.get(tag) + val);
+        aCalcular.forEach(tag -> {
+            if (almacenadas.containsKey(tag) && almacenadas.get(tag) != 0.0) {
+                relevancias.put(tag, almacenadas.get(tag));
+            } else {
+                this.tfidf.values().forEach(map -> map.forEach((t,val) -> {
+                    if (tag.equals(t)) {
+                        relevancias.put(tag, relevancias.get(tag) + val);
+                    }
+                }));
             }
-        })));
+        });
+        almacenadas.putAll(relevancias);
     }
 }
