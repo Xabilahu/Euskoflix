@@ -6,6 +6,7 @@ import eus.ehu.euskoflix.packDatos.PropertiesManager;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -48,7 +49,6 @@ public class VentanaLogin extends JFrame {
         ImageIcon icon = new ImageIcon(logo);
         JLabel icono = new JLabel(icon);
         icono.setBounds(60, 10, icon.getIconWidth(), icon.getIconHeight());
-
         this.addWindowListener(new WindowAdapter() {
             public void windowOpened(WindowEvent e) {
                 icono.requestFocus();
@@ -72,8 +72,6 @@ public class VentanaLogin extends JFrame {
         panel.add(txtPass);
         panel.add(entrar);
         centrar();
-        this.setVisible(true);
-
     }
 
     private void centrar() {
@@ -92,13 +90,26 @@ public class VentanaLogin extends JFrame {
         this.txtUser.addFocusListener(pListenForFocusUser);
         this.txtPass.addFocusListener(pListenForFocusPass);
     }
-
-    public JTextField getTxtUser() {
-        return this.txtUser;
+    
+    public void anadirActionListener(ActionListener pLoguearseListener) {
+    	this.entrar.addActionListener(pLoguearseListener);
     }
 
-    public JTextField getTxtPass() {
-        return this.txtPass;
-    }
+    public JTextField getTxtUser() { return this.txtUser; }
+
+    public JTextField getTxtPass() { return this.txtPass; }
+    
+    public int getUsuario() {
+    	int username = -1;
+    	try {
+    		username = Integer.parseInt(this.txtUser.getText());
+    	}catch(NumberFormatException e){
+    		JOptionPane.showMessageDialog(this,
+	                "El nombre de usuario debe ser tu ID.", "Error login",
+	                JOptionPane.INFORMATION_MESSAGE);
+    	}
+    	return username; }
+    
+    public String getContra() { return this.txtPass.getText(); }
 
 }

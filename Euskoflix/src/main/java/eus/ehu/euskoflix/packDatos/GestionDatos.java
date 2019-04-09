@@ -250,5 +250,22 @@ public class GestionDatos {
         }
         return nt;
     }
+    
+    public String getUsuarioPorId(int pId) {
+    	ResultSet rst = BaseDatos.getBaseDatos().getUsuarioPorId(pId);
+    	JsonObject jsonUsuario = new JsonObject();
+    	try {
+    		if (rst.next()) {
+    			
+    			String nombre = rst.getString("nombre");
+    			jsonUsuario.addProperty("nombre", nombre);
+    			String apellido = rst.getString("apellido");
+    			jsonUsuario.addProperty("apellido", apellido);
+    		}
+    	} catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return jsonUsuario.toString();
+    }
 
 }

@@ -9,6 +9,10 @@ import eus.ehu.euskoflix.packVista.VentanaCargaDatos;
 import eus.ehu.euskoflix.packVista.VentanaLogin;
 
 import javax.swing.*;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.LinkedHashMap;
@@ -44,6 +48,7 @@ public class ControladorVista {
         this.mostrarLoader();
         this.gestionDatos.cargarDatos(TipoFichero.test);
         this.cerrarLoader();
+        //this.mostrarLogin();
         this.mostrarCargaDatos();
     }
 
@@ -51,14 +56,16 @@ public class ControladorVista {
         this.euskoFlixLoader.setVisible(true);
     }
 
-    public void mostrarLogin() {
+    private void mostrarLogin() {
         this.ventanaLogin.anadirFocusListener(new VentanaLoginListenerUser(), new VentanaLoginListenerPass());
+        this.ventanaLogin.anadirActionListener(new LoguearseListener());
         this.ventanaLogin.setVisible(true);
     }
 
     private void cerrarLoader() {
         this.euskoFlixLoader.setVisible(false);
         this.euskoFlixLoader.dispose();
+        
     }
 
     private void mostrarCargaDatos() {
@@ -233,6 +240,38 @@ public class ControladorVista {
         @Override
         public void focusLost(FocusEvent e) {
         }
+    }
+    
+    class LoguearseListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int username = ventanaLogin.getUsuario();
+			if (username != -1) {
+				
+				String contrasena = ventanaLogin.getContra();
+				String infoUsuario = gestionDatos.getUsuarioPorId(username);
+				
+				JsonParser parser = new JsonParser();
+				JsonObject jsonUsuario = parser.parse(infoUsuario).getAsJsonObject();
+				String nombre = jsonUsuario.get("nombre").getAsString();
+				String apellido = jsonUsuario.get("apellido").getAsString();
+				
+				if (nombre != null && apellido != null) {
+					Usuario usuario = new Usuario(username, nombre, apellido, contrasena);
+					if (usuario.comprobarPassword(usuario)) {
+						//new VentanaUsuario(username);
+					}else {
+						JOptionPane.showMessageDialog(ventanaLogin,
+				                "Usuario o contraseña incorrecto.", "Error login",
+				                JOptionPane.INFORMATION_MESSAGE);
+					}
+				}else {
+					JOptionPane.showMessageDialog(ventanaLogin,
+			                "Usuario no encontrado.", "Error login",
+			                JOptionPane.INFORMATION_MESSAGE);
+				}	
+			}
+		}
     }
 
 }

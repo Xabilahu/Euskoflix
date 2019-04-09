@@ -547,5 +547,17 @@ public class BaseDatos {
         }
         return rst;
     }
+    
+    public ResultSet getUsuarioPorId(int pId) {
+        ResultSet rst = null;
+        try {
+	        PreparedStatement pst = this.getConexion().prepareStatement("SELECT nombre,apellido FROM usuario WHERE id = ?");
+	        pst.setInt(1, pId);
+	        rst = pst.executeQuery();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return rst;
+	}
 
 }
