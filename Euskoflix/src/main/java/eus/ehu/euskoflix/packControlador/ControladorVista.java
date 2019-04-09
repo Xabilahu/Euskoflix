@@ -109,7 +109,7 @@ public class ControladorVista {
     //Pestana Tags
     public String[][] datosTags(int id) {
         Pelicula p = Cartelera.getInstance().getPeliculaPorIdSinMapeo(id);
-        GestionDatos.getInstance().getTags(p);
+        GestionDatos.getInstance().addTags(p);
         return p.tagsToStringArray();
     }
 

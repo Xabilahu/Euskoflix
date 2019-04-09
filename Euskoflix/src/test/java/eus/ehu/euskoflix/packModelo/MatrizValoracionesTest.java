@@ -89,7 +89,6 @@ public class MatrizValoracionesTest {
         FileWriter fw = new FileWriter("pelisRecomendadesSimPersonas_" + CatalogoUsuarios.getInstance().getUsuarioLogueado().getId() + "_norm");
         fw.write(Filtrado.getInstance().recomendar(TipoRecomendacion.Persona, 10).toString());
         fw.close();
-//        MatrizValoraciones.getInstance().pepe();
     }
 
     @Test

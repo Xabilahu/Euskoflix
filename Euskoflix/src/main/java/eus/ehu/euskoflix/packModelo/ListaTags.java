@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 public class ListaTags {
 
+    //Tag collection, both entry values refer to same instance, just to have constant access
     private HashMap<Tag, Tag> lista;
 
     public ListaTags() {

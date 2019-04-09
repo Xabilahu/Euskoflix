@@ -65,7 +65,7 @@ public class GestionDatos {
             while (pelis.next()) {
                 Pelicula p = new Pelicula(pelis.getInt("id"), pelis.getString("titulo"), pelis.getInt("idTMDB"));
                 Cartelera.getInstance().addPelicula(p);
-                this.getTags(p);
+                this.addTags(p);
                 tf.add(p.getId());
                 p.getLista().rellenarTf(tf, p.getId());
             }
@@ -202,7 +202,7 @@ public class GestionDatos {
         return i;
     }
 
-    public void getTags(Pelicula p) {
+    public void addTags(Pelicula p) {
         ResultSet rst = BaseDatos.getBaseDatos().getTagsByPelicula(p.getId());
         try {
             while (rst.next()) {

@@ -33,7 +33,17 @@ public class ListaEtiquetasFiltrado {
 
     public void cargarIdfs() {
         this.tfidf.values().forEach(this::completarIDF);
-        int i = 0;
+        //This code normalizes the tfidf vectors by tag
+//        this.peliculasPorEtiqueta.keySet().forEach(tag -> {
+//            double x = 0.0;
+//            for (Integer i: this.tfidf.keySet()) {
+//                if (this.tfidf.get(i).containsKey(tag)) x += this.tfidf.get(i).get(tag);
+//            }
+//            final double y = Math.sqrt(x);
+//            this.tfidf.values().forEach(map -> {
+//                if (map.containsKey(tag)) map.put(tag,map.get(tag)/y);
+//            });
+//        });
     }
 
     private void completarIDF(HashMap<Tag, Double> map) {
@@ -51,14 +61,14 @@ public class ListaEtiquetasFiltrado {
     }
 
     public void calcularRelevanciasSimilitudes(FiltradoContenido fc) {
-        HashMap<Integer, LinkedList<Integer>> usersPelisACalcular = MatrizValoraciones.getInstance().getValoracionesByLimite(3.5);
+        HashMap<Integer, LinkedList<Integer>> usersPelisACalcular = MatrizValoraciones.getInstance().getUsersPeliculasByLimite(3.5);
         HashMap<Tag, Double> relevanciasLogged = new HashMap<>();
         vecesTags.keySet().forEach(tag -> relevanciasLogged.put(tag, 0.0));
         HashMap<Tag, Double> esqueleto = new HashMap<>(relevanciasLogged);
         int idLogged = CatalogoUsuarios.getInstance().getUsuarioLogueado().getId();
         HashMap<Tag, Double> almacenadas = new HashMap<>();
         this.calcularRelevancias(usersPelisACalcular, idLogged, relevanciasLogged, almacenadas);
-        usersPelisACalcular.forEach((i, lista) -> {
+        usersPelisACalcular.keySet().forEach(i -> {
             if (i != idLogged) {
                 HashMap<Tag, Double> relevancias = new HashMap<>(esqueleto);
                 this.calcularRelevancias(usersPelisACalcular, i, relevancias, almacenadas);

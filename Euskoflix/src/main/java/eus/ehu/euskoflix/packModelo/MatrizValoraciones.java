@@ -137,7 +137,7 @@ public class MatrizValoraciones {
         return sb.toString();
     }
 
-    public HashMap<Integer, LinkedList<Integer>> getValoracionesByLimite(double pLim) {
+    public HashMap<Integer, LinkedList<Integer>> getUsersPeliculasByLimite(double pLim) {
         HashMap<Integer, LinkedList<Integer>> resultado = new HashMap<>();
         this.valoraciones.forEach((i, map) -> {
             resultado.put(i, new LinkedList<>());

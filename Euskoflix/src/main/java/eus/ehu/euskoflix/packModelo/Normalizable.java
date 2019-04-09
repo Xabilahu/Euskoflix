@@ -17,9 +17,9 @@ public abstract class Normalizable {
 
     public double normalizar(double pValor) { //throws Exception {
 //        double normalizado = (pValor - this.media);
-////        if (Double.isNaN(normalizado)) {
-////            throw new Exception();
-////        }
+//        if (Double.isNaN(normalizado)) {
+//            throw new Exception();
+//        }
 //        return normalizado;
         return pValor;
     }
