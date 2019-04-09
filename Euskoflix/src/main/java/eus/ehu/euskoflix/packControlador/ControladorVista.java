@@ -259,7 +259,9 @@ public class ControladorVista {
 				if (nombre != null && apellido != null) {
 					Usuario usuario = new Usuario(username, nombre, apellido, contrasena);
 					if (usuario.comprobarPassword(usuario)) {
-						//new VentanaUsuario(username);
+						String infoUsuario2 = usuario.usuario2json();
+						//String[][] peliculasVistas = 
+						//new VentanaUsuario(infoUsuario2, peliculasVistas);
 					}else {
 						JOptionPane.showMessageDialog(ventanaLogin,
 				                "Usuario o contraseña incorrecto.", "Error login",

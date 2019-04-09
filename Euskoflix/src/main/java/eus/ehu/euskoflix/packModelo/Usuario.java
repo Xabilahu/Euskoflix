@@ -6,6 +6,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import com.google.gson.JsonObject;
+
 public class Usuario extends Normalizable {
 
     private int id;
@@ -53,6 +55,18 @@ public class Usuario extends Normalizable {
     public String getPassword() {
         return password;
     }
-
-
+    
+    public String usuario2json() {
+    	//para pasar la informacion a la interfaz
+    	
+    	JsonObject jsonUsuario = new JsonObject();
+    	jsonUsuario.addProperty("id", this.id);
+    	jsonUsuario.addProperty("nombre", this.nombre);
+    	jsonUsuario.addProperty("apellido", this.apellido);
+    	jsonUsuario.addProperty("password", this.password);
+    	
+    	return jsonUsuario.toString();
+    	
+    }
+    
 }
