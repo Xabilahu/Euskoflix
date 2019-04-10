@@ -10,14 +10,14 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.swing.*;
 import java.awt.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-
+import java.util.TimerTask;
+import  java.util.Timer;
 import static javafx.concurrent.Worker.State.FAILED;
 
 public class SimpleSwingBrowser extends JFrame {
@@ -25,6 +25,7 @@ public class SimpleSwingBrowser extends JFrame {
     private final JFXPanel jfxPanel = new JFXPanel();
     private final JPanel panel = new JPanel(new BorderLayout());
     private WebEngine engine;
+    private String url;
 
     public SimpleSwingBrowser() {
         super();
@@ -45,7 +46,7 @@ public class SimpleSwingBrowser extends JFrame {
         panel.add(jfxPanel, BorderLayout.CENTER);
         getContentPane().add(panel);
 
-
+        this.setUndecorated(true);
         setPreferredSize(new Dimension(1024, 600));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
@@ -66,7 +67,8 @@ public class SimpleSwingBrowser extends JFrame {
                             @Override
                             public void changed(ObservableValue<? extends Throwable> o, Throwable old, final Throwable value) {
                                 if (engine.getLoadWorker().getState() == FAILED) {
-                                    SwingUtilities.invokeLater(new Runnable() {
+                                    System.out.println("error");
+                                    /*SwingUtilities.invokeLater(new Runnable() {
                                         @Override
                                         public void run() {
                                             JOptionPane.showMessageDialog(
@@ -77,7 +79,7 @@ public class SimpleSwingBrowser extends JFrame {
                                                     "Loading error...",
                                                     JOptionPane.ERROR_MESSAGE);
                                         }
-                                    });
+                                    });*/
                                 }
                             }
                         });
@@ -85,7 +87,6 @@ public class SimpleSwingBrowser extends JFrame {
                     @Override
                     public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newValue) {
                         if (newValue == Worker.State.SUCCEEDED){
-                            System.out.println("eliminando elementos");
                             Document d = engine.getDocument();
                             NodeList nl = d.getElementsByTagName("div");
                             for (int i = 0 ; i < nl.getLength(); i++){
@@ -95,11 +96,24 @@ public class SimpleSwingBrowser extends JFrame {
                                         (classes.contains("ytp-chrome-top")
                                         || classes.contains("ytp-gradient-bottom")
                                         || classes.contains("ytp-gradient-top")
-                                        || classes.contains("ytp-chrome-bottom"))){
+                                        || classes.contains("ytp-chrome-bottom")
+                                        )){
                                     e.setAttribute("style","display:none !important");
+                                    e.setTextContent("");
+                                }else if(classes != null && classes.contains("ytp-pause-overlay ")){
+                                    e.setTextContent("");
+                                    e.setAttribute("class","");
                                 }
                             }
+                            nl = d.getElementsByTagName("a");
+                            for (int i = 0 ; i < nl.getLength(); i++){
+                                Element e = (Element) nl.item(i);
+                                e.setAttribute("href","#");
+                                e.setTextContent("");
+                            }
                             SimpleSwingBrowser.this.setVisible(true);
+                        }else if(oldValue == Worker.State.SUCCEEDED){
+                            loadURL(SimpleSwingBrowser.this.url);
                         }
                     }
                 });
@@ -109,6 +123,7 @@ public class SimpleSwingBrowser extends JFrame {
     }
 
     public void loadURL(final String url) {
+        this.url = url;
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
