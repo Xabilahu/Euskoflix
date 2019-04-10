@@ -31,13 +31,7 @@ public class BaseDatos {
     public void iniciarBD(TipoFichero pTipo) {
         if (!comprobarExisteBD())
             crearBD(pTipo);
-        else {
-			/*try {
-				Thread.sleep(6000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}*/
-        }
+        else {}
     }
 
     /**
@@ -251,48 +245,6 @@ public class BaseDatos {
             e.printStackTrace();
         }
     }
-
-   /* private void anadirUsuarios(TipoFichero pTipo) {
-        try {
-            Connection c = this.getConexion();
-            c.setAutoCommit(false);
-            String fileName = "";
-            switch (pTipo) {
-                case big:
-                    fileName = "nombres";
-                    break;
-                case test:
-                    fileName = "testNombres";
-                    break;
-                case small:
-                    fileName = "smallNombres";
-                    break;
-            }
-            InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(fileName));
-            try {
-                BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-                PreparedStatement pst = c.prepareStatement("INSERT INTO usuario(contrasena,nombre,apellido) VALUES(?,?,?)");
-                String defaultPass = PropertiesManager.getInstance().getDefaultPassword();
-                while (in.ready()) {
-                    StringTokenizer stringTokenizer = new StringTokenizer(in.readLine());
-                    pst.setString(1, defaultPass);
-                    pst.setString(2, stringTokenizer.nextToken(","));
-                    pst.setString(3, stringTokenizer.nextToken(","));
-                    pst.addBatch();
-                }
-                pst.executeBatch();
-                c.commit();
-                c.setAutoCommit(true);
-                c.close();
-                in.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.exit(-1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     private void addIds(TipoFichero pTipo) {
         try {

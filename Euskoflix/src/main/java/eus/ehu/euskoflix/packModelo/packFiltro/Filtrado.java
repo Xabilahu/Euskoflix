@@ -91,14 +91,6 @@ public class Filtrado {
         this.filtradoContenido.cargarTF(pTf);
     }
 
-    /*public void addEtiquetaContenido(Tag pTag, int pValor){
-        this.filtradoContenido.addEtiquetaContenido(pTag,pValor);
-    }*/
-
-    /*public void cargarEstructuraEtiquetas(ListaEtiquetasFiltrado pEstruct) {
-        this.filtradoContenido.cargarEstructuraEtiquetas(pEstruct);
-    }*/
-
     private void calcularRecomendacionesContenido() {
         this.filtradoContenido.calcularRecomendaciones();
     }

@@ -24,7 +24,4 @@ public class Similitud {
         return sim;
     }
 
-    public double getPorcentaje() {
-        return 1 - 2 * Math.acos(Math.abs(sim)) / Math.PI;
-    }
 }

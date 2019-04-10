@@ -24,7 +24,7 @@ public class CatalogoUsuarios {
     }
 
     public void registrar(Usuario pUsuario) {
-
+        //TODO implements in Sprint #3
     }
 
     public void addUsuario(Usuario pUser) {
@@ -56,29 +56,6 @@ public class CatalogoUsuarios {
                 MatrizValoraciones.getInstance().cargarMediasDesv(u);
             }
         }
-    }
-
-    public void print() {
-       /* boolean primero = true;
-        StringBuilder sb = new StringBuilder("<html><table>");
-        sb.append("<th><td>usuario 1</td><td>Usuario 2</td><td>Similitud</td></th>");
-        for (Usuario u1 : this.lista) {
-            if (u1 != null) {
-                for (Usuario u2 : this.lista) {
-                    if (u2 != null && u1 != u2) {
-                        sb.append("<tr><td>");
-                        sb.append(u1.getId());
-                        sb.append("</td><td>");
-                        sb.append(u2.getId());
-                        sb.append("</td><td>");
-                        sb.append(MatrizValoraciones.getInstance().simPersonas(u1,u2).getSim());
-                        sb.append("</td></tr>");
-                    }
-                }
-            }
-        }
-        sb.append("</table></html>");
-        JOptionPane.showMessageDialog(null,sb.toString());*/
     }
 
     public Usuario getUsuarioLogueado() {

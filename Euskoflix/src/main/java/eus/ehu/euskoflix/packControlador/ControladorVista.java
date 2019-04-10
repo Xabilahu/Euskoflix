@@ -44,7 +44,7 @@ public class ControladorVista {
 
     public void iniciarAplicacion() {
         this.mostrarLoader();
-        this.gestionDatos.cargarDatos(TipoFichero.test);
+        this.gestionDatos.cargarDatos(TipoFichero.small);
         this.cerrarLoader();
         //this.mostrarLogin();
         this.mostrarCargaDatos();

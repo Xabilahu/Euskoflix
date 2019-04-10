@@ -16,7 +16,7 @@ public abstract class Normalizable {
     }
 
     public double normalizar(double pValor) { //throws Exception {
-//        double normalizado = (pValor - this.media);
+//        double normalizado = (pValor - this.media) / this.cuasiDesv;
 //        if (Double.isNaN(normalizado)) {
 //            throw new Exception();
 //        }
@@ -41,7 +41,7 @@ public abstract class Normalizable {
     }
 
     public double desnormalizar(double pValor) {
-//        return (pValor + this.media);//* this.cuasiDesv) + this.media;
+//        return (pValor * this.cuasiDesv) + this.media;
         return pValor;
     }
 }

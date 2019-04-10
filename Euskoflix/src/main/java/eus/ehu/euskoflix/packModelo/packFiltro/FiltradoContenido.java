@@ -41,7 +41,4 @@ public class FiltradoContenido extends Filtrable {
         return tfidf;
     }
 
-    /*public void cargarEstructuraEtiquetas(HashMap<Tag, HashSet<Integer>> pEstruct) {
-        this.tfidf.cargarEstructuraEtiquetas(pEstruct);
-    }*/
 }
