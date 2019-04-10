@@ -10,8 +10,8 @@ public class MainTesting {
             @Override
             public void run() {
                 SimpleSwingBrowser browser = new SimpleSwingBrowser();
-                browser.setVisible(true);
-                browser.loadURL("https://www.youtube.com/embed/QH2-TGUlwu4?autoplay=1&modestbranding=1&showinfo=0&rel=0&cc_load_policy=1&iv_load_policy=3&fs=0");
+                //browser.setVisible(true);
+                browser.loadURL("https://www.youtube.com/embed/TcMBFSGVi1c?autoplay=1&modestbranding=1&showinfo=0&rel=0&cc_load_policy=1&iv_load_policy=3&fs=0");
             }
         });
     }
