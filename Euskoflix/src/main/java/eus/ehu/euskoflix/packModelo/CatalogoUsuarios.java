@@ -31,10 +31,12 @@ public class CatalogoUsuarios {
     }
 
     public Usuario login(Usuario pUsuario) {
-        Usuario user = null;
+        Usuario user;
         if ((user = this.getUsuarioPorId(pUsuario.getId())) != null && user.comprobarPassword(pUsuario)) {
             this.logged = user;
             Filtrado.getInstance().cargarModelos();
+        } else {
+            user = null;
         }
         return user;
     }
