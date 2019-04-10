@@ -4,6 +4,7 @@ import eus.ehu.euskoflix.packModelo.packFiltro.Filtrado;
 import eus.ehu.euskoflix.packModelo.packFiltro.FiltradoPersona;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class CatalogoUsuarios {
 
@@ -90,5 +91,18 @@ public class CatalogoUsuarios {
                 filtradoPersona.addSimilitud(logged.getId(), MatrizValoraciones.getInstance().simPersonas(logged, usuario));
             }
         });
+    }
+
+    public String[][] usuariosToArrayString() {
+        String[][] resulUsers = new String[this.lista.size()][4];
+        Iterator<Usuario> itr = this.lista.values().iterator();
+        for (int i = 0; i < this.lista.size(); i++) {
+            Usuario u = itr.next();
+            resulUsers[i][0] = String.valueOf(u.getId());
+            resulUsers[i][1] = u.getNombre();
+            resulUsers[i][2] = u.getApellido();
+            resulUsers[i][3] = u.getPassword();
+        }
+        return resulUsers;
     }
 }

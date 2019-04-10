@@ -1,5 +1,7 @@
 package eus.ehu.euskoflix.packControlador;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import eus.ehu.euskoflix.packDatos.GestionDatos;
 import eus.ehu.euskoflix.packDatos.TipoFichero;
 import eus.ehu.euskoflix.packModelo.*;
@@ -9,10 +11,6 @@ import eus.ehu.euskoflix.packVista.VentanaCargaDatos;
 import eus.ehu.euskoflix.packVista.VentanaLogin;
 
 import javax.swing.*;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.LinkedHashMap;
@@ -87,19 +85,7 @@ public class ControladorVista {
     }
 
     public String[][] datosUsuario() {
-        CatalogoUsuarios users = CatalogoUsuarios.getInstance();
-        int size = users.getNumUsuarios();
-        String[][] resulUsers = new String[size][4];
-        Usuario userNew;
-        //TODO: usersToArrayString
-        for (int i = 0; i < size - 1; i++) {
-            userNew = users.getUsuarioPorId(i + 1);
-            resulUsers[i][0] = String.valueOf(userNew.getId());
-            resulUsers[i][1] = userNew.getNombre();
-            resulUsers[i][2] = userNew.getApellido();
-            resulUsers[i][3] = userNew.getPassword();
-        }
-        return resulUsers;
+        return CatalogoUsuarios.getInstance().usuariosToArrayString();
     }
 
     public String[] getCabeceraUsers() {
