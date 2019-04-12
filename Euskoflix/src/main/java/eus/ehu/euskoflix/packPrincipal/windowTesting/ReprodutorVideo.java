@@ -17,14 +17,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import static javafx.concurrent.Worker.State.FAILED;
 
-public class SimpleSwingBrowser extends JFrame {
+public class ReprodutorVideo extends JFrame {
 
     private final JFXPanel jfxPanel = new JFXPanel();
     private final JPanel panel = new JPanel(new BorderLayout());
     private WebEngine engine;
     private String url;
     private Point mousePosition;
-    public SimpleSwingBrowser() {
+    public ReprodutorVideo() {
         super();
         mousePosition = new Point();
         initComponents();
@@ -55,7 +55,7 @@ public class SimpleSwingBrowser extends JFrame {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE){
                     jfxPanel.setVisible(false);
-                    SimpleSwingBrowser.this.dispose();
+                    ReprodutorVideo.this.dispose();
                 }
             }
 
@@ -100,9 +100,9 @@ public class SimpleSwingBrowser extends JFrame {
             public void mouseDragged(MouseEvent e) {
                 int x = e.getX();
                 int y = e.getY();
-                int windowX = SimpleSwingBrowser.this.getLocation().x;
-                int windowY = SimpleSwingBrowser.this.getLocation().y;
-                SimpleSwingBrowser.this.move(windowX + (x - mousePosition.x), windowY + (y - mousePosition.y));
+                int windowX = ReprodutorVideo.this.getLocation().x;
+                int windowY = ReprodutorVideo.this.getLocation().y;
+                ReprodutorVideo.this.move(windowX + (x - mousePosition.x), windowY + (y - mousePosition.y));
             }
 
             @Override
@@ -168,9 +168,9 @@ public class SimpleSwingBrowser extends JFrame {
                             e.setAttribute("href","#");
                             e.setTextContent("");
                         }
-                        SimpleSwingBrowser.this.setVisible(true);
+                        ReprodutorVideo.this.setVisible(true);
                     }else if(oldValue == Worker.State.SUCCEEDED){
-                        loadURL(SimpleSwingBrowser.this.url);
+                        loadURL(ReprodutorVideo.this.url);
                     }
                 });
                 jfxPanel.setScene(new Scene(view));

@@ -1,14 +1,9 @@
 package eus.ehu.euskoflix.packControlador;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import eus.ehu.euskoflix.packDatos.GestionDatos;
 import eus.ehu.euskoflix.packDatos.TipoFichero;
 import eus.ehu.euskoflix.packModelo.*;
-import eus.ehu.euskoflix.packVista.EuskoFlixLoader;
-import eus.ehu.euskoflix.packVista.InformacionExtraView;
-import eus.ehu.euskoflix.packVista.VentanaCargaDatos;
-import eus.ehu.euskoflix.packVista.VentanaLogin;
+import eus.ehu.euskoflix.packVista.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,9 +40,9 @@ public class ControladorVista {
     public void iniciarAplicacion() {
         this.mostrarLoader();
         this.gestionDatos.cargarDatos(TipoFichero.small);
-        this.cerrarLoader();
-        //this.mostrarLogin();
-        this.mostrarCargaDatos();
+        this.ocultarLoader();
+        this.mostrarLogin();
+//        this.mostrarCargaDatos();
     }
 
     private void mostrarLoader() {
@@ -60,10 +55,12 @@ public class ControladorVista {
         this.ventanaLogin.setVisible(true);
     }
 
-    private void cerrarLoader() {
+    private void ocultarLoader() {
         this.euskoFlixLoader.setVisible(false);
+    }
+
+    private void cerrarLoader() {
         this.euskoFlixLoader.dispose();
-        
     }
 
     private void mostrarCargaDatos() {
@@ -232,33 +229,27 @@ public class ControladorVista {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int username = ventanaLogin.getUsuario();
-			if (username != -1) {
-				
-				String contrasena = ventanaLogin.getContra();
-				String infoUsuario = gestionDatos.getUsuarioPorId(username);
-				
-				JsonParser parser = new JsonParser();
-				JsonObject jsonUsuario = parser.parse(infoUsuario).getAsJsonObject();
-				String nombre = jsonUsuario.get("nombre").getAsString();
-				String apellido = jsonUsuario.get("apellido").getAsString();
-				
-				if (nombre != null && apellido != null) {
-					Usuario usuario = new Usuario(username, nombre, apellido, contrasena);
-					if (usuario.comprobarPassword(usuario)) {
-						String infoUsuario2 = usuario.usuario2json();
-						//String[][] peliculasVistas = 
-						//new VentanaUsuario(infoUsuario2, peliculasVistas);
-					}else {
-						JOptionPane.showMessageDialog(ventanaLogin,
-				                "Usuario o contraseña incorrecto.", "Error login",
-				                JOptionPane.INFORMATION_MESSAGE);
-					}
-				}else {
-					JOptionPane.showMessageDialog(ventanaLogin,
-			                "Usuario no encontrado.", "Error login",
-			                JOptionPane.INFORMATION_MESSAGE);
-				}	
-			}
+            if (username != Integer.MIN_VALUE) {
+                ventanaLogin.setVisible(false);
+                mostrarLoader();
+                Usuario user = CatalogoUsuarios.getInstance().login(new Usuario(username, "", "", ventanaLogin.getContra()));
+                ocultarLoader();
+                if (user == null) {
+                    ventanaLogin.setVisible(true);
+                    JOptionPane.showMessageDialog(ventanaLogin,
+                            "Usuario o contraseña incorrecto.", "Error login",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    ventanaLogin.dispose();
+                    cerrarLoader();
+                    new VentanaUsuario(user.usuarioToStringArray(), MatrizValoraciones.getInstance().getPeliculasVistas(user.getId()).toStringArray());
+                }
+            } else {
+                JOptionPane.showMessageDialog(ventanaLogin,
+                        "Usuario o contraseña incorrecto.", "Error login",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
 		}
     }
 

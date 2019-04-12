@@ -12,7 +12,7 @@ public class FiltradoProducto extends Filtrable {
     }
 
     @Override
-    public ListaPeliculasRecomendadas recomendar(int pNum) {
+    public ListaPeliculasValoraciones recomendar(int pNum) {
         return super.getNRecomendaciones(pNum);
     }
 

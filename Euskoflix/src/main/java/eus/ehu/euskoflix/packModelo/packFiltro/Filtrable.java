@@ -11,11 +11,11 @@ public abstract class Filtrable {
 
     private static final int N = 30;
     private HashMap<Integer, TreeSet<Similitud>> matrizSimilitudes;
-    private ListaPeliculasRecomendadas recomendados;
+    private ListaPeliculasValoraciones recomendados;
 
     public Filtrable() {
         this.matrizSimilitudes = new HashMap<>();
-        this.recomendados = new ListaPeliculasRecomendadas();
+        this.recomendados = new ListaPeliculasValoraciones();
     }
 
     /**
@@ -46,7 +46,7 @@ public abstract class Filtrable {
         return similitudes;
     }
 
-    public abstract ListaPeliculasRecomendadas recomendar(int pNum);
+    public abstract ListaPeliculasValoraciones recomendar(int pNum);
 
     public void addSimilitudSimetrica(Similitud pSimilitud) {
         this.addSimilitud(pSimilitud.getI(), pSimilitud);
@@ -69,7 +69,7 @@ public abstract class Filtrable {
 
     public abstract void calcularRecomendaciones();
 
-    public ListaPeliculasRecomendadas getNRecomendaciones(int pNum) {
+    public ListaPeliculasValoraciones getNRecomendaciones(int pNum) {
         return this.recomendados.getNRecomendaciones(pNum);
     }
 
@@ -106,7 +106,7 @@ public abstract class Filtrable {
     /**
      * This method is only used in jUnit
      */
-    public ListaPeliculasRecomendadas getRecomendados() {
+    public ListaPeliculasValoraciones getRecomendados() {
         return recomendados;
     }
 }

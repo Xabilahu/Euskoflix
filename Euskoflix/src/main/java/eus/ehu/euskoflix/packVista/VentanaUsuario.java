@@ -32,7 +32,7 @@ public class VentanaUsuario extends JFrame {
 	 private JComboBox algoritmos;
 	 private JButton recomendar;
 	 
-	 public VentanaUsuario(String pUsuario, String[][] pPeliculasVistas) {
+	 public VentanaUsuario(String[] pUsuario, String[][] pPeliculasVistas) {
 		 if (!WebLookAndFeel.isInstalled()) {
 	            WebLookAndFeel.install();
 	        }
@@ -64,12 +64,10 @@ public class VentanaUsuario extends JFrame {
 	        tablePeliculasVistas.getColumnModel().getColumn(0).setPreferredWidth(400);
 	        tablePeliculasVistas.getColumnModel().getColumn(1).setPreferredWidth(50);
 	        tablePeliculasVistas.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
-	        
-	        JPanel contentPane = new JPanel();
+
 	        contentPane.setLayout(new BorderLayout());
-	        JScrollPane scrollPane1 = new JScrollPane(contentPane);
-	        contentPane.add(scrollPane1, BorderLayout.CENTER);
-		 
+	        pack();
+		 	this.setVisible(true);
 	 }
 
 }

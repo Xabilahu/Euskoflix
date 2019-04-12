@@ -37,11 +37,11 @@ public class Filtrado {
         this.filtradoContenido = new FiltradoContenido();
     }
 
-    public ListaPeliculasRecomendadas recomendar(TipoRecomendacion pTipo, int pCantidad) {
+    public ListaPeliculasValoraciones recomendar(TipoRecomendacion pTipo, int pCantidad) {
         if (!isModeloCargado(pTipo)) {
             cargarModelo(pTipo);
         }
-        ListaPeliculasRecomendadas lp = null;
+        ListaPeliculasValoraciones lp = null;
         switch (pTipo) {
             case Persona:
                 lp = this.filtradoPersona.recomendar(pCantidad);

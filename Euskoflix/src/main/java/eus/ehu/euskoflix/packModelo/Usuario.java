@@ -56,17 +56,11 @@ public class Usuario extends Normalizable {
         return password;
     }
     
-    public String usuario2json() {
-    	//para pasar la informacion a la interfaz
-    	
-    	JsonObject jsonUsuario = new JsonObject();
-    	jsonUsuario.addProperty("id", this.id);
-    	jsonUsuario.addProperty("nombre", this.nombre);
-    	jsonUsuario.addProperty("apellido", this.apellido);
-    	jsonUsuario.addProperty("password", this.password);
-    	
-    	return jsonUsuario.toString();
-    	
+    public String[] usuarioToStringArray() {
+        String[] res = new String[2];
+        res[0] = this.nombre;
+        res[1] = this.apellido;
+        return res;
     }
     
 }

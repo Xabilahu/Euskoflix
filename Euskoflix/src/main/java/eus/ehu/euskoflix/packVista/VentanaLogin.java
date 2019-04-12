@@ -20,7 +20,7 @@ public class VentanaLogin extends JFrame {
 
     private JPanel panel;
     private JTextField txtUser;
-    private JTextField txtPass;
+    private JPasswordField txtPass;
     private JButton entrar;
 
     public VentanaLogin() {
@@ -61,7 +61,7 @@ public class VentanaLogin extends JFrame {
         txtUser.setText("Nombre de usuario");
         txtUser.setHorizontalAlignment(JTextField.CENTER);
 
-        txtPass = new JTextField();
+        txtPass = new JPasswordField();
         txtPass.setBounds(225, 100, 150, 25);
         txtPass.setText("Contraseña");
         txtPass.setHorizontalAlignment(JTextField.CENTER);
@@ -100,7 +100,7 @@ public class VentanaLogin extends JFrame {
     public JTextField getTxtPass() { return this.txtPass; }
     
     public int getUsuario() {
-    	int username = -1;
+    	int username = Integer.MIN_VALUE;
     	try {
     		username = Integer.parseInt(this.txtUser.getText());
     	}catch(NumberFormatException e){

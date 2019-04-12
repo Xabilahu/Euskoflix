@@ -2,7 +2,6 @@ package eus.ehu.euskoflix.packModelo.packFiltro;
 
 import eus.ehu.euskoflix.packModelo.Cartelera;
 import eus.ehu.euskoflix.packModelo.CatalogoUsuarios;
-import eus.ehu.euskoflix.packModelo.Tag;
 
 import java.util.HashSet;
 
@@ -19,7 +18,7 @@ public class FiltradoContenido extends Filtrable {
     }
 
     @Override
-    public ListaPeliculasRecomendadas recomendar(int pNum) {
+    public ListaPeliculasValoraciones recomendar(int pNum) {
         return super.getNRecomendaciones(pNum);
     }
 

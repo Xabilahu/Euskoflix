@@ -1,6 +1,7 @@
 package eus.ehu.euskoflix.packModelo;
 
 import eus.ehu.euskoflix.packDatos.GestionDatos;
+import eus.ehu.euskoflix.packModelo.packFiltro.ListaPeliculasValoraciones;
 import eus.ehu.euskoflix.packModelo.packFiltro.Similitud;
 
 import java.util.*;
@@ -202,4 +203,11 @@ public class MatrizValoraciones {
     public Set<Integer> getPeliculasValoradas(int pId) {
         return this.valoraciones.get(pId).keySet();
     }
+
+    public ListaPeliculasValoraciones getPeliculasVistas(int pId) {
+        ListaPeliculasValoraciones lpv = new ListaPeliculasValoraciones();
+        this.valoraciones.get(pId).forEach((i,v) -> lpv.add(i,v));
+        return lpv;
+    }
+
 }

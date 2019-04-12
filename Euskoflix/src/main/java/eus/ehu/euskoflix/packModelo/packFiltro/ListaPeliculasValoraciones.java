@@ -1,16 +1,18 @@
 package eus.ehu.euskoflix.packModelo.packFiltro;
 
+import eus.ehu.euskoflix.packModelo.Cartelera;
+
 import java.text.DecimalFormat;
 import java.util.AbstractMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeSet;
 
-public class ListaPeliculasRecomendadas {
+public class ListaPeliculasValoraciones {
 
     private TreeSet<Map.Entry<Integer, Double>> recomendaciones;
 
-    public ListaPeliculasRecomendadas() {
+    public ListaPeliculasValoraciones() {
         this.recomendaciones = new TreeSet<>((o1, o2) -> Double.compare(o1.getValue(), o2.getValue()) * -1);
     }
 
@@ -18,8 +20,8 @@ public class ListaPeliculasRecomendadas {
         this.recomendaciones.add(new AbstractMap.SimpleEntry<>(pId, pValoracion));
     }
 
-    public ListaPeliculasRecomendadas getNRecomendaciones(int pNum) {
-        ListaPeliculasRecomendadas ls = new ListaPeliculasRecomendadas();
+    public ListaPeliculasValoraciones getNRecomendaciones(int pNum) {
+        ListaPeliculasValoraciones ls = new ListaPeliculasValoraciones();
         Iterator itr = recomendaciones.iterator();
         for (int i = 0; i < pNum && itr.hasNext(); i++) {
             AbstractMap.SimpleEntry<Integer, Double> current = (AbstractMap.SimpleEntry<Integer, Double>) itr.next();
@@ -39,6 +41,17 @@ public class ListaPeliculasRecomendadas {
             sb.append("\n");
         });
         return sb.toString();
+    }
+
+    public String[][] toStringArray() {
+        String[][] res = new String[this.recomendaciones.size()][2];
+        Iterator<Map.Entry<Integer,Double>> itr = this.recomendaciones.iterator();
+        for (int i = 0; itr.hasNext(); i++) {
+            Map.Entry<Integer,Double> entry = itr.next();
+            res[i][0] = Cartelera.getInstance().getPeliculaPorIdSinMapeo(entry.getKey()).getTitulo();
+            res[i][1] = entry.getValue().toString();
+        }
+        return res;
     }
 
     /**
