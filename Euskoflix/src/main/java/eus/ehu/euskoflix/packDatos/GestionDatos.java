@@ -191,13 +191,33 @@ public class GestionDatos {
                     break;
                 }
             }
+            //TODO TRAILER FILLING
+            URL trailer = new URL(PropertiesManager.getInstance().getTrailerApiRquestURL(tmdbID));
+            con = (HttpURLConnection) trailer.openConnection();
+            con.setRequestProperty("Content-Type", "application/json");
+            in = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
+            str = new StringBuilder();
+            while (in.ready()) {
+                str.append(in.readLine());
+            }
+            in.close();
+            con.disconnect();
+            json = str.toString();
+            parser = new JsonParser();
+            movie = parser.parse(json).getAsJsonObject();
+            JsonArray trailers = movie.getAsJsonArray("results");
+            String trailerUrl = trailers.get(0).getAsJsonObject().get("key").getAsString();
+            System.out.println(trailerUrl);
             //Movie poster query
             //URL img = new URL("https://image.tmdb.org/t/p/w154" + posterPath);
             URL img = new URL(PropertiesManager.getInstance().getPosterApiRequestURL(posterPath));
             Image image = ImageIO.read(img);
-            i = new Informacion(image, sinopsis, director);
+
+            trailerUrl = PropertiesManager.getInstance().getDefaultTrailerUrl().replace("video_id", trailerUrl);
+            System.out.println(trailerUrl);
+            i = new Informacion(image, sinopsis, director, trailerUrl);
         } catch (IOException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
         }
         return i;
     }

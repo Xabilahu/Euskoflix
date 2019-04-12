@@ -80,4 +80,8 @@ public class Pelicula extends Normalizable {
         return lista;
     }
 
+    public String getTrailerUrl() {
+        this.fillInfoExtra();
+        return this.infoExtra.getTrailerUrl();
+    }
 }

@@ -63,7 +63,7 @@ public class ControladorVista {
         this.euskoFlixLoader.dispose();
     }
 
-    private void mostrarCargaDatos() {
+    public void mostrarCargaDatos() {
 
         this.ventanaCargaDatos = new VentanaCargaDatos(datosUsuario(), getCabeceraUsers(), datosPelis(), getCabeceraFilms());
 
@@ -114,7 +114,7 @@ public class ControladorVista {
     }
 
     public void crearInfoExtraView(int pId) {
-        informacionExtraView = new InformacionExtraView(ventanaCargaDatos, true, pId);
+        informacionExtraView = new InformacionExtraView(pId);
         Object[] info = getInfoPelicula(pId);
         informacionExtraView.initComponents(pId, datosTags(pId), getCabeceraTags(), datosRatings(pId), getCabeceraRatings());
         informacionExtraView.fillComponents(info);
@@ -151,12 +151,13 @@ public class ControladorVista {
      * @return [titulo, director, sinopsis, poster]
      */
     public Object[] getInfoPelicula(int pId) {
-        Object[] result = new Object[4];
+        Object[] result = new Object[5];
         Pelicula p = Cartelera.getInstance().getPeliculaPorIdSinMapeo(pId);
         result[0] = p.getTitulo();
         result[1] = p.getDirector();
         result[2] = p.getSinopsis();
         result[3] = p.getPoster();
+        result[4] = p.getTrailerUrl();
         return result;
     }
 

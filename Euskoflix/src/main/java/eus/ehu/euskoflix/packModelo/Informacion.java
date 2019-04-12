@@ -12,11 +12,13 @@ public class Informacion {
     private Image poster;
     private String sinopsis;
     private String director;
+    private String trailerUrl;
 
-    public Informacion(Image pPoster, String pSinopsis, String pDirector) {
+    public Informacion(Image pPoster, String pSinopsis, String pDirector, String trailerUrl) {
         this.poster = pPoster;
         this.sinopsis = pSinopsis;
         this.director = pDirector;
+        this.trailerUrl = trailerUrl;
     }
 
     public Informacion() {
@@ -52,5 +54,9 @@ public class Informacion {
 
     public void setDirector(String director) {
         this.director = director;
+    }
+
+    public String getTrailerUrl() {
+        return this.trailerUrl;
     }
 }

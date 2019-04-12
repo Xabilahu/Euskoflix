@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import static javafx.concurrent.Worker.State.FAILED;
 
 public class ReprodutorVideo extends JFrame {
@@ -44,7 +45,7 @@ public class ReprodutorVideo extends JFrame {
         panel.add(jfxPanel, BorderLayout.CENTER);
         getContentPane().add(panel);
 
-        this.setUndecorated(true);
+        this.setUndecorated(false);
         jfxPanel.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -110,9 +111,11 @@ public class ReprodutorVideo extends JFrame {
             }
         });
         setPreferredSize(new Dimension(640, 360));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         pack();
         requestFocus();
+        this.setAlwaysOnTop(true);
+        setLocationRelativeTo(null);
     }
 
     private void createScene() {

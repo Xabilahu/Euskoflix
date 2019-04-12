@@ -1,13 +1,16 @@
 package eus.ehu.euskoflix.packVista;
 
+import eus.ehu.euskoflix.packPrincipal.windowTesting.ReprodutorVideo;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
  * @author kaecius
  */
-public class InformacionExtraView extends javax.swing.JDialog {
+public class InformacionExtraView extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1L;
 
@@ -16,6 +19,7 @@ public class InformacionExtraView extends javax.swing.JDialog {
      */
 
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -35,8 +39,7 @@ public class InformacionExtraView extends javax.swing.JDialog {
     private javax.swing.JScrollPane scrollSinopsis;
     private javax.swing.JTextArea txtSinopsis;
 
-    public InformacionExtraView(java.awt.Frame parent, boolean modal, int pPelicula) {
-        super(parent, modal);
+    public InformacionExtraView(int pPelicula) {
     }
 
 
@@ -46,6 +49,16 @@ public class InformacionExtraView extends javax.swing.JDialog {
         lblImagen.setText("");
         lblImagen.setIcon(new ImageIcon((Image) info[3]));
         txtSinopsis.setText((String) info[2]);
+        if (info[4] != null) {
+            jButton2.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    new ReprodutorVideo().loadURL((String) info[4]);
+                }
+            });
+        } else {
+            jButton2.setEnabled(false);
+        }
     }
 
     /**
@@ -79,7 +92,7 @@ public class InformacionExtraView extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setAlwaysOnTop(true);
+        // setAlwaysOnTop(true);
         getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel1.setLayout(new java.awt.BorderLayout());
@@ -228,6 +241,18 @@ public class InformacionExtraView extends javax.swing.JDialog {
         jButton1.setText("Cerrar");
 
         jPanel6.add(jButton1);
+
+
+        jButton2 = new javax.swing.JButton();
+
+        jButton2.setText("Ver Trailer");
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        jPanel2.add(jButton2, gridBagConstraints);
 
         getContentPane().add(jPanel6, java.awt.BorderLayout.SOUTH);
         setUndecorated(true);

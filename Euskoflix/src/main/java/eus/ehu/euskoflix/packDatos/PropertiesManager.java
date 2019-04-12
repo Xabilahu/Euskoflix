@@ -58,6 +58,10 @@ public class PropertiesManager {
         return getString(id, "/credits?api_key=");
     }
 
+    public String getTrailerApiRquestURL(int id) {
+        return this.properties.getProperty("api.movie.url") + id + "/videos?api_key=" + this.properties.getProperty("api.key") + "&language=en-US";
+    }
+
     public String getDefaultPassword() {
         return this.properties.getProperty("default.password");
     }
@@ -82,6 +86,10 @@ public class PropertiesManager {
         return this.properties.getProperty("path.to.logo.icon");
     }
 
+    public String getDefaultTrailerUrl() {
+        return this.properties.getProperty("url.video");
+    }
+
     private String getString(int id, String s) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(this.properties.getProperty("api.movie.url"));
@@ -91,5 +99,6 @@ public class PropertiesManager {
         stringBuilder.append("&language=es");
         return stringBuilder.toString();
     }
+
 
 }
