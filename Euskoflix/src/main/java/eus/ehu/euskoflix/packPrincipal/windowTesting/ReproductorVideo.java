@@ -17,15 +17,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import static javafx.concurrent.Worker.State.FAILED;
+import static javafx.concurrent.Worker.State.SCHEDULED;
 
-public class ReprodutorVideo extends JFrame {
+public class ReproductorVideo extends JFrame {
 
     private final JFXPanel jfxPanel = new JFXPanel();
     private final JPanel panel = new JPanel(new BorderLayout());
     private WebEngine engine;
     private String url;
     private Point mousePosition;
-    public ReprodutorVideo() {
+    public ReproductorVideo() {
         super();
         mousePosition = new Point();
         initComponents();
@@ -56,7 +57,7 @@ public class ReprodutorVideo extends JFrame {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE){
                     jfxPanel.setVisible(false);
-                    ReprodutorVideo.this.dispose();
+                    ReproductorVideo.this.dispose();
                 }
             }
 
@@ -101,15 +102,29 @@ public class ReprodutorVideo extends JFrame {
             public void mouseDragged(MouseEvent e) {
                 int x = e.getX();
                 int y = e.getY();
-                int windowX = ReprodutorVideo.this.getLocation().x;
-                int windowY = ReprodutorVideo.this.getLocation().y;
-                ReprodutorVideo.this.move(windowX + (x - mousePosition.x), windowY + (y - mousePosition.y));
+                int windowX = ReproductorVideo.this.getLocation().x;
+                int windowY = ReproductorVideo.this.getLocation().y;
+                ReproductorVideo.this.move(windowX + (x - mousePosition.x), windowY + (y - mousePosition.y));
             }
 
             @Override
             public void mouseMoved(MouseEvent e) {
             }
         });
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                Platform.runLater(() -> {
+                    Platform.setImplicitExit(false);
+                    ReproductorVideo.this.jfxPanel.setVisible(false);
+                    ReproductorVideo.this.engine.load(null);
+                    ReproductorVideo.this.dispose();
+                    System.gc();
+                });
+            }
+        });
+
         setPreferredSize(new Dimension(640, 360));
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         pack();
@@ -171,9 +186,9 @@ public class ReprodutorVideo extends JFrame {
                             e.setAttribute("href","#");
                             e.setTextContent("");
                         }
-                        ReprodutorVideo.this.setVisible(true);
-                    }else if(oldValue == Worker.State.SUCCEEDED){
-                        loadURL(ReprodutorVideo.this.url);
+                        ReproductorVideo.this.setVisible(true);
+                    }else if(oldValue == Worker.State.SUCCEEDED && newValue == SCHEDULED){
+                        loadURL(ReproductorVideo.this.url);
                     }
                 });
                 jfxPanel.setScene(new Scene(view));

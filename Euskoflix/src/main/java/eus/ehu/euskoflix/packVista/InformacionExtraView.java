@@ -1,6 +1,6 @@
 package eus.ehu.euskoflix.packVista;
 
-import eus.ehu.euskoflix.packPrincipal.windowTesting.ReprodutorVideo;
+import eus.ehu.euskoflix.packPrincipal.windowTesting.ReproductorVideo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,7 +53,7 @@ public class InformacionExtraView extends javax.swing.JFrame {
             jButton2.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    new ReprodutorVideo().loadURL((String) info[4]);
+                    new ReproductorVideo().loadURL((String) info[4]);
                 }
             });
         } else {

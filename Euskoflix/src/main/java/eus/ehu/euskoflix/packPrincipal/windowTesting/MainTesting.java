@@ -12,7 +12,7 @@ public class MainTesting {
 
             @Override
             public void run() {
-                ReprodutorVideo browser = new ReprodutorVideo();
+                ReproductorVideo browser = new ReproductorVideo();
                 //browser.setVisible(true);
                 browser.loadURL("https://www.youtube.com/embed/video_id?&theme=dark&autoplay=1&autohide=1&modestbranding=1&fs=0&showinfo=0&rel=0&controls=0&disablekb=1");
             }
