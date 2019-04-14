@@ -1,10 +1,7 @@
 package eus.ehu.euskoflix.packVista;
 
-import eus.ehu.euskoflix.packPrincipal.windowTesting.ReproductorVideo;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
@@ -49,16 +46,16 @@ public class InformacionExtraView extends javax.swing.JFrame {
         lblImagen.setText("");
         lblImagen.setIcon(new ImageIcon((Image) info[3]));
         txtSinopsis.setText((String) info[2]);
-        if (info[4] != null) {
-            jButton2.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    new ReproductorVideo().loadURL((String) info[4]);
-                }
-            });
-        } else {
-            jButton2.setEnabled(false);
-        }
+//        if (info[4] != null) {
+//            jButton2.addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent actionEvent) {
+//                    new ReproductorVideo().loadURL((String) info[4]);
+//                }
+//            });
+//        } else {
+//            jButton2.setEnabled(false);
+//        }
     }
 
     /**
@@ -264,5 +261,12 @@ public class InformacionExtraView extends javax.swing.JFrame {
         this.jButton1.addActionListener(pListenForCerrar);
     }
 
+    public void desactivarTrailer() {
+        this.jButton2.setEnabled(false);
+    }
+
+    public void addReproductorListener(ActionListener reproductorListener) {
+        this.jButton2.addActionListener(reproductorListener);
+    }
 }
 

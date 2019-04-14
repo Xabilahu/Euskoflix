@@ -3,6 +3,7 @@ package eus.ehu.euskoflix.packControlador;
 import eus.ehu.euskoflix.packDatos.GestionDatos;
 import eus.ehu.euskoflix.packDatos.TipoFichero;
 import eus.ehu.euskoflix.packModelo.*;
+import eus.ehu.euskoflix.packPrincipal.windowTesting.ReproductorVideo;
 import eus.ehu.euskoflix.packVista.*;
 
 import javax.swing.*;
@@ -23,6 +24,7 @@ public class ControladorVista {
     private VentanaCargaDatos ventanaCargaDatos;
     private InformacionExtraView informacionExtraView;
     private VentanaLogin ventanaLogin;
+    private ReproductorVideo reproductorVideo;
 
     private ControladorVista() {
         this.ventanaLogin = new VentanaLogin();
@@ -41,7 +43,7 @@ public class ControladorVista {
         this.mostrarLoader();
         this.gestionDatos.cargarDatos(TipoFichero.small);
         this.ocultarLoader();
-        this.mostrarLogin();
+//        this.mostrarLogin();
 //        this.mostrarCargaDatos();
     }
 
@@ -117,6 +119,11 @@ public class ControladorVista {
         informacionExtraView = new InformacionExtraView(pId);
         Object[] info = getInfoPelicula(pId);
         informacionExtraView.initComponents(pId, datosTags(pId), getCabeceraTags(), datosRatings(pId), getCabeceraRatings());
+        if (info[4] != null) {
+            informacionExtraView.addReproductorListener(new ReproductorListener((String) info[4]));
+        } else {
+            informacionExtraView.desactivarTrailer();
+        }
         informacionExtraView.fillComponents(info);
 
         informacionExtraView.addCerrarListener(new CerrarInfoExtraListener());
@@ -254,4 +261,26 @@ public class ControladorVista {
 		}
     }
 
+//    class CerrarReproductorListener implements ActionListener {
+//
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            reproductorVideo = null;
+//        }
+//    }
+
+    class ReproductorListener implements ActionListener{
+
+        private String url;
+
+        public ReproductorListener(String str) {
+            this.url = str;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            reproductorVideo = new ReproductorVideo();
+            reproductorVideo.loadURL(this.url);
+        }
+    }
 }

@@ -205,8 +205,15 @@ public class GestionDatos {
             json = str.toString();
             parser = new JsonParser();
             movie = parser.parse(json).getAsJsonObject();
-            JsonArray trailers = movie.getAsJsonArray("results");
-            String trailerUrl = trailers.get(0).getAsJsonObject().get("key").getAsString();
+            JsonArray videos = movie.getAsJsonArray("results");
+            String trailerUrl = "";
+            for (JsonElement o : videos) {
+                JsonObject obj = (JsonObject) o;
+                if (obj.get("name").getAsString().toLowerCase().contains("trailer")) {
+                    trailerUrl = obj.get("key").getAsString();
+                }
+            }
+//            String trailerUrl = videos.get(0).getAsJsonObject().get("key").getAsString();
             //Movie poster query
             //URL img = new URL("https://image.tmdb.org/t/p/w154" + posterPath);
             URL img = new URL(PropertiesManager.getInstance().getPosterApiRequestURL(posterPath));

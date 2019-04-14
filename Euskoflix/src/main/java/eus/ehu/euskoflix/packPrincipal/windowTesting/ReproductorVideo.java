@@ -26,6 +26,7 @@ public class ReproductorVideo extends JFrame {
     private WebEngine engine;
     private String url;
     private Point mousePosition;
+
     public ReproductorVideo() {
         super();
         mousePosition = new Point();
@@ -126,7 +127,7 @@ public class ReproductorVideo extends JFrame {
         });
 
         setPreferredSize(new Dimension(640, 360));
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pack();
         requestFocus();
         this.setAlwaysOnTop(true);
