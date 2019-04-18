@@ -30,6 +30,7 @@ public class ControladorVista {
     private ReproductorVideo reproductorVideo;
 
     private ControladorVista() {
+        this.euskoFlixLoader = new EuskoFlixLoader();
         this.ventanaLogin = new VentanaLogin();
         this.gestionDatos = GestionDatos.getInstance();
     }
@@ -50,7 +51,7 @@ public class ControladorVista {
     }
 
     private void mostrarLoader() {
-        this.euskoFlixLoader = new EuskoFlixLoader();
+        this.euskoFlixLoader.regenerarBarra();
         this.euskoFlixLoader.setVisible(true);
     }
 
@@ -62,8 +63,6 @@ public class ControladorVista {
 
     private void cerrarLoader() {
         this.euskoFlixLoader.setVisible(false);
-        this.euskoFlixLoader.dispose();
-        this.euskoFlixLoader = null;
     }
 
     public void mostrarCargaDatos() {
@@ -112,9 +111,9 @@ public class ControladorVista {
     }
 
     public void crearInfoExtraView(int pId) {
-        informacionExtraView = new InformacionExtraView(pId);
+        informacionExtraView = new InformacionExtraView();
         Object[] info = getInfoPelicula(pId);
-        informacionExtraView.initComponents(pId, datosTags(pId), getCabeceraTags(), datosRatings(pId), getCabeceraRatings());
+        informacionExtraView.initComponents(datosTags(pId), getCabeceraTags(), datosRatings(pId), getCabeceraRatings());
         if (info[4] != null) {
             informacionExtraView.addReproductorListener(new ReproductorListener((String) info[4]));
         } else {
@@ -123,7 +122,6 @@ public class ControladorVista {
         informacionExtraView.fillComponents(info);
 
         informacionExtraView.addCerrarListener(new CerrarInfoExtraListener());
-        ventanaCargaDatos.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         informacionExtraView.setVisible(true);
     }
 
@@ -265,12 +263,13 @@ public class ControladorVista {
 		}
 
         private Object[][] generarInfoPelis(Integer[] pPeliculasVistas) {
-		    Object[][] result = new Object[pPeliculasVistas.length][2];
+		    Object[][] result = new Object[pPeliculasVistas.length][3];
 		    int x = 0;
 		    for (Integer i : pPeliculasVistas){
 		        Pelicula p = Cartelera.getInstance().getPeliculaPorIdSinMapeo(i);
 		        result[x][0] = p.getPoster();
-		        result[x++][1] = p.getTitulo();
+		        result[x][1] = i;
+		        result[x++][2] = p.getTitulo();
             }
 		    return result;
         }

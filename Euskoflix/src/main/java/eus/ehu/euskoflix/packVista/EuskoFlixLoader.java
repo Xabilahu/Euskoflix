@@ -13,6 +13,8 @@ public class EuskoFlixLoader extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
+    private JProgressBar progressBar;
+
     public EuskoFlixLoader() {
         WebLookAndFeel.install();
         this.requestFocus();
@@ -30,7 +32,7 @@ public class EuskoFlixLoader extends JFrame {
             icono.setSize(icon.getIconWidth(), icon.getIconHeight());
 
             this.add(icono, BorderLayout.CENTER);
-            JProgressBar progressBar = new JProgressBar();
+            progressBar = new JProgressBar();
             progressBar.setBackground(Color.white);
             progressBar.setIndeterminate(true);
             progressBar.setLayout(new BorderLayout());
@@ -64,4 +66,7 @@ public class EuskoFlixLoader extends JFrame {
         setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
     }
 
+    public void regenerarBarra() {
+        this.progressBar = new JProgressBar();
+    }
 }

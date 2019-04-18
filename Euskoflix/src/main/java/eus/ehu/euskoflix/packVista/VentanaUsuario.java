@@ -1,12 +1,15 @@
 package eus.ehu.euskoflix.packVista;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import com.alee.laf.WebLookAndFeel;
+import eus.ehu.euskoflix.packControlador.ControladorVista;
 import eus.ehu.euskoflix.packDatos.PropertiesManager;
 
 public class VentanaUsuario extends JFrame {
@@ -150,6 +153,32 @@ public class VentanaUsuario extends JFrame {
             icon.setLayout(new BorderLayout(0, 0));
             icon.setIcon(new ImageIcon((Image) obj[0]));
             panel.add(icon);
+            panel.addMouseListener(new MouseListener() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					ControladorVista.getInstance().crearInfoExtraView((int)obj[1]);
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+
+				}
+			});
         }
      }
 	 
