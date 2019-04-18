@@ -23,14 +23,14 @@ public class ControladorVista {
 
     /* Vista */
     private EuskoFlixLoader euskoFlixLoader;
+    private EuskoFlixLoader filtroLoader;
     private VentanaCargaDatos ventanaCargaDatos;
     private InformacionExtraView informacionExtraView;
     private VentanaLogin ventanaLogin;
-    private VentanaUsuario ventanaUsuario;
     private ReproductorVideo reproductorVideo;
 
     private ControladorVista() {
-        this.euskoFlixLoader = new EuskoFlixLoader();
+        this.euskoFlixLoader = new EuskoFlixLoader("Cargando Datos...");
         this.ventanaLogin = new VentanaLogin();
         this.gestionDatos = GestionDatos.getInstance();
     }
@@ -51,7 +51,6 @@ public class ControladorVista {
     }
 
     private void mostrarLoader() {
-        this.euskoFlixLoader.regenerarBarra();
         this.euskoFlixLoader.setVisible(true);
     }
 
@@ -252,7 +251,7 @@ public class ControladorVista {
                     Object[][] vistas = this.generarInfoPelis(MatrizValoraciones.getInstance().getPeliculasVistas(username).toIntegerArray());
                     Object[][] recomendadas = this.generarInfoPelis(Filtrado.getInstance().recomendar(TipoRecomendacion.Hibrido, 10).toIntegerArray());
                     cerrarLoader();
-                    ventanaUsuario = new VentanaUsuario(user.usuarioToStringArray(), vistas,recomendadas);
+                    new VentanaUsuario(user.usuarioToStringArray(), vistas,recomendadas);
                 }
             } else {
                 JOptionPane.showMessageDialog(ventanaLogin,
