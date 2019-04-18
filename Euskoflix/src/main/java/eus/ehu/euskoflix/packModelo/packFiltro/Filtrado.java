@@ -52,6 +52,9 @@ public class Filtrado {
             case Contenido:
                 lp = this.filtradoContenido.recomendar(pCantidad);
                 break;
+            default:
+                lp = ListaPeliculasValoraciones.generarHíbrido(this.filtradoPersona.recomendar(pCantidad), this.filtradoProducto.recomendar(100), this.filtradoContenido.recomendar(100));
+                break;
         }
         return lp;
     }

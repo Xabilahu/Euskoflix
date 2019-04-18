@@ -1,12 +1,7 @@
 package eus.ehu.euskoflix.packModelo.packFiltro;
 
-import eus.ehu.euskoflix.packModelo.Cartelera;
-
 import java.text.DecimalFormat;
-import java.util.AbstractMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 public class ListaPeliculasValoraciones {
 
@@ -14,6 +9,23 @@ public class ListaPeliculasValoraciones {
 
     public ListaPeliculasValoraciones() {
         this.recomendaciones = new TreeSet<>((o1, o2) -> Double.compare(o1.getValue(), o2.getValue()) * -1);
+    }
+
+    public static ListaPeliculasValoraciones generarHíbrido(ListaPeliculasValoraciones pLista1, ListaPeliculasValoraciones pLista2, ListaPeliculasValoraciones pLista3) {
+        HashMap<Integer, Double> rec = new HashMap<>();
+        ListaPeliculasValoraciones lpv = new ListaPeliculasValoraciones();
+        pLista1.recomendaciones.forEach(entry -> rec.put(entry.getKey(), entry.getValue()/3.0));
+        pLista2.recomendaciones.forEach(entry -> {
+            if (rec.containsKey(entry.getKey())) {
+                rec.put(entry.getKey(), rec.get(entry.getKey()) + (entry.getValue() / 3.0));
+            }
+        });
+        pLista3.recomendaciones.forEach(entry -> {
+            if (rec.containsKey(entry.getKey())) {
+                lpv.add(entry.getKey(), rec.get(entry.getKey()) + (entry.getValue() / 3.0));
+            }
+        });
+        return lpv;
     }
 
     public void add(int pId, double pValoracion) {
@@ -43,13 +55,11 @@ public class ListaPeliculasValoraciones {
         return sb.toString();
     }
 
-    public String[][] toStringArray() {
-        String[][] res = new String[this.recomendaciones.size()][2];
-        Iterator<Map.Entry<Integer,Double>> itr = this.recomendaciones.iterator();
-        for (int i = 0; itr.hasNext(); i++) {
-            Map.Entry<Integer,Double> entry = itr.next();
-            res[i][0] = Cartelera.getInstance().getPeliculaPorIdSinMapeo(entry.getKey()).getTitulo();
-            res[i][1] = entry.getValue().toString();
+    public Integer[] toIntegerArray() {
+        Integer[] res = new Integer[this.recomendaciones.size()];
+        int i = 0;
+        for (Map.Entry<Integer,Double> entry : this.recomendaciones.descendingSet()){
+            res[i++] = entry.getKey();
         }
         return res;
     }

@@ -70,6 +70,10 @@ public class PropertiesManager {
         return this.properties.getProperty("path.to.logo");
     }
 
+    public String getPathToMovieNotFound() {
+        return this.properties.getProperty("path.to.movie.not.found");
+    }
+
     public String getPathToLoginLogo() {
         return this.properties.getProperty("path.to.login.logo");
     }

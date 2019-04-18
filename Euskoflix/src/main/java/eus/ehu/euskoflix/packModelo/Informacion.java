@@ -24,7 +24,7 @@ public class Informacion {
     public Informacion() {
         try {
             this.poster = ImageIO.read(GestionDatos.class.getResourceAsStream(
-                    PropertiesManager.getInstance().getPathToLogo()));
+                    PropertiesManager.getInstance().getPathToMovieNotFound()));
         } catch (IOException ignored) {
 
         }

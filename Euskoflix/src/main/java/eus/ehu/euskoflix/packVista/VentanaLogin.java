@@ -58,7 +58,7 @@ public class VentanaLogin extends JFrame {
 
         txtUser = new JTextField();
         txtUser.setBounds(25, 100, 150, 25);
-        txtUser.setText("Nombre de usuario");
+        txtUser.setText("ID de usuario");
         txtUser.setHorizontalAlignment(JTextField.CENTER);
 
         txtPass = new JPasswordField();

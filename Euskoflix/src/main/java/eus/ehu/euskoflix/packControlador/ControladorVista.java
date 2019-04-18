@@ -3,6 +3,8 @@ package eus.ehu.euskoflix.packControlador;
 import eus.ehu.euskoflix.packDatos.GestionDatos;
 import eus.ehu.euskoflix.packDatos.TipoFichero;
 import eus.ehu.euskoflix.packModelo.*;
+import eus.ehu.euskoflix.packModelo.packFiltro.Filtrado;
+import eus.ehu.euskoflix.packModelo.packFiltro.TipoRecomendacion;
 import eus.ehu.euskoflix.packPrincipal.windowTesting.ReproductorVideo;
 import eus.ehu.euskoflix.packVista.*;
 
@@ -24,11 +26,11 @@ public class ControladorVista {
     private VentanaCargaDatos ventanaCargaDatos;
     private InformacionExtraView informacionExtraView;
     private VentanaLogin ventanaLogin;
+    private VentanaUsuario ventanaUsuario;
     private ReproductorVideo reproductorVideo;
 
     private ControladorVista() {
         this.ventanaLogin = new VentanaLogin();
-        this.euskoFlixLoader = new EuskoFlixLoader();
         this.gestionDatos = GestionDatos.getInstance();
     }
 
@@ -42,12 +44,13 @@ public class ControladorVista {
     public void iniciarAplicacion() {
         this.mostrarLoader();
         this.gestionDatos.cargarDatos(TipoFichero.small);
-        this.ocultarLoader();
-//        this.mostrarLogin();
+        this.cerrarLoader();
+        this.mostrarLogin();
 //        this.mostrarCargaDatos();
     }
 
     private void mostrarLoader() {
+        this.euskoFlixLoader = new EuskoFlixLoader();
         this.euskoFlixLoader.setVisible(true);
     }
 
@@ -57,12 +60,10 @@ public class ControladorVista {
         this.ventanaLogin.setVisible(true);
     }
 
-    private void ocultarLoader() {
-        this.euskoFlixLoader.setVisible(false);
-    }
-
     private void cerrarLoader() {
+        this.euskoFlixLoader.setVisible(false);
         this.euskoFlixLoader.dispose();
+        this.euskoFlixLoader = null;
     }
 
     public void mostrarCargaDatos() {
@@ -76,11 +77,6 @@ public class ControladorVista {
         JOptionPane.showMessageDialog(ventanaCargaDatos,
                 "Doble click en una película para más información", "Info",
                 JOptionPane.INFORMATION_MESSAGE);
-    }
-
-
-    public void cargarDatos() {
-        GestionDatos.getInstance().cargarDatos(TipoFichero.test);
     }
 
     public String[][] datosUsuario() {
@@ -185,7 +181,6 @@ public class ControladorVista {
                 int id = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
                 ventanaCargaDatos.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 crearInfoExtraView(id);
-
             }
         }
 
@@ -207,18 +202,22 @@ public class ControladorVista {
         @Override
         public void actionPerformed(ActionEvent e) {
             informacionExtraView.dispose();
-
         }
     }
 
     class VentanaLoginListenerUser implements FocusListener {
         @Override
         public void focusGained(FocusEvent e) {
-            ventanaLogin.getTxtUser().setText("");
+            if (ventanaLogin.getTxtUser().getText().equals("ID de usuario")) {
+                ventanaLogin.getTxtUser().setText("");
+            }
         }
 
         @Override
         public void focusLost(FocusEvent e) {
+            if (ventanaLogin.getTxtUser().getText().isEmpty()) {
+                ventanaLogin.getTxtUser().setText("ID de usuario");
+            }
         }
     }
 
@@ -230,6 +229,9 @@ public class ControladorVista {
 
         @Override
         public void focusLost(FocusEvent e) {
+            if (ventanaLogin.getTxtPass().getText() .isEmpty()) {
+                ventanaLogin.getTxtPass().setText("Contraseña");
+            }
         }
     }
     
@@ -241,16 +243,18 @@ public class ControladorVista {
                 ventanaLogin.setVisible(false);
                 mostrarLoader();
                 Usuario user = CatalogoUsuarios.getInstance().login(new Usuario(username, "", "", ventanaLogin.getContra()));
-                ocultarLoader();
                 if (user == null) {
+                    cerrarLoader();
                     ventanaLogin.setVisible(true);
                     JOptionPane.showMessageDialog(ventanaLogin,
                             "Usuario o contraseña incorrecto.", "Error login",
                             JOptionPane.ERROR_MESSAGE);
                 } else {
                     ventanaLogin.dispose();
+                    Object[][] vistas = this.generarInfoPelis(MatrizValoraciones.getInstance().getPeliculasVistas(username).toIntegerArray());
+                    Object[][] recomendadas = this.generarInfoPelis(Filtrado.getInstance().recomendar(TipoRecomendacion.Hibrido, 10).toIntegerArray());
                     cerrarLoader();
-                    new VentanaUsuario(user.usuarioToStringArray(), MatrizValoraciones.getInstance().getPeliculasVistas(user.getId()).toStringArray());
+                    ventanaUsuario = new VentanaUsuario(user.usuarioToStringArray(), vistas,recomendadas);
                 }
             } else {
                 JOptionPane.showMessageDialog(ventanaLogin,
@@ -259,15 +263,18 @@ public class ControladorVista {
             }
 
 		}
-    }
 
-//    class CerrarReproductorListener implements ActionListener {
-//
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            reproductorVideo = null;
-//        }
-//    }
+        private Object[][] generarInfoPelis(Integer[] pPeliculasVistas) {
+		    Object[][] result = new Object[pPeliculasVistas.length][2];
+		    int x = 0;
+		    for (Integer i : pPeliculasVistas){
+		        Pelicula p = Cartelera.getInstance().getPeliculaPorIdSinMapeo(i);
+		        result[x][0] = p.getPoster();
+		        result[x++][1] = p.getTitulo();
+            }
+		    return result;
+        }
+    }
 
     class ReproductorListener implements ActionListener{
 

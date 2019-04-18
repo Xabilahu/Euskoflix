@@ -169,7 +169,6 @@ public class GestionDatos {
             String json = str.toString();
             JsonParser parser = new JsonParser();
             JsonObject movie = parser.parse(json).getAsJsonObject();
-            String titulo = movie.get("title").getAsString();
             String posterPath = movie.get("poster_path").getAsString();
             String sinopsis = movie.get("overview").getAsString();
             URL credits = new URL(PropertiesManager.getInstance().getCreditsApiRequestURL(tmdbID));

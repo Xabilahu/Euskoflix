@@ -2,6 +2,6 @@ package eus.ehu.euskoflix.packModelo.packFiltro;
 
 public enum TipoRecomendacion {
 
-    Persona, Pelicula, Contenido
+    Persona, Pelicula, Contenido, Hibrido
 
 }
