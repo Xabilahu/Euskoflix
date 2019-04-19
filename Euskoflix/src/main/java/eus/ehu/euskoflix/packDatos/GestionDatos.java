@@ -65,6 +65,7 @@ public class GestionDatos {
             while (pelis.next()) {
                 Pelicula p = new Pelicula(pelis.getInt("id"), pelis.getString("titulo"), pelis.getInt("idTMDB"));
                 Cartelera.getInstance().addPelicula(p);
+                p.fillInfoExtra(this.getInfoExtra(p));
                 this.addTags(p);
                 tf.add(p.getId());
                 p.getLista().rellenarTf(tf, p.getId());
@@ -203,9 +204,9 @@ public class GestionDatos {
             con.disconnect();
             json = str.toString();
             parser = new JsonParser();
+            String trailerUrl = "";
             movie = parser.parse(json).getAsJsonObject();
             JsonArray videos = movie.getAsJsonArray("results");
-            String trailerUrl = "";
             for (JsonElement o : videos) {
                 JsonObject obj = (JsonObject) o;
                 if (obj.get("name").getAsString().toLowerCase().contains("trailer")) {
@@ -220,8 +221,8 @@ public class GestionDatos {
 
             trailerUrl = PropertiesManager.getInstance().getDefaultTrailerUrl().replace("video_id", trailerUrl);
             i = new Informacion(image, sinopsis, director, trailerUrl);
-        } catch (IOException e) {
-            //e.printStackTrace();
+        } catch (Exception e) {
+//            System.out.println("No se ha podido recuperar la información extra de la película: " + pPelicula.getTitulo());
         }
         return i;
     }

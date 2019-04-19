@@ -23,10 +23,10 @@ public class ControladorVista {
 
     /* Vista */
     private EuskoFlixLoader euskoFlixLoader;
-    private EuskoFlixLoader filtroLoader;
     private VentanaCargaDatos ventanaCargaDatos;
     private InformacionExtraView informacionExtraView;
     private VentanaLogin ventanaLogin;
+    private VentanaUsuario ventanaUsuario;
     private ReproductorVideo reproductorVideo;
 
     private ControladorVista() {
@@ -161,9 +161,21 @@ public class ControladorVista {
         return result;
     }
 
+    private Object[][] generarInfoPelis(Integer[] pPeliculasVistas) {
+        Object[][] result = new Object[pPeliculasVistas.length][3];
+        int x = 0;
+        for (Integer i : pPeliculasVistas){
+            Pelicula p = Cartelera.getInstance().getPeliculaPorIdSinMapeo(i);
+            result[x][0] = p.getPoster();
+            result[x][1] = i;
+            result[x++][2] = p.getTitulo();
+        }
+        return result;
+    }
+
     /* Implementaciones de los listeners */
 
-    class InfoExtraListener implements MouseListener {
+    private class InfoExtraListener implements MouseListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -194,7 +206,7 @@ public class ControladorVista {
         }
     }
 
-    class CerrarInfoExtraListener implements ActionListener {
+    private class CerrarInfoExtraListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -202,7 +214,7 @@ public class ControladorVista {
         }
     }
 
-    class VentanaLoginListenerUser implements FocusListener {
+    private class VentanaLoginListenerUser implements FocusListener {
         @Override
         public void focusGained(FocusEvent e) {
             if (ventanaLogin.getTxtUser().getText().equals("ID de usuario")) {
@@ -218,7 +230,7 @@ public class ControladorVista {
         }
     }
 
-    class VentanaLoginListenerPass implements FocusListener {
+    private class VentanaLoginListenerPass implements FocusListener {
         @Override
         public void focusGained(FocusEvent e) {
             ventanaLogin.getTxtPass().setText("");
@@ -232,7 +244,7 @@ public class ControladorVista {
         }
     }
     
-    class LoguearseListener implements ActionListener{
+    private class LoguearseListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int username = ventanaLogin.getUsuario();
@@ -248,10 +260,11 @@ public class ControladorVista {
                             JOptionPane.ERROR_MESSAGE);
                 } else {
                     ventanaLogin.dispose();
-                    Object[][] vistas = this.generarInfoPelis(MatrizValoraciones.getInstance().getPeliculasVistas(username).toIntegerArray());
-                    Object[][] recomendadas = this.generarInfoPelis(Filtrado.getInstance().recomendar(TipoRecomendacion.Hibrido, 10).toIntegerArray());
+                    Object[][] vistas = generarInfoPelis(MatrizValoraciones.getInstance().getPeliculasVistas(username).toIntegerArray());
+                    Object[][] recomendadas = generarInfoPelis(Filtrado.getInstance().recomendar(TipoRecomendacion.Hibrido, 10).toIntegerArray());
                     cerrarLoader();
-                    new VentanaUsuario(user.usuarioToStringArray(), vistas,recomendadas);
+                    ventanaUsuario = new VentanaUsuario(user.usuarioToStringArray(), vistas,recomendadas, Cartelera.getInstance().getNumPeliculas());
+                    ventanaUsuario.addRecomendacionListener(new RecomendacionListener());
                 }
             } else {
                 JOptionPane.showMessageDialog(ventanaLogin,
@@ -260,21 +273,9 @@ public class ControladorVista {
             }
 
 		}
-
-        private Object[][] generarInfoPelis(Integer[] pPeliculasVistas) {
-		    Object[][] result = new Object[pPeliculasVistas.length][3];
-		    int x = 0;
-		    for (Integer i : pPeliculasVistas){
-		        Pelicula p = Cartelera.getInstance().getPeliculaPorIdSinMapeo(i);
-		        result[x][0] = p.getPoster();
-		        result[x][1] = i;
-		        result[x++][2] = p.getTitulo();
-            }
-		    return result;
-        }
     }
 
-    class ReproductorListener implements ActionListener{
+    private class ReproductorListener implements ActionListener {
 
         private String url;
 
@@ -288,4 +289,23 @@ public class ControladorVista {
             reproductorVideo.loadURL(this.url);
         }
     }
+
+    private class RecomendacionListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Container panelSur = (Container) ventanaUsuario.getContentPane().getComponents()[2];
+            int numRecs = 0;
+            String tipoRec = "";
+            for (Component c : panelSur.getComponents()){
+                if (c instanceof JSpinner) {
+                    numRecs = (int)((JSpinner) c).getValue();
+                } else if (c instanceof JComboBox) {
+                    ((JComboBox) c).getSelectedItem();
+                }
+            }
+            new PopUpRecomendaciones(generarInfoPelis(Filtrado.getInstance().recomendar(TipoRecomendacion.stringToEnum(tipoRec), numRecs).toIntegerArray()));
+        }
+    }
+
 }

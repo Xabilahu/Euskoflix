@@ -1,6 +1,7 @@
 package eus.ehu.euskoflix.packModelo;
 
 import eus.ehu.euskoflix.packDatos.GestionDatos;
+import eus.ehu.euskoflix.packVista.InformacionExtraView;
 
 import java.awt.*;
 
@@ -48,24 +49,19 @@ public class Pelicula extends Normalizable {
         this.tmdbId = tmdbId;
     }
 
-    private void fillInfoExtra() {
-        if (infoExtra == null) {
-            this.infoExtra = GestionDatos.getInstance().getInfoExtra(this);
-        }
+    public void fillInfoExtra(Informacion pInfo) {
+        this.infoExtra = pInfo;
     }
 
     public String getDirector() {
-        this.fillInfoExtra();
         return this.infoExtra.getDirector();
     }
 
     public String getSinopsis() {
-        this.fillInfoExtra();
         return this.infoExtra.getSinopsis();
     }
 
     public Image getPoster() {
-        this.fillInfoExtra();
         return this.infoExtra.getPoster();
     }
 
@@ -81,7 +77,6 @@ public class Pelicula extends Normalizable {
     }
 
     public String getTrailerUrl() {
-        this.fillInfoExtra();
         return this.infoExtra.getTrailerUrl();
     }
 }

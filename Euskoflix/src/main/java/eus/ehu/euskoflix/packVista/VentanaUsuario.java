@@ -1,15 +1,13 @@
 package eus.ehu.euskoflix.packVista;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import com.alee.laf.WebLookAndFeel;
-import eus.ehu.euskoflix.packControlador.ControladorVista;
 import eus.ehu.euskoflix.packDatos.PropertiesManager;
 
 public class VentanaUsuario extends JFrame {
@@ -19,10 +17,10 @@ public class VentanaUsuario extends JFrame {
     private JPanel paneVistas;
     private JScrollPane scrollPaneVst;
     private JPanel panelPelis;
-    private JPanel paneFilmVContainer;
+    private PanelPelis paneFilmVContainer;
     private JPanel paneRecomendadas;
     private JScrollPane scrollPaneRec;
-    private JPanel paneFilmRContainer;
+    private PanelPelis paneFilmRContainer;
     private JPanel panelRecomendaciones;
     private JComboBox<String> comboBox;
     private JButton btnRecommend;
@@ -35,7 +33,7 @@ public class VentanaUsuario extends JFrame {
     private Component horizontalStrut;
     private JPanel panelUsuario;
 
-    public VentanaUsuario(String[] pUsuario, Object[][] pPeliculasVistas, Object[][] pPeliculasRecomendadas) {
+    public VentanaUsuario(String[] pUsuario, Object[][] pPeliculasVistas, Object[][] pPeliculasRecomendadas, int pTotalPelis) {
         if (!WebLookAndFeel.isInstalled()) {
             WebLookAndFeel.install();
         }
@@ -54,13 +52,13 @@ public class VentanaUsuario extends JFrame {
         this.setLocation((screenSize.width - dim.width) / 2, (screenSize.height - dim.height) / 2);
         contentPane = new JPanel();
         this.setContentPane(contentPane);
-        this.initComponents(pPeliculasVistas, pPeliculasRecomendadas);
+        this.initComponents(pPeliculasVistas, pPeliculasRecomendadas, pTotalPelis);
         lblUsuario.setText(pUsuario[0] + " " + pUsuario[1]);
         this.pack();
         this.setVisible(true);
     }
 
-    private void initComponents(Object[][] pPeliculasVistas, Object[][] pPeliculasRecomendadas) {
+    private void initComponents(Object[][] pPeliculasVistas, Object[][] pPeliculasRecomendadas, int pTotalPelis) {
 
         contentPane.setLayout(new BorderLayout(0, 0));
 
@@ -94,33 +92,31 @@ public class VentanaUsuario extends JFrame {
         panelPelis.setLayout(new GridLayout(0, 1, 0, 2));
 
         scrollPaneVst = new JScrollPane();
-        scrollPaneVst.setViewportBorder(null);
         paneVistas = new JPanel();
         panelPelis.add(paneVistas);
-        paneVistas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Peliculas Vistas", 0, 0, new java.awt.Font("Times New Roman", 1, 11)));
+        paneVistas.setBorder(BorderFactory.createTitledBorder(null, "Peliculas Vistas", 0, 0, new Font("Times New Roman", 1, 11)));
         paneVistas.setLayout(new BorderLayout());
 
-        paneFilmVContainer = new JPanel();
-        paneFilmVContainer.setBorder(null);
+        paneFilmVContainer = new PanelPelis();
         scrollPaneVst.setViewportView(paneFilmVContainer);
         paneVistas.add(scrollPaneVst);
         paneFilmVContainer.setLayout(new GridLayout(1,0, 5, 5));
 
-        this.generarPanelesPelis(true, pPeliculasVistas);
+        paneFilmVContainer.generarPanelesPelis(pPeliculasVistas);
 
         paneRecomendadas = new JPanel();
         panelPelis.add(paneRecomendadas);
-        paneRecomendadas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Peliculas Recomendadas", 0, 0, new java.awt.Font("Times New Roman", 1, 11)));
+        paneRecomendadas.setBorder(BorderFactory.createTitledBorder(null, "Peliculas Recomendadas", 0, 0, new Font("Times New Roman", 1, 11)));
         paneRecomendadas.setLayout(new BorderLayout());
 
         scrollPaneRec = new JScrollPane();
         paneRecomendadas.add(scrollPaneRec, BorderLayout.CENTER);
 
-        paneFilmRContainer = new JPanel();
+        paneFilmRContainer = new PanelPelis();
         scrollPaneRec.setViewportView(paneFilmRContainer);
         paneFilmRContainer.setLayout(new GridLayout(1, 0, 5, 5));
 
-        this.generarPanelesPelis(false, pPeliculasRecomendadas);
+        paneFilmRContainer.generarPanelesPelis(pPeliculasRecomendadas);
 
         panelRecomendaciones = new JPanel();
         contentPane.add(panelRecomendaciones, BorderLayout.SOUTH);
@@ -129,7 +125,8 @@ public class VentanaUsuario extends JFrame {
         comboBox = new JComboBox(options);
         panelRecomendaciones.add(comboBox);
 
-        spinner = new JSpinner();
+        SpinnerNumberModel model = new SpinnerNumberModel(1, 1, pTotalPelis - pPeliculasVistas.length, 1);
+        spinner = new JSpinner(model);
         spinner.getEditor().setPreferredSize(new Dimension(50,22));
         panelRecomendaciones.add(spinner);
 
@@ -138,86 +135,8 @@ public class VentanaUsuario extends JFrame {
 
     }
 
-    private void generarPanelesPelis(boolean pVistas, Object[][] pPeliculas) {
-        JPanel contenedor;
-        if (pVistas) {
-            contenedor = paneFilmVContainer;
-        } else {
-            contenedor = paneFilmRContainer;
-        }
-        for (Object[] obj : pPeliculas) {
-            JPanel panel = new JPanel();
-            contenedor.add(panel);
-            Dimension dim = new Dimension(154,231);
-            panel.setPreferredSize(dim);
-            panel.setMinimumSize(dim);
-            panel.setMaximumSize(dim);
-            JLabel icon = new JLabel();
-            icon.setLayout(new OverlayLayout(panel));
-            icon.setHorizontalAlignment(SwingConstants.CENTER);
-            icon.setLayout(new BorderLayout(0, 0));
-            icon.setIcon(new ImageIcon((Image) obj[0]));
-            panel.add(icon);
-            JLabel titulo = new MarqueeLabel((String)obj[2], 2, 20);
-            titulo.setVisible(false);
-            JPanel panelTitulo = new JPanel(new BorderLayout());
-            panelTitulo.add(titulo, BorderLayout.SOUTH);
-            panelTitulo.setOpaque(false);
-            titulo.setBackground(Color.WHITE);
-            titulo.setOpaque(true);
-            icon.add(panelTitulo);
-            panel.addMouseListener(new MouseListener() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    ControladorVista.getInstance().crearInfoExtraView((int)obj[1]);
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    titulo.setVisible(true);
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    titulo.setVisible(false);
-                }
-            });
-        }
+    public void addRecomendacionListener(ActionListener pListener) {
+        this.btnRecommend.addActionListener(pListener);
     }
-
-    private class MarqueeLabel extends JLabel {
-//		   public int LEFT_TO_RIGHT = 1;
-//		   public  int RIGHT_TO_LEFT = 2;
-        private int Option;
-        private int Speed;
-
-        public MarqueeLabel(String text, int Option, int Speed) {
-            this.Option = Option;
-            this.Speed = Speed;
-            this.setText(text);
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            if (Option == 1) {
-                g.translate((int) ((System.currentTimeMillis() / Speed) % (getWidth() * 2) - getWidth()), 0);
-            } else if (Option == 2) {
-                g.translate((int) (getWidth() - (System.currentTimeMillis() / Speed) % (getWidth() * 2)), 0);
-            }
-            super.paintComponent(g);
-            repaint(5);
-        }
-    }
-
 
 }
