@@ -112,6 +112,18 @@ public class BaseDatos {
                     "    FOREIGN KEY (id_genero) REFERENCES genero(id), " +
                     "    FOREIGN KEY (id_pelicula) REFERENCES pelicula(id)); ";
 
+            if (pTipo == TipoFichero.small) {
+                instruccion += "CREATE TABLE pelicula_info ( " +
+                               "   id_pelicula INTEGER NOT NULL, " +
+                               "   director TEXT, " +
+                               "   poster_path TEXT, " +
+                               "   trailer_path TEXT, " +
+                               "   synopsis TEXT, " +
+
+                               "   PRIMARY KEY (id_pelicula), " +
+                               "   FOREIGN KEY (id_pelicula) REFERENCES pelicula(id)); ";
+            }
+
             s.executeUpdate(instruccion);
             s.close();
             c.close();
@@ -132,10 +144,47 @@ public class BaseDatos {
     }
 
     private void anadirDatos(TipoFichero pTipo) {
-        //  anadirUsuarios(pTipo);
         anadirPeliculas(pTipo);
+        anadirInfoExtra(pTipo);
         anadirUsuariosYValoraciones(pTipo);
         anadirEtiquetas(pTipo);
+    }
+
+    private void anadirInfoExtra(TipoFichero pTipo) {
+        if (pTipo == TipoFichero.small) {
+            try {
+                Connection c = this.getConexion();
+                c.setAutoCommit(false);
+                InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("smallInfo"));
+                try {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+                    in.readLine(); // skip headers
+                    PreparedStatement pst = c.prepareStatement("INSERT INTO pelicula_info VALUES (?,?,?,?,?)");
+                    while (in.ready()) {
+                        StringTokenizer stringTokenizer = new StringTokenizer(in.readLine(),",");
+                        pst.setInt(1, Integer.parseInt(stringTokenizer.nextToken()));
+                        pst.setString(2,stringTokenizer.nextToken());
+                        pst.setString(3,stringTokenizer.nextToken());
+                        pst.setString(4,stringTokenizer.nextToken());
+                        StringBuilder synopsis = new StringBuilder();
+                        while (stringTokenizer.hasMoreTokens()) {
+                            synopsis.append(stringTokenizer.nextToken());
+                        }
+                        pst.setString(5,synopsis.toString());
+                        pst.addBatch();
+                    }
+                    pst.executeBatch();
+                    c.commit();
+                    c.close();
+                    in.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.exit(-1);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void anadirPeliculas(TipoFichero pTipo) {
@@ -450,6 +499,18 @@ public class BaseDatos {
         ResultSet rst = null;
         try {
             PreparedStatement pst = this.getConexion().prepareStatement("SELECT etiqueta, count(*) AS veces FROM etiqueta WHERE id_pelicula = ? GROUP BY etiqueta ORDER BY etiqueta ASC");
+            pst.setInt(1, pId);
+            rst = pst.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rst;
+    }
+
+    public ResultSet getInfoByPelicula(int pId) {
+        ResultSet rst = null;
+        try {
+            PreparedStatement pst = this.getConexion().prepareStatement("SELECT director,poster_path,trailer_path,synopsis FROM pelicula_info WHERE id_pelicula = ?");
             pst.setInt(1, pId);
             rst = pst.executeQuery();
         } catch (SQLException e) {
