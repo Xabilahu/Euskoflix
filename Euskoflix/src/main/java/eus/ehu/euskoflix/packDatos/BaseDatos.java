@@ -256,10 +256,11 @@ public class BaseDatos {
             InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(fileName));
             InputStream is1 = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(userFileName));
             try {
-                String defaultPass = PropertiesManager.getInstance().getDefaultPassword();
+                String password = PropertiesManager.getInstance().getDefaultPassword();
                 BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
                 BufferedReader inUsuario = new BufferedReader(new InputStreamReader(is1, StandardCharsets.UTF_8));
                 in.readLine(); // skip headers
+                inUsuario.readLine();// skip headers
                 PreparedStatement pst = c.prepareStatement("INSERT INTO valoracion(id_usuario, id_pelicula, valoracion) VALUES (?,?,?)");
                 PreparedStatement pstUsuarios = c.prepareStatement("INSERT INTO usuario(id,contrasena,nombre,apellido) VALUES(?,?,?,?)");
                 int lastIdUsurio = -1;
@@ -273,9 +274,12 @@ public class BaseDatos {
                     if (lastIdUsurio != idUsuario) {
                         StringTokenizer stringTokenizerU = new StringTokenizer(inUsuario.readLine());
                         pstUsuarios.setInt(1, idUsuario);
-                        pstUsuarios.setString(2, defaultPass);
                         pstUsuarios.setString(3, stringTokenizerU.nextToken(","));
                         pstUsuarios.setString(4, stringTokenizerU.nextToken(","));
+                        if (stringTokenizerU.hasMoreTokens()) {
+                            password = stringTokenizerU.nextToken(",");
+                        }
+                        pstUsuarios.setString(2, password);
                         pstUsuarios.addBatch();
                         lastIdUsurio = idUsuario;
                     }
@@ -572,5 +576,18 @@ public class BaseDatos {
 	    }
 	    return rst;
 	}
+
+	public void addNuevoUsuario(int pId, String pPass, String pNombre, String pApellido) {
+        try {
+            PreparedStatement pst = this.getConexion().prepareStatement("INSERT INTO usuario VALUES (?,?,?,?)");
+            pst.setInt(1, pId);
+            pst.setString(2, pPass);
+            pst.setString(3, pNombre);
+            pst.setString(4, pApellido);
+            pst.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

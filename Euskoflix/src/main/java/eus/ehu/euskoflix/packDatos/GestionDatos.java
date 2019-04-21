@@ -1,22 +1,18 @@
 package eus.ehu.euskoflix.packDatos;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import eus.ehu.euskoflix.packModelo.*;
 import eus.ehu.euskoflix.packModelo.packFiltro.Filtrado;
 import eus.ehu.euskoflix.packModelo.packFiltro.ListaEtiquetasFiltrado;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
+import java.math.BigInteger;
+import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -216,4 +212,29 @@ public class GestionDatos {
         return nt;
     }
 
+    public void registrar(String pNombre, String pApellido, String pPassword) {
+        String pass = "";
+        try {
+            MessageDigest mg = MessageDigest.getInstance(PropertiesManager.getInstance().getEncryptionType());
+            mg.reset();
+            mg.update(pPassword.getBytes());
+            pass = new BigInteger(1, mg.digest()).toString(16);
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("Error de encriptación.");
+        }
+        int id = CatalogoUsuarios.getInstance().getNumUsuarios() + 1;
+        CatalogoUsuarios.getInstance().registrar(new Usuario(id, pNombre, pApellido, pass));
+        BaseDatos.getBaseDatos().addNuevoUsuario(id, pass, pNombre, pApellido);
+        try {
+            System.out.println(GestionDatos.this.getClass().getResource(PropertiesManager.getInstance().getPathToFile("smallNombres")).toURI());
+            System.out.println(id);
+//            FileWriter fw = new FileWriter(new File(GestionDatos.this.getClass().getResource(PropertiesManager.getInstance().getPathToFile("smallNombres")).toURI()), true);
+//            fw.write(pNombre + "," + pApellido + "," + pass);
+//            fw.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
 }

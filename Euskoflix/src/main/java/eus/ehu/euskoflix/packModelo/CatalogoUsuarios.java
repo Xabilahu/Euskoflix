@@ -24,7 +24,7 @@ public class CatalogoUsuarios {
     }
 
     public void registrar(Usuario pUsuario) {
-        //TODO implements in Sprint #3
+        this.lista.put(pUsuario.getId(), pUsuario);
     }
 
     public void addUsuario(Usuario pUser) {

@@ -6,13 +6,11 @@ import eus.ehu.euskoflix.packDatos.PropertiesManager;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class VentanaLogin extends JFrame {
 
@@ -22,6 +20,7 @@ public class VentanaLogin extends JFrame {
     private JTextField txtUser;
     private JPasswordField txtPass;
     private JButton entrar;
+    private JButton registrar;
 
     public VentanaLogin() {
         if (!WebLookAndFeel.isInstalled()) {
@@ -36,6 +35,11 @@ public class VentanaLogin extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setBounds((screenSize.width - 500) / 2, (screenSize.height - 500) / 2, 400, 200);
+        this.initComponents();
+        centrar();
+    }
+
+    private void initComponents() {
         panel = new JPanel();
         panel.setLayout(null);
         setContentPane(panel);
@@ -67,11 +71,15 @@ public class VentanaLogin extends JFrame {
         txtPass.setHorizontalAlignment(JTextField.CENTER);
 
         entrar = new JButton("Entrar");
-        entrar.setBounds(150, 135, 100, 25);
+        entrar.setBounds(90, 135, 100, 25);
+
+        registrar = new JButton("Registrar");
+        registrar.setBounds(210, 135, 100, 25);
         panel.add(txtUser);
         panel.add(txtPass);
         panel.add(entrar);
-        centrar();
+        panel.add(registrar);
+        //TODO: layout
     }
 
     private void centrar() {
@@ -90,14 +98,24 @@ public class VentanaLogin extends JFrame {
         this.txtUser.addFocusListener(pListenForFocusUser);
         this.txtPass.addFocusListener(pListenForFocusPass);
     }
-    
-    public void anadirActionListener(ActionListener pLoguearseListener) {
+
+    public void addKeyListener(KeyListener pListener) {
+        this.txtPass.addKeyListener(pListener);
+    }
+
+    public void addLoginListener(ActionListener pLoguearseListener) {
     	this.entrar.addActionListener(pLoguearseListener);
+    }
+
+    public void addRegistroListener(ActionListener pListener) {
+        this.registrar.addActionListener(pListener);
     }
 
     public JTextField getTxtUser() { return this.txtUser; }
 
-    public JTextField getTxtPass() { return this.txtPass; }
+    public JPasswordField getTxtPass() {
+        return this.txtPass;
+    }
     
     public int getUsuario() {
     	int username = Integer.MIN_VALUE;
@@ -110,6 +128,8 @@ public class VentanaLogin extends JFrame {
     	}
     	return username; }
     
-    public String getContra() { return this.txtPass.getText(); }
+    public String getContra() {
+        return new String(this.txtPass.getPassword());
+    }
 
 }

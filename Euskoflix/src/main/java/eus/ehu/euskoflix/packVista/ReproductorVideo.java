@@ -1,4 +1,4 @@
-package eus.ehu.euskoflix.packPrincipal.windowTesting;
+package eus.ehu.euskoflix.packVista;
 
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
@@ -147,18 +147,6 @@ public class ReproductorVideo extends JFrame {
                         .addListener((o, old, value) -> {
                             if (engine.getLoadWorker().getState() == FAILED) {
                                 System.out.println("error");
-                                /*SwingUtilities.invokeLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        JOptionPane.showMessageDialog(
-                                                panel,
-                                                (value != null)
-                                                        ? engine.getLocation() + "\n" + value.getMessage()
-                                                        : engine.getLocation() + "\nUnexpected error.",
-                                                "Loading error...",
-                                                JOptionPane.ERROR_MESSAGE);
-                                    }
-                                });*/
                             }
                         });
                 engine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {

@@ -5,7 +5,7 @@ import eus.ehu.euskoflix.packDatos.TipoFichero;
 import eus.ehu.euskoflix.packModelo.*;
 import eus.ehu.euskoflix.packModelo.packFiltro.Filtrado;
 import eus.ehu.euskoflix.packModelo.packFiltro.TipoRecomendacion;
-import eus.ehu.euskoflix.packPrincipal.windowTesting.ReproductorVideo;
+import eus.ehu.euskoflix.packVista.ReproductorVideo;
 import eus.ehu.euskoflix.packVista.*;
 
 import javax.swing.*;
@@ -28,6 +28,7 @@ public class ControladorVista {
     private VentanaLogin ventanaLogin;
     private VentanaUsuario ventanaUsuario;
     private ReproductorVideo reproductorVideo;
+    private VentanaRegistro ventanaRegistro;
 
     private ControladorVista() {
         this.euskoFlixLoader = new EuskoFlixLoader("Cargando Datos...");
@@ -43,6 +44,7 @@ public class ControladorVista {
     }
 
     public void iniciarAplicacion() {
+        JOptionPane.showMessageDialog(this.euskoFlixLoader, "Para disfrutar de la experiencia Euskoflix al completo\nes recomendable tener conexión a Internet.", "Información Extra Películas", JOptionPane.INFORMATION_MESSAGE);
         this.mostrarLoader();
         this.gestionDatos.cargarDatos(TipoFichero.small);
         this.cerrarLoader();
@@ -56,7 +58,9 @@ public class ControladorVista {
 
     private void mostrarLogin() {
         this.ventanaLogin.anadirFocusListener(new VentanaLoginListenerUser(), new VentanaLoginListenerPass());
-        this.ventanaLogin.anadirActionListener(new LoguearseListener());
+        this.ventanaLogin.addLoginListener(new LoguearseListener());
+        this.ventanaLogin.addRegistroListener(new AbrirVentanaRegistroListener());
+        this.ventanaLogin.addKeyListener(new LoguearseKeyListener());
         this.ventanaLogin.setVisible(true);
     }
 
@@ -173,6 +177,33 @@ public class ControladorVista {
         return result;
     }
 
+    private void login() {
+        int username = ventanaLogin.getUsuario();
+        if (username != Integer.MIN_VALUE) {
+            ventanaLogin.setVisible(false);
+            mostrarLoader();
+            Usuario user = CatalogoUsuarios.getInstance().login(new Usuario(username, "", "", ventanaLogin.getContra()));
+            if (user == null) {
+                cerrarLoader();
+                ventanaLogin.setVisible(true);
+                JOptionPane.showMessageDialog(ventanaLogin,
+                        "Usuario o contraseña incorrecto.", "Error login",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                ventanaLogin.dispose();
+                Object[][] vistas = generarInfoPelis(MatrizValoraciones.getInstance().getPeliculasVistas(username).toIntegerArray());
+                Object[][] recomendadas = generarInfoPelis(Filtrado.getInstance().recomendar(TipoRecomendacion.Hibrido, 10).toIntegerArray());
+                cerrarLoader();
+                ventanaUsuario = new VentanaUsuario(user.usuarioToStringArray(), vistas,recomendadas, Cartelera.getInstance().getNumPeliculas());
+                ventanaUsuario.addRecomendacionListener(new RecomendacionListener());
+            }
+        } else {
+            JOptionPane.showMessageDialog(ventanaLogin,
+                    "Usuario o contraseña incorrecto.", "Error login",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     /* Implementaciones de los listeners */
 
     private class InfoExtraListener implements MouseListener {
@@ -233,46 +264,75 @@ public class ControladorVista {
     private class VentanaLoginListenerPass implements FocusListener {
         @Override
         public void focusGained(FocusEvent e) {
-            ventanaLogin.getTxtPass().setText("");
+            if (ventanaLogin.getContra().equals("Contraseña")) {
+                ventanaLogin.getTxtPass().setText("");
+            }
         }
 
         @Override
         public void focusLost(FocusEvent e) {
-            if (ventanaLogin.getTxtPass().getText() .isEmpty()) {
+            if (ventanaLogin.getContra().isEmpty()) {
                 ventanaLogin.getTxtPass().setText("Contraseña");
             }
+        }
+    }
+
+    private class LoguearseKeyListener implements KeyListener {
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                login();
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+
         }
     }
     
     private class LoguearseListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int username = ventanaLogin.getUsuario();
-            if (username != Integer.MIN_VALUE) {
-                ventanaLogin.setVisible(false);
-                mostrarLoader();
-                Usuario user = CatalogoUsuarios.getInstance().login(new Usuario(username, "", "", ventanaLogin.getContra()));
-                if (user == null) {
-                    cerrarLoader();
-                    ventanaLogin.setVisible(true);
-                    JOptionPane.showMessageDialog(ventanaLogin,
-                            "Usuario o contraseña incorrecto.", "Error login",
-                            JOptionPane.ERROR_MESSAGE);
-                } else {
-                    ventanaLogin.dispose();
-                    Object[][] vistas = generarInfoPelis(MatrizValoraciones.getInstance().getPeliculasVistas(username).toIntegerArray());
-                    Object[][] recomendadas = generarInfoPelis(Filtrado.getInstance().recomendar(TipoRecomendacion.Hibrido, 10).toIntegerArray());
-                    cerrarLoader();
-                    ventanaUsuario = new VentanaUsuario(user.usuarioToStringArray(), vistas,recomendadas, Cartelera.getInstance().getNumPeliculas());
-                    ventanaUsuario.addRecomendacionListener(new RecomendacionListener());
-                }
-            } else {
-                JOptionPane.showMessageDialog(ventanaLogin,
-                        "Usuario o contraseña incorrecto.", "Error login",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-
+		    login();
 		}
+    }
+
+    private class AbrirVentanaRegistroListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ventanaRegistro = new VentanaRegistro();
+            ventanaRegistro.addCancelarLisener(new CerrarVentanaRegistroListener());
+            ventanaRegistro.addRegistrarListener(new RegistrarseListener());
+        }
+    }
+
+    private class CerrarVentanaRegistroListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ventanaRegistro.dispose();
+        }
+    }
+
+    private class RegistrarseListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String password = ventanaRegistro.getPassword();
+            String nombre = ventanaRegistro.getNombre();
+            String apellido = ventanaRegistro.getApellido();
+            if (password != null && nombre != null && apellido != null) {
+                GestionDatos.getInstance().registrar(nombre, apellido, password);
+            }
+        }
     }
 
     private class ReproductorListener implements ActionListener {

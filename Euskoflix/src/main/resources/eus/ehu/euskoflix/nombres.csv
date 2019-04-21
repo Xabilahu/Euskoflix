@@ -1,3 +1,4 @@
+nombre,apellido(,password --> if no pass, pass by default)
 Amparo,Peña
 Rosa,Castro
 César,Torres

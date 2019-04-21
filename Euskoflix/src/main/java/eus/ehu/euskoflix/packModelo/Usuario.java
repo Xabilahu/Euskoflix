@@ -35,7 +35,7 @@ public class Usuario extends Normalizable {
             mg.update(pPassword.getBytes());
             return new BigInteger(1, mg.digest()).toString(16);
         } catch (NoSuchAlgorithmException e) {
-            System.out.println("Error de encriptación");
+            System.out.println("Error de encriptación.");
             return null;
         }
     }

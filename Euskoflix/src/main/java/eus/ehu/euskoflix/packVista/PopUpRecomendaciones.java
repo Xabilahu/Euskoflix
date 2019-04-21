@@ -2,7 +2,6 @@ package eus.ehu.euskoflix.packVista;
 
 import com.alee.laf.WebLookAndFeel;
 import eus.ehu.euskoflix.packDatos.PropertiesManager;
-import eus.ehu.euskoflix.packModelo.packFiltro.TipoRecomendacion;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -58,12 +57,7 @@ public class PopUpRecomendaciones extends JDialog {
         this.btnCerrar = new JButton("Cerrar");
         this.btnCerrar.setFont(new java.awt.Font("Times New Roman", 0, 14));
         this.panelBoton.add(this.btnCerrar);
-        this.btnCerrar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
+        this.btnCerrar.addActionListener(e -> dispose());
         this.contentPane.add(this.panelBoton,BorderLayout.SOUTH);
         this.setContentPane(this.contentPane);
     }

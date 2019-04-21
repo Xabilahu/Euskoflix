@@ -90,6 +90,18 @@ public class PropertiesManager {
         return this.properties.getProperty("path.to.logo.icon");
     }
 
+    public String getPathToGif() {
+        return this.properties.getProperty("path.to.gif");
+    }
+
+    public String getPathToSpanish() {
+        return this.properties.getProperty("path.to.spanish");
+    }
+
+    public String getPathToEnglish() {
+        return this.properties.getProperty("path.to.english");
+    }
+
     public String getDefaultTrailerUrl() {
         return this.properties.getProperty("url.video");
     }

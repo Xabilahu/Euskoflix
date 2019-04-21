@@ -1,3 +1,4 @@
+nombre,apellido(,password --> if no pass, pass by default)
 nombre0,apellido0
 nombre1,apellido1
 nombre2,apellido2
