@@ -380,7 +380,8 @@ public class ControladorVista {
                 if (c instanceof JSpinner) {
                     numRecs = (int)((JSpinner) c).getValue();
                 } else if (c instanceof JComboBox) {
-                    ((JComboBox) c).getSelectedItem();
+                    tipoRec = ((JComboBox) c).getSelectedItem().toString();
+
                 }
             }
             new PopUpRecomendaciones(0,false,generarInfoPelis(Filtrado.getInstance().recomendar(TipoRecomendacion.stringToEnum(tipoRec), numRecs).toIntegerArray()));
