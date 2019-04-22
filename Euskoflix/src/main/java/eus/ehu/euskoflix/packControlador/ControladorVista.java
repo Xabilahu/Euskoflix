@@ -364,7 +364,7 @@ public class ControladorVista {
         @Override
         public void actionPerformed(ActionEvent e) {
         	String busqueda = ventanaUsuario.getBusqueda();
-        	Integer[] peliculas = gestionDatos.realizarBusqueda(busqueda);
+        	Integer[] peliculas = GestionDatos.getInstance().realizarBusqueda(busqueda);
         	new PopUpBusqueda(generarInfoPelis(peliculas));
         }
     }
