@@ -135,8 +135,15 @@ public class VentanaUsuario extends JFrame {
 
     }
 
+    public void addBusquedaListener(ActionListener pListener) {
+        this.btnBusqueda.addActionListener(pListener);
+    }
+    
     public void addRecomendacionListener(ActionListener pListener) {
         this.btnRecommend.addActionListener(pListener);
     }
-
+    
+    public String getBusqueda() {
+        return this.txtBusqueda.getText();
+    }
 }

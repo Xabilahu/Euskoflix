@@ -196,6 +196,7 @@ public class ControladorVista {
                 Object[][] recomendadas = generarInfoPelis(Filtrado.getInstance().recomendar(TipoRecomendacion.Hibrido, 10).toIntegerArray());
                 cerrarLoader();
                 ventanaUsuario = new VentanaUsuario(user.usuarioToStringArray(), vistas,recomendadas, Cartelera.getInstance().getNumPeliculas());
+                ventanaUsuario.addBusquedaListener(new BusquedaListener());
                 ventanaUsuario.addRecomendacionListener(new RecomendacionListener());
             }
         } else {
@@ -358,6 +359,16 @@ public class ControladorVista {
         public void actionPerformed(ActionEvent e) {
             reproductorVideo = new ReproductorVideo();
             reproductorVideo.loadURL(this.url);
+        }
+    }
+    
+    private class BusquedaListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        	String busqueda = ventanaUsuario.getBusqueda();
+        	Integer[] peliculas = gestionDatos.realizarBusqueda(busqueda);
+        	new PopUpBusqueda(generarInfoPelis(peliculas));
         }
     }
 

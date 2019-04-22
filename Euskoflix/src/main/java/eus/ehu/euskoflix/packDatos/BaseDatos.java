@@ -665,4 +665,16 @@ public class BaseDatos {
             e.printStackTrace();
         }
     }
+    
+    public ResultSet realizarBusqueda(String pBusqueda) {
+        ResultSet rst = null;
+        try {
+	        PreparedStatement pst = this.getConexion().prepareStatement("SELECT * FROM pelicula WHERE titulo LIKE ?");
+	        pst.setString(1, "%" + pBusqueda + "%");
+	        rst = pst.executeQuery();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return rst;
+	}
 }

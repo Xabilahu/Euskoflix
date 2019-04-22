@@ -15,6 +15,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GestionDatos {
@@ -251,6 +252,19 @@ public class GestionDatos {
 
     public void addValoracion(int pIdUsuario, int pIdPelicula, double pValoracion) {
         BaseDatos.getBaseDatos().addValoracion(pIdUsuario,pIdPelicula,pValoracion);
+    }
+    
+    public Integer[] realizarBusqueda(String pBusqueda) {
+    	ResultSet rst = BaseDatos.getBaseDatos().realizarBusqueda(pBusqueda);
+    	ArrayList<Integer> peliculas = new ArrayList<Integer>();
+    	try {
+            while (rst.next()) {
+            	peliculas.add(rst.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return peliculas.toArray(new Integer[peliculas.size()]);
     }
 
 }
