@@ -109,4 +109,9 @@ public abstract class Filtrable {
     public ListaPeliculasValoraciones getRecomendados() {
         return recomendados;
     }
+
+    public void vaciarEstructuras() {
+        this.recomendados = new ListaPeliculasValoraciones();
+        this.matrizSimilitudes = new HashMap<>();
+    }
 }

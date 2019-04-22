@@ -30,8 +30,10 @@ public class VentanaUsuario extends JFrame {
     private JTextField txtBusqueda;
     private JPanel panelBusqueda;
     private JLabel lblUsuario;
-    private Component horizontalStrut;
+    private Component horizontalStrut1;
     private JPanel panelUsuario;
+    private JButton btnCerrarSesion;
+    private JPanel panelEtiqueta;
 
     public VentanaUsuario(String[] pUsuario, Object[][] pPeliculasVistas, Object[][] pPeliculasRecomendadas, int pTotalPelis) {
         if (!WebLookAndFeel.isInstalled()) {
@@ -80,12 +82,24 @@ public class VentanaUsuario extends JFrame {
         panelSuperior.add(panelUsuario, BorderLayout.EAST);
         panelUsuario.setLayout(new BorderLayout(0, 0));
 
-        lblUsuario = new JLabel();
-        panelUsuario.add(lblUsuario, BorderLayout.CENTER);
-        lblUsuario.setHorizontalAlignment(SwingConstants.LEFT);
+        panelEtiqueta = new JPanel(new GridBagLayout());
+        panelUsuario.add(panelEtiqueta, BorderLayout.WEST);
 
-        horizontalStrut = Box.createHorizontalStrut(10);
-        panelUsuario.add(horizontalStrut, BorderLayout.EAST);
+        lblUsuario = new JLabel();
+        GridBagConstraints gb = new GridBagConstraints();
+        gb.insets = new java.awt.Insets(0, 0, 0, 10);
+        gb.gridx = 0;
+        gb.gridy = 0;
+        gb.anchor = GridBagConstraints.CENTER;
+        panelEtiqueta.add(lblUsuario, gb);
+        lblUsuario.setHorizontalAlignment(SwingConstants.LEFT);
+        lblUsuario.setVerticalAlignment(SwingConstants.CENTER);
+
+        horizontalStrut1 = Box.createHorizontalStrut(2);
+        panelUsuario.add(horizontalStrut1, BorderLayout.EAST);
+
+        btnCerrarSesion = new JButton("Cerrar Sesión");
+        panelUsuario.add(btnCerrarSesion, BorderLayout.CENTER);
 
         panelPelis = new JPanel();
         contentPane.add(panelPelis, BorderLayout.CENTER);
@@ -138,12 +152,17 @@ public class VentanaUsuario extends JFrame {
     public void addBusquedaListener(ActionListener pListener) {
         this.btnBusqueda.addActionListener(pListener);
     }
-    
+
     public void addRecomendacionListener(ActionListener pListener) {
         this.btnRecommend.addActionListener(pListener);
     }
-    
+
     public String getBusqueda() {
         return this.txtBusqueda.getText();
     }
+
+    public void addCerrarSesionListener(ActionListener pListener) {
+        this.btnCerrarSesion.addActionListener(pListener);
+    }
+
 }

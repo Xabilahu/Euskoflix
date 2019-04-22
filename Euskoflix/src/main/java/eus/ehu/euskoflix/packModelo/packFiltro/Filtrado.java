@@ -10,7 +10,6 @@ public class Filtrado {
 
 
     private Filtrado() {
-
     }
 
     public static Filtrado getInstance() {
@@ -41,7 +40,7 @@ public class Filtrado {
         if (!isModeloCargado(pTipo)) {
             cargarModelo(pTipo);
         }
-        ListaPeliculasValoraciones lp = null;
+        ListaPeliculasValoraciones lp;
         switch (pTipo) {
             case Persona:
                 lp = this.filtradoPersona.recomendar(pCantidad);
@@ -96,6 +95,12 @@ public class Filtrado {
 
     private void calcularRecomendacionesContenido() {
         this.filtradoContenido.calcularRecomendaciones();
+    }
+
+    public void vaciarFiltros() {
+        this.filtradoContenido.vaciarEstructuras();
+        this.filtradoProducto = new FiltradoProducto();
+        this.filtradoPersona = new FiltradoPersona();
     }
 
     /**

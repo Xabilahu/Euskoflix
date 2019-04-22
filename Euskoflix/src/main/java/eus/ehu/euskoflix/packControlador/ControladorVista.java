@@ -19,9 +19,6 @@ public class ControladorVista {
 
     private static ControladorVista mControladorVista;
 
-    /* Controlador */
-    private GestionDatos gestionDatos;
-
     /* Vista */
     private EuskoFlixLoader euskoFlixLoader;
     private VentanaCargaDatos ventanaCargaDatos;
@@ -34,7 +31,6 @@ public class ControladorVista {
     private ControladorVista() {
         this.euskoFlixLoader = new EuskoFlixLoader("Cargando Datos...");
         this.ventanaLogin = new VentanaLogin();
-        this.gestionDatos = GestionDatos.getInstance();
     }
 
     public static ControladorVista getInstance() {
@@ -47,7 +43,7 @@ public class ControladorVista {
     public void iniciarAplicacion() {
         JOptionPane.showMessageDialog(this.euskoFlixLoader, "Para disfrutar de la experiencia Euskoflix al completo\nes recomendable tener conexión a Internet.", "Información Extra Películas", JOptionPane.INFORMATION_MESSAGE);
         this.mostrarLoader();
-        this.gestionDatos.cargarDatos(TipoFichero.small);
+        GestionDatos.getInstance().cargarDatos(TipoFichero.small);
         this.cerrarLoader();
         this.mostrarLogin();
 //        this.mostrarCargaDatos();
@@ -198,6 +194,7 @@ public class ControladorVista {
                 ventanaUsuario = new VentanaUsuario(user.usuarioToStringArray(), vistas,recomendadas, Cartelera.getInstance().getNumPeliculas());
                 ventanaUsuario.addBusquedaListener(new BusquedaListener());
                 ventanaUsuario.addRecomendacionListener(new RecomendacionListener());
+                ventanaUsuario.addCerrarSesionListener(new CerrarSesionListener());
             }
         } else {
             JOptionPane.showMessageDialog(ventanaLogin,
@@ -387,6 +384,17 @@ public class ControladorVista {
                 }
             }
             new PopUpRecomendaciones(0,false,generarInfoPelis(Filtrado.getInstance().recomendar(TipoRecomendacion.stringToEnum(tipoRec), numRecs).toIntegerArray()));
+        }
+    }
+
+    private class CerrarSesionListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ventanaUsuario.dispose();
+            Filtrado.getInstance().vaciarFiltros();
+            ventanaLogin = new VentanaLogin();
+            mostrarLogin();
         }
     }
 

@@ -425,10 +425,10 @@ public class BaseDatos {
             if (pTipo != TipoFichero.small) {
                 generosPst.executeBatch();
                 peliculaGeneroPst.executeBatch();
+                generosPst.close();
+                peliculaGeneroPst.close();
             }
             c.commit();
-            generosPst.close();
-            peliculaGeneroPst.close();
             peliculasPst.close();
             this.cerrarConnection();
             in.close();
