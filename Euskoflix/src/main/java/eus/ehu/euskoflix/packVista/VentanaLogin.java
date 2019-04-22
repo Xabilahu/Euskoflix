@@ -32,6 +32,7 @@ public class VentanaLogin extends JFrame {
             e.printStackTrace();
         }
         this.setTitle("Euskoflix");
+        this.setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setBounds((screenSize.width - 500) / 2, (screenSize.height - 500) / 2, 400, 200);
@@ -79,7 +80,6 @@ public class VentanaLogin extends JFrame {
         panel.add(txtPass);
         panel.add(entrar);
         panel.add(registrar);
-        //TODO: layout
     }
 
     private void centrar() {

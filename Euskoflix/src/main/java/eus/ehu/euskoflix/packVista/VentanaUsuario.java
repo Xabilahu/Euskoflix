@@ -102,7 +102,7 @@ public class VentanaUsuario extends JFrame {
         paneVistas.add(scrollPaneVst);
         paneFilmVContainer.setLayout(new GridLayout(1,0, 5, 5));
 
-        paneFilmVContainer.generarPanelesPelis(pPeliculasVistas);
+        paneFilmVContainer.generarPanelesPelis(false, pPeliculasVistas);
 
         paneRecomendadas = new JPanel();
         panelPelis.add(paneRecomendadas);
@@ -116,7 +116,7 @@ public class VentanaUsuario extends JFrame {
         scrollPaneRec.setViewportView(paneFilmRContainer);
         paneFilmRContainer.setLayout(new GridLayout(1, 0, 5, 5));
 
-        paneFilmRContainer.generarPanelesPelis(pPeliculasRecomendadas);
+        paneFilmRContainer.generarPanelesPelis(false, pPeliculasRecomendadas);
 
         panelRecomendaciones = new JPanel();
         contentPane.add(panelRecomendaciones, BorderLayout.SOUTH);

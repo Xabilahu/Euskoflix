@@ -210,4 +210,7 @@ public class MatrizValoraciones {
         return lpv;
     }
 
+    public void cargarValoracionesUsuarioNuevo(int pIdUsuario, HashMap<Integer, Double> pRatings) {
+        this.valoraciones.put(pIdUsuario,pRatings);
+    }
 }

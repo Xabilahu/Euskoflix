@@ -50,6 +50,8 @@ public class GestionDatos {
                 Tag t = new Tag(rst.getString("etiqueta"));
                 lef.addPeliculaAEtiqueta(t, peli);
             }
+            rst.close();
+            BaseDatos.getBaseDatos().cerrarConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,6 +69,8 @@ public class GestionDatos {
                 tf.add(p.getId());
                 p.getLista().rellenarTf(tf, p.getId());
             }
+            pelis.close();
+            BaseDatos.getBaseDatos().cerrarConnection();
             Filtrado.getInstance().cargarTf(tf);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,6 +84,8 @@ public class GestionDatos {
                 Usuario u = new Usuario(usuarios.getInt("id"), usuarios.getString("nombre"), usuarios.getString("apellido"), usuarios.getString("contrasena"));
                 CatalogoUsuarios.getInstance().addUsuario(u);
             }
+            usuarios.close();
+            BaseDatos.getBaseDatos().cerrarConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -93,6 +99,8 @@ public class GestionDatos {
             for (int i = 1; rst.next(); i++) {
                 valoraciones[i] = rst.getFloat("valoracion");
             }
+            rst.close();
+            BaseDatos.getBaseDatos().cerrarConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -128,6 +136,9 @@ public class GestionDatos {
                     filas[i] = -1;
                 }
             }
+            rst.close();
+            rst2.close();
+            BaseDatos.getBaseDatos().cerrarConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -142,6 +153,8 @@ public class GestionDatos {
             for (int i = 1; rst.next(); i++) {
                 columnas[i] = rst.getInt("id_pelicula");
             }
+            rst.close();
+            BaseDatos.getBaseDatos().cerrarConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -157,8 +170,10 @@ public class GestionDatos {
                 i = new Informacion(ImageIO.read(new URL(PropertiesManager.getInstance().getPosterApiRequestURL(rst.getString("poster_path")))),
                         rst.getString("synopsis"), rst.getString("director"), rst.getString("trailer_path"));
             }
+            rst.close();
+            BaseDatos.getBaseDatos().cerrarConnection();
         } catch (Exception e) {
-//            System.out.println("No se ha podido recuperar la información extra de la película: " + pPelicula.getTitulo());
+            System.out.println("No se ha podido recuperar la información extra de la película: " + Cartelera.getInstance().getPeliculaPorIdSinMapeo(pPelicula));
         }
         return i;
     }
@@ -170,6 +185,8 @@ public class GestionDatos {
                 Tag t = new Tag(rst.getString("etiqueta"), rst.getInt("veces"));
                 p.addTag(t);
             }
+            rst.close();
+            BaseDatos.getBaseDatos().cerrarConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -193,6 +210,8 @@ public class GestionDatos {
                     pelis.put(pelicula, valoracion);
                 }
             }
+            rst.close();
+            BaseDatos.getBaseDatos().cerrarConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -206,13 +225,15 @@ public class GestionDatos {
             while (rst.next()) {
                 nt.put(new Tag(rst.getString(1)), rst.getInt(2));
             }
+            rst.close();
+            BaseDatos.getBaseDatos().cerrarConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return nt;
     }
 
-    public void registrar(String pNombre, String pApellido, String pPassword) {
+    public int registrar(String pNombre, String pApellido, String pPassword) {
         String pass = "";
         try {
             MessageDigest mg = MessageDigest.getInstance(PropertiesManager.getInstance().getEncryptionType());
@@ -222,19 +243,14 @@ public class GestionDatos {
         } catch (NoSuchAlgorithmException e) {
             System.out.println("Error de encriptación.");
         }
-        int id = CatalogoUsuarios.getInstance().getNumUsuarios() + 1;
+        int id = BaseDatos.getBaseDatos().getIdUsuarioMax() + 1;
         CatalogoUsuarios.getInstance().registrar(new Usuario(id, pNombre, pApellido, pass));
         BaseDatos.getBaseDatos().addNuevoUsuario(id, pass, pNombre, pApellido);
-        try {
-            System.out.println(GestionDatos.this.getClass().getResource(PropertiesManager.getInstance().getPathToFile("smallNombres")).toURI());
-            System.out.println(id);
-//            FileWriter fw = new FileWriter(new File(GestionDatos.this.getClass().getResource(PropertiesManager.getInstance().getPathToFile("smallNombres")).toURI()), true);
-//            fw.write(pNombre + "," + pApellido + "," + pass);
-//            fw.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+        return id;
     }
+
+    public void addValoracion(int pIdUsuario, int pIdPelicula, double pValoracion) {
+        BaseDatos.getBaseDatos().addValoracion(pIdUsuario,pIdPelicula,pValoracion);
+    }
+
 }

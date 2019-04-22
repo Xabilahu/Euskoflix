@@ -63,4 +63,11 @@ public class Cartelera {
         return this.lista.getPeliculasNoValoradas(pUsuario);
     }
 
+    public Integer[] peliculasToIntegerArray() {
+        Integer[] res = new Integer[this.idMapping.size()];
+        int i = 0;
+        for (Integer x : this.idMapping)
+            res[i++] = x;
+        return res;
+    }
 }

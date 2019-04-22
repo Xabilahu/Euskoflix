@@ -9,6 +9,7 @@ import java.util.StringTokenizer;
 public class BaseDatos {
 
     private static BaseDatos mBaseDatos;
+    private Connection c;
 
     private BaseDatos() {
     }
@@ -62,7 +63,7 @@ public class BaseDatos {
         data_dir.mkdir();
         try {
             Class.forName("org.sqlite.JDBC");
-            Connection c = this.getConexion();
+            c = this.getConexion();
             Statement s = c.createStatement();
 
             String instruccion = "CREATE TABLE usuario ( " +
@@ -126,7 +127,7 @@ public class BaseDatos {
 
             s.executeUpdate(instruccion);
             s.close();
-            c.close();
+            this.cerrarConnection();
             anadirDatos(pTipo);
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -147,13 +148,34 @@ public class BaseDatos {
         anadirPeliculas(pTipo);
         anadirInfoExtra(pTipo);
         anadirUsuariosYValoraciones(pTipo);
+//        anadirUsuariosNuevos();
         anadirEtiquetas(pTipo);
     }
+
+//    private void anadirUsuariosNuevos() {
+//        File f = new File(System.getProperty("user.dir") + File.separator + PropertiesManager.getInstance().getNewUsersFileName());
+//        if (f.exists()) {
+//            try {
+//                int id = this.getIdUsuarioMax() + 1;
+//                BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(f), StandardCharsets.UTF_8));
+//                in.readLine(); //skip headers
+//                while (in.ready()) {
+//                    StringTokenizer stok = new StringTokenizer(in.readLine(), ",");
+//                    String nombre = stok.nextToken();
+//                    String apellido = stok.nextToken();
+//                    this.addNuevoUsuario(id++, stok.nextToken(), nombre, apellido);
+//                }
+//                in.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     private void anadirInfoExtra(TipoFichero pTipo) {
         if (pTipo == TipoFichero.small) {
             try {
-                Connection c = this.getConexion();
+                c = this.getConexion();
                 c.setAutoCommit(false);
                 InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile("smallInfo"));
                 try {
@@ -175,7 +197,8 @@ public class BaseDatos {
                     }
                     pst.executeBatch();
                     c.commit();
-                    c.close();
+                    pst.close();
+                    this.cerrarConnection();
                     in.close();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -194,7 +217,7 @@ public class BaseDatos {
 
     private void anadirEtiquetas(TipoFichero pTipo) {
         try {
-            Connection c = this.getConexion();
+            c = this.getConexion();
             c.setAutoCommit(false);
             String fileName = "";
             switch (pTipo) {
@@ -222,7 +245,8 @@ public class BaseDatos {
                 }
                 pst.executeBatch();
                 c.commit();
-                c.close();
+                pst.close();
+                this.cerrarConnection();
                 in.close();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -235,7 +259,7 @@ public class BaseDatos {
 
     private void anadirUsuariosYValoraciones(TipoFichero pTipo) {
         try {
-            Connection c = this.getConexion();
+            c = this.getConexion();
             c.setAutoCommit(false);
             String fileName = "";
             String userFileName = "";
@@ -256,7 +280,7 @@ public class BaseDatos {
             InputStream is = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(fileName));
             InputStream is1 = BaseDatos.class.getResourceAsStream(PropertiesManager.getInstance().getPathToFile(userFileName));
             try {
-                String password = PropertiesManager.getInstance().getDefaultPassword();
+                String defaultPassword = PropertiesManager.getInstance().getDefaultPassword();
                 BufferedReader in = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
                 BufferedReader inUsuario = new BufferedReader(new InputStreamReader(is1, StandardCharsets.UTF_8));
                 in.readLine(); // skip headers
@@ -274,12 +298,9 @@ public class BaseDatos {
                     if (lastIdUsurio != idUsuario) {
                         StringTokenizer stringTokenizerU = new StringTokenizer(inUsuario.readLine());
                         pstUsuarios.setInt(1, idUsuario);
+                        pstUsuarios.setString(2, defaultPassword);
                         pstUsuarios.setString(3, stringTokenizerU.nextToken(","));
                         pstUsuarios.setString(4, stringTokenizerU.nextToken(","));
-                        if (stringTokenizerU.hasMoreTokens()) {
-                            password = stringTokenizerU.nextToken(",");
-                        }
-                        pstUsuarios.setString(2, password);
                         pstUsuarios.addBatch();
                         lastIdUsurio = idUsuario;
                     }
@@ -287,7 +308,8 @@ public class BaseDatos {
                 pstUsuarios.executeBatch();
                 pst.executeBatch();
                 c.commit();
-                c.close();
+                pst.close();
+                this.cerrarConnection();
                 in.close();
                 inUsuario.close();
             } catch (Exception e) {
@@ -301,7 +323,7 @@ public class BaseDatos {
 
     private void addIds(TipoFichero pTipo) {
         try {
-            Connection c = this.getConexion();
+            c = this.getConexion();
             c.setAutoCommit(false);
             String fileName = "";
             switch (pTipo) {
@@ -329,7 +351,8 @@ public class BaseDatos {
             }
             pst.executeBatch();
             c.commit();
-            c.close();
+            pst.close();
+            this.cerrarConnection();
             in.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -342,7 +365,7 @@ public class BaseDatos {
     private void addPeliculaYGenero(TipoFichero pTipo) {
         try {
             HashMap<String, Integer> genres = new HashMap<String, Integer>();
-            Connection c = this.getConexion();
+            c = this.getConexion();
             c.setAutoCommit(false);
             String fileName = "";
             switch (pTipo) {
@@ -404,7 +427,10 @@ public class BaseDatos {
                 peliculaGeneroPst.executeBatch();
             }
             c.commit();
-            c.close();
+            generosPst.close();
+            peliculaGeneroPst.close();
+            peliculasPst.close();
+            this.cerrarConnection();
             in.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -427,8 +453,12 @@ public class BaseDatos {
 
     public int getNumPeliculasValoradas() {
         try {
-            PreparedStatement pst = this.getConexion().prepareStatement("select count(*) from valoracion where id_pelicula in (select distinct id_pelicula from valoracion)");
-            return pst.executeQuery().getInt(1);
+            c = this.getConexion();
+            PreparedStatement pst = c.prepareStatement("select count(*) from valoracion where id_pelicula in (select distinct id_pelicula from valoracion)");
+            int i = pst.executeQuery().getInt(1);
+            pst.close();
+            this.cerrarConnection();
+            return i;
         } catch (SQLException e) {
             e.printStackTrace();
             return 0;
@@ -437,8 +467,12 @@ public class BaseDatos {
 
     public int getNumUsuariosQueValoran() {
         try {
-            PreparedStatement pst = this.getConexion().prepareStatement("select count(distinct id_usuario) from valoracion");
-            return pst.executeQuery().getInt(1);
+            c = this.getConexion();
+            PreparedStatement pst = c.prepareStatement("select count(distinct id_usuario) from valoracion");
+            int i = pst.executeQuery().getInt(1);
+            pst.close();
+            this.cerrarConnection();
+            return i;
         } catch (SQLException e) {
             e.printStackTrace();
             return 0;
@@ -447,8 +481,12 @@ public class BaseDatos {
 
     public int getNumValoraciones() {
         try {
-            PreparedStatement pst = this.getConexion().prepareStatement("SELECT count(*) FROM valoracion");
-            return pst.executeQuery().getInt(1);
+            c = this.getConexion();
+            PreparedStatement pst = c.prepareStatement("SELECT count(*) FROM valoracion");
+            int i = pst.executeQuery().getInt(1);
+            pst.close();
+            this.cerrarConnection();
+            return i;
         } catch (SQLException e) {
             e.printStackTrace();
             return 0;
@@ -458,20 +496,21 @@ public class BaseDatos {
     private ResultSet pedirTabla(String query) {
         ResultSet rst = null;
         try {
+            c = this.getConexion();
             PreparedStatement pst = null;
             switch (query) {
                 case "peliculas":
-                    pst = this.getConexion().prepareStatement("SELECT * FROM pelicula");
+                    pst = c.prepareStatement("SELECT * FROM pelicula");
                     break;
                 case "valoraciones":
-                    pst = this.getConexion().prepareStatement("SELECT * FROM valoracion order by id_usuario, id_pelicula asc");
+                    pst = c.prepareStatement("SELECT * FROM valoracion order by id_usuario, id_pelicula asc");
                     break;
                 case "usuarios":
-                    pst = this.getConexion().prepareStatement("SELECT * FROM usuario");
+                    pst = c.prepareStatement("SELECT * FROM usuario");
                     break;
             }
             rst = pst.executeQuery();
-        } catch (SQLException e) {
+            } catch (SQLException e) {
             e.printStackTrace();
         }
         return rst;
@@ -480,7 +519,8 @@ public class BaseDatos {
     public ResultSet getValoracionesUsuarios() {
         ResultSet rst = null;
         try {
-            PreparedStatement pst = this.getConexion().prepareStatement("SELECT DISTINCT id_usuario FROM valoracion order by id_usuario asc");
+            c = this.getConexion();
+            PreparedStatement pst = c.prepareStatement("SELECT DISTINCT id_usuario FROM valoracion order by id_usuario asc");
             rst = pst.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -491,7 +531,8 @@ public class BaseDatos {
     public ResultSet getNumValoracionesUsuario() {
         ResultSet rst = null;
         try {
-            PreparedStatement pst = this.getConexion().prepareStatement("select id_usuario,count(valoracion) as suma from valoracion group by id_usuario order by id_usuario;");
+            c = this.getConexion();
+            PreparedStatement pst = c.prepareStatement("select id_usuario,count(valoracion) as suma from valoracion group by id_usuario order by id_usuario;");
             rst = pst.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -502,7 +543,8 @@ public class BaseDatos {
     public ResultSet getTagsByPelicula(int pId) {
         ResultSet rst = null;
         try {
-            PreparedStatement pst = this.getConexion().prepareStatement("SELECT etiqueta, count(*) AS veces FROM etiqueta WHERE id_pelicula = ? GROUP BY etiqueta ORDER BY etiqueta ASC");
+            c = this.getConexion();
+            PreparedStatement pst = c.prepareStatement("SELECT etiqueta, count(*) AS veces FROM etiqueta WHERE id_pelicula = ? GROUP BY etiqueta ORDER BY etiqueta ASC");
             pst.setInt(1, pId);
             rst = pst.executeQuery();
         } catch (SQLException e) {
@@ -514,7 +556,8 @@ public class BaseDatos {
     public ResultSet getInfoByPelicula(int pId) {
         ResultSet rst = null;
         try {
-            PreparedStatement pst = this.getConexion().prepareStatement("SELECT director,poster_path,trailer_path,synopsis FROM pelicula_info WHERE id_pelicula = ?");
+            c = this.getConexion();
+            PreparedStatement pst = c.prepareStatement("SELECT director,poster_path,trailer_path,synopsis FROM pelicula_info WHERE id_pelicula = ?");
             pst.setInt(1, pId);
             rst = pst.executeQuery();
         } catch (SQLException e) {
@@ -527,10 +570,10 @@ public class BaseDatos {
      * This method is only used in jUnit
      */
     public ResultSet getValoracionesByPelicula(int pId) throws SQLException {
-        ResultSet rst = null;
-        PreparedStatement pst = this.getConexion().prepareStatement("SELECT id_usuario, valoracion FROM valoracion WHERE id_pelicula = ? ORDER BY id_usuario ASC");
+        c = this.getConexion();
+        PreparedStatement pst = c.prepareStatement("SELECT id_usuario, valoracion FROM valoracion WHERE id_pelicula = ? ORDER BY id_usuario ASC");
         pst.setInt(1, pId);
-        rst = pst.executeQuery();
+        ResultSet rst = pst.executeQuery();
         return rst;
     }
 
@@ -546,7 +589,8 @@ public class BaseDatos {
     public ResultSet getNt() {
         ResultSet rst = null;
         try {
-            PreparedStatement pst = this.getConexion().prepareStatement("SELECT etiqueta,count(distinct id_pelicula) FROM etiqueta GROUP BY etiqueta");
+            c = this.getConexion();
+            PreparedStatement pst = c.prepareStatement("SELECT etiqueta,count(distinct id_pelicula) FROM etiqueta GROUP BY etiqueta");
             rst = pst.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -557,37 +601,68 @@ public class BaseDatos {
     public ResultSet getTagsPeliculas() {
         ResultSet rst = null;
         try {
-            PreparedStatement pst = this.getConexion().prepareStatement("SELECT DISTINCT etiqueta, id_pelicula FROM etiqueta");
+            c = this.getConexion();
+            PreparedStatement pst = c.prepareStatement("SELECT DISTINCT etiqueta, id_pelicula FROM etiqueta");
             rst = pst.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return rst;
     }
-    
-    public ResultSet getUsuarioPorId(int pId) {
-        ResultSet rst = null;
-        try {
-	        PreparedStatement pst = this.getConexion().prepareStatement("SELECT nombre,apellido FROM usuario WHERE id = ?");
-	        pst.setInt(1, pId);
-	        rst = pst.executeQuery();
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return rst;
-	}
 
-	public void addNuevoUsuario(int pId, String pPass, String pNombre, String pApellido) {
+    public void addNuevoUsuario(int pId, String pPass, String pNombre, String pApellido) {
         try {
-            PreparedStatement pst = this.getConexion().prepareStatement("INSERT INTO usuario VALUES (?,?,?,?)");
+            c = this.getConexion();
+            PreparedStatement pst = c.prepareStatement("INSERT INTO usuario VALUES (?,?,?,?)");
             pst.setInt(1, pId);
             pst.setString(2, pPass);
             pst.setString(3, pNombre);
             pst.setString(4, pApellido);
             pst.execute();
+            pst.close();
+            this.cerrarConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    public int getIdUsuarioMax() {
+        int id = 0;
+        try {
+            c = this.getConexion();
+            PreparedStatement pst = c.prepareStatement("SELECT MAX(id) AS max FROM usuario");
+            ResultSet rst = pst.executeQuery();
+            rst.next();
+            id = rst.getInt("max");
+            rst.close();
+            pst.close();
+            this.cerrarConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
+    public void cerrarConnection() {
+        try {
+            this.c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addValoracion(int pIdUsuario, int pIdPelicula, double pValoracion) {
+        try {
+            Connection c = this.getConexion();
+            PreparedStatement pst = c.prepareStatement("INSERT INTO valoracion VALUES(?,?,?)");
+            pst.setInt(1, pIdUsuario);
+            pst.setInt(2, pIdPelicula);
+            pst.setDouble(3, pValoracion);
+            pst.execute();
+            pst.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -11,6 +11,7 @@ import eus.ehu.euskoflix.packVista.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -204,6 +205,12 @@ public class ControladorVista {
         }
     }
 
+    public void cargarValoracionesUsuarioNuevo(int pIdUsuario, HashMap<Integer, Double> pRatings) {
+        MatrizValoraciones.getInstance().cargarValoracionesUsuarioNuevo(pIdUsuario, pRatings);
+        MatrizValoraciones.getInstance().cargarMediasDesv(CatalogoUsuarios.getInstance().getUsuarioPorId(pIdUsuario));
+        pRatings.forEach((i,val) -> GestionDatos.getInstance().addValoracion(pIdUsuario, i, val));
+    }
+
     /* Implementaciones de los listeners */
 
     private class InfoExtraListener implements MouseListener {
@@ -330,7 +337,11 @@ public class ControladorVista {
             String nombre = ventanaRegistro.getNombre();
             String apellido = ventanaRegistro.getApellido();
             if (password != null && nombre != null && apellido != null) {
-                GestionDatos.getInstance().registrar(nombre, apellido, password);
+                int id = GestionDatos.getInstance().registrar(nombre, apellido, password);
+                JOptionPane.showMessageDialog(ventanaRegistro, nombre + ", recuerde su número de usuario, pues es el que\ndeberá utilizar para loguearse en Euskoflix.\n\nNº de usuario: " + id, "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(ventanaRegistro, nombre + ", para poder hacer uso del recomendador Euskoflix\ndeberá valorar alguna película que haya visto.", "Valoraciones Películas", JOptionPane.INFORMATION_MESSAGE);
+                new PopUpRecomendaciones(id,true, generarInfoPelis(Cartelera.getInstance().peliculasToIntegerArray()));
+                ventanaRegistro.dispose();
             }
         }
     }
@@ -364,7 +375,7 @@ public class ControladorVista {
                     ((JComboBox) c).getSelectedItem();
                 }
             }
-            new PopUpRecomendaciones(generarInfoPelis(Filtrado.getInstance().recomendar(TipoRecomendacion.stringToEnum(tipoRec), numRecs).toIntegerArray()));
+            new PopUpRecomendaciones(0,false,generarInfoPelis(Filtrado.getInstance().recomendar(TipoRecomendacion.stringToEnum(tipoRec), numRecs).toIntegerArray()));
         }
     }
 

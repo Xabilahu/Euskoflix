@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertiesManager {
-    public static final String PROPERTIES_FILE_NAME = "euskoflix.properties";
+    private static final String PROPERTIES_FILE_NAME = "euskoflix.properties";
     private static PropertiesManager ourInstance = new PropertiesManager();
     private Properties properties;
 
@@ -92,6 +92,10 @@ public class PropertiesManager {
 
     public String getPathToGif() {
         return this.properties.getProperty("path.to.gif");
+    }
+
+    public String getNewUsersFileName() {
+        return this.properties.getProperty("new.users");
     }
 
     public String getPathToSpanish() {
