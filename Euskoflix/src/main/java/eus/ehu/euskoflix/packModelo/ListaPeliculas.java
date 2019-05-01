@@ -63,4 +63,21 @@ public class ListaPeliculas {
         return noValoradas;
     }
 
+    public ListaPeliculas filtrarPeliculas(String pConsulta) {
+        ListaPeliculas lp = new ListaPeliculas();
+        this.lista.forEach((integer, pelicula) -> {
+            if (pelicula.contains(pConsulta)){
+                lp.addPelicula(pelicula);
+            }
+        });
+        return lp;
+    }
+
+    public Integer[] toIdArray() {
+        Integer[] ids = new Integer[this.lista.size()];
+
+        this.lista.keySet().toArray(ids);
+
+        return ids;
+    }
 }

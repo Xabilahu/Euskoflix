@@ -79,4 +79,8 @@ public class Pelicula extends Normalizable {
     public String getTrailerUrl() {
         return this.infoExtra.getTrailerUrl();
     }
+
+    public boolean contains(String pConsulta) {
+        return this.titulo.toLowerCase().matches(".*"+pConsulta+".*");
+    }
 }

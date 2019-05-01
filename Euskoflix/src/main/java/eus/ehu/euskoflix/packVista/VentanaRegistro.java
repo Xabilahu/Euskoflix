@@ -7,14 +7,11 @@ import java.awt.BorderLayout;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridLayout;
-import java.awt.Component;
 import java.awt.event.ActionListener;
 
 public class VentanaRegistro extends JDialog {
 
 	private JPanel contentPane;
-	private JPanel panelRegistro;
 	private JPanel panelBotones;
 	private JTextField txtApellido;
 	private JTextField txtNombre;
@@ -22,13 +19,10 @@ public class VentanaRegistro extends JDialog {
 	private JPasswordField pass2;
 	private JButton btnRegistro;
 	private JLabel lblGif;
-	private JPanel panelNombre;
+	private JPanel jPanel1;
 	private JLabel lblNombre;
-	private JPanel panelApellido;
-	private JPanel panelPass;
 	private JLabel lblApellido;
 	private JLabel lblPass;
-	private JPanel panelConfirmPass;
 	private JLabel lblConfirmPass;
 	private JButton btnCancelar;
 	
@@ -50,62 +44,92 @@ public class VentanaRegistro extends JDialog {
 	}
 
 	private void initComponents() {
-		lblGif = new JLabel();
+		java.awt.GridBagConstraints gridBagConstraints;
+
+		lblGif = new javax.swing.JLabel();
+		jPanel1 = new javax.swing.JPanel();
+		lblNombre = new javax.swing.JLabel();
+		txtNombre = new javax.swing.JTextField();
+		lblApellido = new javax.swing.JLabel();
+		txtApellido = new javax.swing.JTextField();
+		lblPass = new javax.swing.JLabel();
+		pass1 = new javax.swing.JPasswordField();
+		lblConfirmPass = new javax.swing.JLabel();
+		pass2 = new javax.swing.JPasswordField();
+
+		setLayout(new java.awt.BorderLayout());
+
 		lblGif.setHorizontalAlignment(SwingConstants.CENTER);
-		lblGif.setIcon(new ImageIcon(VentanaRegistro.this.getClass().getResource(PropertiesManager.getInstance().getPathToGif())));
-		contentPane.add(lblGif, BorderLayout.NORTH);
+		lblGif.setIcon(new ImageIcon(VentanaRegistro.this.getClass().getResource(PropertiesManager.getInstance().getPathToEuskoflixGif())));
+		add(lblGif, java.awt.BorderLayout.NORTH);
 
-		panelRegistro = new JPanel();
-		contentPane.add(panelRegistro, BorderLayout.CENTER);
-		panelRegistro.setLayout(new GridLayout(4,1));
+		jPanel1.setLayout(new java.awt.GridBagLayout());
 
-		panelNombre = new JPanel();
-		panelRegistro.add(panelNombre, "1, 2, fill, fill");
+		lblNombre.setText("Nombre");
+		gridBagConstraints = new java.awt.GridBagConstraints();
+		gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+		gridBagConstraints.weightx = 0.3;
+		gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+		jPanel1.add(lblNombre, gridBagConstraints);
 
-		lblNombre = new JLabel("Nombre");
-		panelNombre.add(lblNombre);
-		Component horizontalStrut_2 = Box.createHorizontalStrut(82);
-		panelNombre.add(horizontalStrut_2);
+		gridBagConstraints = new java.awt.GridBagConstraints();
+		gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.weightx = 0.7;
+		gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+		jPanel1.add(txtNombre, gridBagConstraints);
 
-		panelApellido = new JPanel();
-		panelRegistro.add(panelApellido, "1, 3, fill, fill");
+		lblApellido.setText("Apellido");
+		gridBagConstraints = new java.awt.GridBagConstraints();
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+		gridBagConstraints.weightx = 0.3;
+		gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+		jPanel1.add(lblApellido, gridBagConstraints);
 
-		lblApellido = new JLabel("Apellido");
-		panelApellido.add(lblApellido);
+		gridBagConstraints = new java.awt.GridBagConstraints();
+		gridBagConstraints.gridx = 1;
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.weightx = 0.7;
+		gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+		jPanel1.add(txtApellido, gridBagConstraints);
 
-		Component horizontalStrut = Box.createHorizontalStrut(80);
-		panelApellido.add(horizontalStrut);
+		lblPass.setText("Contraseña");
+		gridBagConstraints = new java.awt.GridBagConstraints();
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 2;
+		gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+		gridBagConstraints.weightx = 0.3;
+		gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+		jPanel1.add(lblPass, gridBagConstraints);
 
-		txtApellido = new JTextField();
-		panelApellido.add(txtApellido);
-		txtApellido.setColumns(20);
+		gridBagConstraints = new java.awt.GridBagConstraints();
+		gridBagConstraints.gridx = 1;
+		gridBagConstraints.gridy = 2;
+		gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.weightx = 0.7;
+		gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+		jPanel1.add(pass1, gridBagConstraints);
 
-		txtNombre = new JTextField();
-		panelNombre.add(txtNombre);
-		txtNombre.setColumns(20);
+		lblConfirmPass.setText("Confirmar Contraseña");
+		gridBagConstraints = new java.awt.GridBagConstraints();
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 3;
+		gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+		gridBagConstraints.weightx = 0.3;
+		gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+		jPanel1.add(lblConfirmPass, gridBagConstraints);
 
-		panelPass = new JPanel();
-		panelRegistro.add(panelPass, "1, 4, fill, fill");
+		gridBagConstraints = new java.awt.GridBagConstraints();
+		gridBagConstraints.gridx = 1;
+		gridBagConstraints.gridy = 3;
+		gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.weightx = 0.7;
+		gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+		jPanel1.add(pass2, gridBagConstraints);
 
-		lblPass = new JLabel("Contraseña");
-		panelPass.add(lblPass);
-
-		Component horizontalStrut_1 = Box.createHorizontalStrut(62);
-		panelPass.add(horizontalStrut_1);
-
-		pass1 = new JPasswordField();
-		pass1.setColumns(20);
-		panelPass.add(pass1);
-
-		panelConfirmPass = new JPanel();
-		panelRegistro.add(panelConfirmPass, "1, 5, fill, fill");
-
-		lblConfirmPass = new JLabel("Confirmar Contraseña");
-		panelConfirmPass.add(lblConfirmPass);
-
-		pass2 = new JPasswordField();
-		pass2.setColumns(20);
-		panelConfirmPass.add(pass2);
+		contentPane.add(jPanel1, java.awt.BorderLayout.CENTER);
 
 		panelBotones = new JPanel();
 		contentPane.add(panelBotones, BorderLayout.SOUTH);

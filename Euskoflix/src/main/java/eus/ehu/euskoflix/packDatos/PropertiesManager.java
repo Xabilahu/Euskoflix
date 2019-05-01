@@ -90,8 +90,12 @@ public class PropertiesManager {
         return this.properties.getProperty("path.to.logo.icon");
     }
 
-    public String getPathToGif() {
-        return this.properties.getProperty("path.to.gif");
+    public String getPathToEuskoflixGif() {
+        return this.properties.getProperty("path.to.gif.euskoflix");
+    }
+
+    public String getPathToLoadingGif() {
+        return this.properties.getProperty("path.to.gif.loading");
     }
 
     public String getNewUsersFileName() {

@@ -70,4 +70,8 @@ public class Cartelera {
             res[i++] = x;
         return res;
     }
+    public ListaPeliculas buscarPeliculas(String pConsulta){
+        return this.lista.filtrarPeliculas(pConsulta);
+    }
+
 }
