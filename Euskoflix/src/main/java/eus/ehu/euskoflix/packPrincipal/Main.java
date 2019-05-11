@@ -6,11 +6,15 @@ import eus.ehu.euskoflix.packModelo.MatrizValoraciones;
 import eus.ehu.euskoflix.packModelo.Usuario;
 import eus.ehu.euskoflix.packVista.VentanaUsuario;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class Main {
 
     //Full data charging and recommendations last around 16 sec
-    public static void main(String[] args) {
-        ControladorVista.getInstance().iniciarAplicacion();
+    public static void main(String[] args) throws IOException, InterruptedException {
+          ControladorVista.getInstance().iniciarAplicacion();
 //        ControladorVista.getInstance().mostrarCargaDatos();
 //        GestionDatos.getInstance().cargarDatos(TipoFichero.small);
 //        CatalogoUsuarios.getInstance().login(new Usuario(1, "", "", "euskoflix"));

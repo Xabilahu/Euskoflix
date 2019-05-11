@@ -5,12 +5,15 @@ import eus.ehu.euskoflix.packDatos.TipoFichero;
 import eus.ehu.euskoflix.packModelo.*;
 import eus.ehu.euskoflix.packModelo.packFiltro.Filtrado;
 import eus.ehu.euskoflix.packModelo.packFiltro.TipoRecomendacion;
+import eus.ehu.euskoflix.packPrincipal.Main;
 import eus.ehu.euskoflix.packVista.ReproductorVideo;
 import eus.ehu.euskoflix.packVista.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -178,7 +181,14 @@ public class ControladorVista {
         int username = ventanaLogin.getUsuario();
         if (username != Integer.MIN_VALUE) {
             ventanaLogin.setVisible(false);
-            mostrarLoader();
+            //mostrarLoader();
+            Process ps = null;
+            try {
+                File f = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+                ps=Runtime.getRuntime().exec(new String[]{"java","-jar",f.getParent() + File.separator + "loader.jar"});
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Usuario user = CatalogoUsuarios.getInstance().login(new Usuario(username, "", "", ventanaLogin.getContra()));
             if (user == null) {
                 cerrarLoader();
@@ -190,7 +200,8 @@ public class ControladorVista {
                 ventanaLogin.dispose();
                 Object[][] vistas = generarInfoPelis(MatrizValoraciones.getInstance().getPeliculasVistas(username).toIntegerArray());
                 Object[][] recomendadas = generarInfoPelis(Filtrado.getInstance().recomendar(TipoRecomendacion.Hibrido, 10).toIntegerArray());
-                cerrarLoader();
+                //cerrarLoader();
+                ps.destroy();
                 ventanaUsuario = new VentanaUsuario(user.usuarioToStringArray(), vistas,recomendadas, Cartelera.getInstance().getNumPeliculas());
                 ventanaUsuario.addBusquedaListener(new BusquedaListener());
                 ventanaUsuario.addRecomendacionListener(new RecomendacionListener());

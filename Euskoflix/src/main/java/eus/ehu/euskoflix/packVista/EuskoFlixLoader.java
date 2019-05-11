@@ -19,6 +19,7 @@ public class EuskoFlixLoader extends JFrame {
         }
         this.setAutoRequestFocus(true);
         this.setUndecorated(true);
+        this.setBackground(new Color(0,0,0,0));
         this.setTitle("EuskoFlix");
         this.setLayout(new BorderLayout());
         InputStream in = EuskoFlixLoader.class.getResourceAsStream(PropertiesManager.getInstance().getPathToLogo());
