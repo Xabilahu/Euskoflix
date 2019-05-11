@@ -1,11 +1,11 @@
 package eus.ehu.euskoflix.packControlador;
 
 import eus.ehu.euskoflix.packDatos.GestionDatos;
+import eus.ehu.euskoflix.packDatos.PropertiesManager;
 import eus.ehu.euskoflix.packDatos.TipoFichero;
 import eus.ehu.euskoflix.packModelo.*;
 import eus.ehu.euskoflix.packModelo.packFiltro.Filtrado;
 import eus.ehu.euskoflix.packModelo.packFiltro.TipoRecomendacion;
-import eus.ehu.euskoflix.packPrincipal.Main;
 import eus.ehu.euskoflix.packVista.ReproductorVideo;
 import eus.ehu.euskoflix.packVista.*;
 
@@ -14,6 +14,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -184,14 +186,19 @@ public class ControladorVista {
             //mostrarLoader();
             Process ps = null;
             try {
-                File f = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-                ps=Runtime.getRuntime().exec(new String[]{"java","-jar",f.getParent() + File.separator + "loader.jar"});
+                File f = new File(new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath()).getParent() + File.separator + "data/loader.jar");
+                if (! f.exists()) {
+                    Files.copy(this.getClass().getResourceAsStream(PropertiesManager.getInstance().getPathToLoaderJar()), f.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                }
+                ps=Runtime.getRuntime().exec(new String[]{"java","-jar",f.getPath()});
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            ventanaLogin.setVisible(false);
             Usuario user = CatalogoUsuarios.getInstance().login(new Usuario(username, "", "", ventanaLogin.getContra()));
             if (user == null) {
-                cerrarLoader();
+//                cerrarLoader();
+                ps.destroy();
                 ventanaLogin.setVisible(true);
                 JOptionPane.showMessageDialog(ventanaLogin,
                         "Usuario o contraseña incorrecto.", "Error login",
@@ -202,6 +209,11 @@ public class ControladorVista {
                 Object[][] recomendadas = generarInfoPelis(Filtrado.getInstance().recomendar(TipoRecomendacion.Hibrido, 10).toIntegerArray());
                 //cerrarLoader();
                 ps.destroy();
+                try {
+                    Thread.sleep(150);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 ventanaUsuario = new VentanaUsuario(user.usuarioToStringArray(), vistas,recomendadas, Cartelera.getInstance().getNumPeliculas());
                 ventanaUsuario.addBusquedaListener(new BusquedaListener());
                 ventanaUsuario.addRecomendacionListener(new RecomendacionListener());

@@ -94,6 +94,10 @@ public class PropertiesManager {
         return this.properties.getProperty("path.to.gif.euskoflix");
     }
 
+    public String getPathToLoaderJar() {
+        return this.properties.getProperty("loader.jar");
+    }
+
     public String getPathToLoadingGif() {
         return this.properties.getProperty("path.to.gif.loading");
     }

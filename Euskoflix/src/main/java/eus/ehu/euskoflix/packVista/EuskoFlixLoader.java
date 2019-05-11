@@ -22,7 +22,7 @@ public class EuskoFlixLoader extends JFrame {
         this.setBackground(new Color(0,0,0,0));
         this.setTitle("EuskoFlix");
         this.setLayout(new BorderLayout());
-        InputStream in = EuskoFlixLoader.class.getResourceAsStream(PropertiesManager.getInstance().getPathToLogo());
+        InputStream in = EuskoFlixLoader.class.getResourceAsStream(PropertiesManager.getInstance().getPathToLoginLogo());
         Image mini = null;
         try {
             mini = ImageIO.read(this.getClass().getResourceAsStream(PropertiesManager.getInstance().getPathToMainIcon()));
