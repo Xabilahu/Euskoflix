@@ -181,9 +181,7 @@ public class ControladorVista {
 
     private void login() {
         int username = ventanaLogin.getUsuario();
-        if (username != Integer.MIN_VALUE) {
-            ventanaLogin.setVisible(false);
-            //mostrarLoader();
+        if (username != Integer.MIN_VALUE) {//mostrarLoader();
             Process ps = null;
             try {
                 File f = new File(new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath()).getParent() + File.separator + "data/loader.jar");
@@ -194,6 +192,8 @@ public class ControladorVista {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            long loadTime = System.currentTimeMillis() + 1250;
+            while(System.currentTimeMillis() < loadTime);
             ventanaLogin.setVisible(false);
             Usuario user = CatalogoUsuarios.getInstance().login(new Usuario(username, "", "", ventanaLogin.getContra()));
             if (user == null) {
