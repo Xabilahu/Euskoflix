@@ -26,7 +26,7 @@ public class FiltradoContenido extends Filtrable {
     public void calcularRecomendaciones() {
         this.tfidf.cargarIdfs();
         this.tfidf.calcularRelevanciasSimilitudes(this);
-        Similitud[] similitudes = super.getSimilares(CatalogoUsuarios.getInstance().getUsuarioLogueado().getId());
+        Similitud[] similitudes = super.getNMasSimilares(CatalogoUsuarios.getInstance().getUsuarioLogueado().getId());
         HashSet<Integer> noValoradas = Cartelera.getInstance().getPeliculasNoValoradas(CatalogoUsuarios.getInstance().getUsuarioLogueado());
         for (Integer noValorada : noValoradas) {
             super.generarValoracionRecomendada(true, noValorada, similitudes);
