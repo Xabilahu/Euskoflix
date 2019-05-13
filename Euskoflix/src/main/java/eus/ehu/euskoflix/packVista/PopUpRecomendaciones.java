@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class PopUpRecomendaciones extends JDialog {
 
@@ -58,9 +59,14 @@ public class PopUpRecomendaciones extends JDialog {
         this.panelBoton.add(this.btnCerrar);
         this.btnCerrar.addActionListener(e -> {
             if (valoraciones) {
-                ControladorVista.getInstance().cargarValoracionesUsuarioNuevo(pIdUsuario, this.panelRecomendaciones.getRatings());
+                HashMap<Integer,Double> ratings = this.panelRecomendaciones.getRatings();
+                if (ratings.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Debe valorar al menos una pelicula para hacer uso del recomendador Euskoflix.", "Valoración fallida", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    ControladorVista.getInstance().cargarValoracionesUsuarioNuevo(pIdUsuario, this.panelRecomendaciones.getRatings());
+                    dispose();
+                }
             }
-            dispose();
         });
         this.contentPane.add(this.panelBoton,BorderLayout.SOUTH);
         this.setContentPane(this.contentPane);
