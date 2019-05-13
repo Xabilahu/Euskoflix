@@ -60,7 +60,7 @@ public class GestionDatos {
 
     private void cargarPeliculasTagsTf() {
         ResultSet pelis = BaseDatos.getBaseDatos().getPeliculas();
-        ListaEtiquetasFiltrado tf = new ListaEtiquetasFiltrado();
+        ListaEtiquetasFiltrado tf = new ListaEtiquetasFiltrado(this.cargarNt());
         try {
             while (pelis.next()) {
                 Pelicula p = new Pelicula(pelis.getInt("id"), pelis.getString("titulo"), pelis.getInt("idTMDB"));
@@ -219,7 +219,7 @@ public class GestionDatos {
         return resultado;
     }
 
-    public HashMap<Tag, Integer> cargarNt() {
+    private HashMap<Tag, Integer> cargarNt() {
         ResultSet rst = BaseDatos.getBaseDatos().getNt();
         HashMap<Tag, Integer> nt = new HashMap<>();
         try {

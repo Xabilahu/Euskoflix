@@ -15,8 +15,8 @@ public class ListaEtiquetasFiltrado {
     private HashMap<Integer, HashMap<Tag, Double>> tfidf;
     private HashMap<Tag, HashSet<Integer>> peliculasPorEtiqueta;
 
-    public ListaEtiquetasFiltrado() {
-        this.vecesTags = GestionDatos.getInstance().cargarNt();
+    public ListaEtiquetasFiltrado(HashMap<Tag,Integer> pVecesTags) {
+        this.vecesTags = pVecesTags;
         this.tfidf = new HashMap<>();
         this.peliculasPorEtiqueta = new HashMap<>();
     }

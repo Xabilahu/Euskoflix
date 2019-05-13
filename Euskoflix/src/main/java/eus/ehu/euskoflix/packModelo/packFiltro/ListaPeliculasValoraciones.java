@@ -8,7 +8,10 @@ public class ListaPeliculasValoraciones {
     private TreeSet<Map.Entry<Integer, Double>> recomendaciones;
 
     public ListaPeliculasValoraciones() {
-        this.recomendaciones = new TreeSet<>((o1, o2) -> Double.compare(o1.getValue(), o2.getValue()) * -1);
+        this.recomendaciones = new TreeSet<>((o1, o2) -> {
+            int x = Double.compare(o1.getValue(), o2.getValue()) * -1;
+            return x == 0 ? 1:x;
+        });
     }
 
     public static ListaPeliculasValoraciones generarHíbrido(ListaPeliculasValoraciones pLista1, ListaPeliculasValoraciones pLista2, ListaPeliculasValoraciones pLista3) {
@@ -58,7 +61,7 @@ public class ListaPeliculasValoraciones {
     public Integer[] toIntegerArray() {
         Integer[] res = new Integer[this.recomendaciones.size()];
         int i = 0;
-        for (Map.Entry<Integer,Double> entry : this.recomendaciones.descendingSet()){
+        for (Map.Entry<Integer,Double> entry : this.recomendaciones){
             res[i++] = entry.getKey();
         }
         return res;

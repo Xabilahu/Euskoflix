@@ -192,7 +192,7 @@ public class ControladorVista {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            long loadTime = System.currentTimeMillis() + 1250;
+            long loadTime = System.currentTimeMillis() + 2350;
             while(System.currentTimeMillis() < loadTime);
             ventanaLogin.setVisible(false);
             Usuario user = CatalogoUsuarios.getInstance().login(new Usuario(username, "", "", ventanaLogin.getContra()));
