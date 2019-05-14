@@ -66,6 +66,8 @@ public class PopUpRecomendaciones extends JDialog {
                     ControladorVista.getInstance().cargarValoracionesUsuarioNuevo(pIdUsuario, this.panelRecomendaciones.getRatings());
                     dispose();
                 }
+            } else {
+                dispose();
             }
         });
         this.contentPane.add(this.panelBoton,BorderLayout.SOUTH);
